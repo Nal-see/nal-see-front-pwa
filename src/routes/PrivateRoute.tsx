@@ -7,7 +7,9 @@ const PrivateRoute = () => {
   return isAuthenticated ? (
     <>
       <Outlet />
-      <Tabbar />
+      <div className="fixed bottom-0 w-full border-t px-[27px] py-2 pb-[29px]">
+        <Tabbar />
+      </div>
     </>
   ) : (
     <Navigate to="/" />
