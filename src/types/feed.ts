@@ -1,10 +1,13 @@
 export interface Feed {
   id: string;
-  userName: string;
-  profileImageUrl: string;
+  userId: number;
+  username: string;
+  userImage: string;
   place: string;
-  uploadTime: string;
-  description: string;
-  imageUrl: string;
+  createDate: string;
+  content: string;
+  pictureList: string;
   isLiked: boolean;
+  likeCnt: number;
+  weather: string;
 }
