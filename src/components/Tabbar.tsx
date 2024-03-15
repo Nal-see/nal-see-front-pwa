@@ -64,11 +64,13 @@ const Tabbar = () => {
       title: '메시지',
       icon: (
         <MessageIcon
-          mainColor={activeKey === 'chat' ? 'var(--accent)' : 'var(--secondary'}
+          mainColor={
+            activeKey === 'chat' ? 'var(--accent)' : 'var(--secondary)'
+          }
           subColor={
             activeKey === 'chat'
               ? 'var(--accent-foreground)'
-              : 'var(--secondary-foreground'
+              : 'var(--secondary-foreground)'
           }
         />
       ),
@@ -79,11 +81,13 @@ const Tabbar = () => {
       title: '마이페이지',
       icon: (
         <MypageIcon
-          mainColor={activeKey === 'user' ? 'var(--accent)' : 'var(--secondary'}
+          mainColor={
+            activeKey === 'user' ? 'var(--accent)' : 'var(--secondary)'
+          }
           subColor={
             activeKey === 'user'
               ? 'var(--accent-foreground)'
-              : 'var(--secondary-foreground'
+              : 'var(--secondary-foreground)'
           }
         />
       ),
@@ -95,7 +99,11 @@ const Tabbar = () => {
   */
   const syncTabWithPath = useCallback((pathname: string) => {
     if (pathname === '/posts/create') setActiveKey('newPost');
-    else if (pathname.split('/')[2] === userId) setActiveKey('user');
+    else if (
+      pathname.split('/')[1] === 'user' &&
+      pathname.split('/')[2] === userId
+    )
+      setActiveKey('user');
     else {
       switch (pathname.split('/')[1]) {
         case 'home':
