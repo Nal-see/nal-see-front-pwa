@@ -6,7 +6,7 @@ export interface Feed {
   place: string;
   createDate: string;
   content: string;
-  pictureList: string;
+  pictureList: string[];
   isLiked: boolean;
   likeCnt: number;
   weather: string;

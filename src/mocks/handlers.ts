@@ -4,11 +4,8 @@ import { extractQueryParam } from '@/features/Feed/utils/RegExp';
 
 export const handlers = [
   http.get('/api/posts', (request) => {
-    console.log('request.url ', request.request);
     const size = extractQueryParam(request.request.url, 'size');
     const lastPostId = extractQueryParam(request.request.url, 'lastPostId');
-    console.log('lastPostId: ', lastPostId);
-    console.log('size: ', size);
 
     let filteredFeedData = feedData;
     if (lastPostId) {

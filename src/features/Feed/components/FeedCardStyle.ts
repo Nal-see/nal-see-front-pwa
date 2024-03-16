@@ -12,6 +12,10 @@ export const ProfileImage = styled.img`
   w-10 h-10 rounded-full mr-3
 `;
 
+export const UserInfo = styled.div`
+  flex flex-col
+`;
+
 export const UserName = styled.span`
   font-bold mr-2
 `;
@@ -42,4 +46,12 @@ export const Icon = styled.span`
 
 export const Content = styled.p`
   m-0
+`;
+
+export const MoreButton = styled.button`
+  text-sm text-blue-500 ml-1 focus:outline-none
+`;
+
+export const ToggleButton = styled.button`
+  text-sm text-blue-500 ml-1 focus:outline-none
 `;

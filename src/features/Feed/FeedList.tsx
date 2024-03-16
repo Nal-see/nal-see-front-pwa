@@ -14,7 +14,6 @@ const FeedListPage = () => {
       }: {
         pageParam?: number | undefined;
       }) => {
-        console.log('pageParam: ', pageParam);
         const response = await getFeedList(pageParam);
         return response;
       },
