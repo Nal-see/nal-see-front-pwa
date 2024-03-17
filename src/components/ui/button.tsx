@@ -15,15 +15,18 @@ const buttonVariants = cva(
         outline:
           'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
         secondary:
-          'bg-secondary text-secondary-foreground hover:bg-secondary/80',
+          'hover:bg-secondary/80 bg-secondary text-secondary-foreground',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
+        kakao:
+          'items-start justify-start gap-[98.97px] rounded-lg bg-[#FEE500]',
       },
       size: {
         default: 'h-10 px-4 py-2',
         sm: 'h-9 rounded-md px-3',
         lg: 'h-11 rounded-md px-8',
         icon: 'size-10',
+        kakao: 'h-[46px] w-[350px] py-[13px] pl-4 pr-[134px]',
       },
     },
     defaultVariants: {
