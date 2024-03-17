@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Feed } from '@/types/feed';
 import { FaHeart, FaRegHeart, FaRegComment } from 'react-icons/fa';
 import Slider from 'react-slick';
@@ -20,7 +20,6 @@ import {
   ToggleButton,
 } from './FeedCardStyle';
 import { formatDate } from '../utils/formatDate';
-import Example from './bottonDrawer';
 
 interface FeedCardProps {
   feed: Feed;
@@ -88,7 +87,6 @@ const FeedCard: React.FC<FeedCardProps> = ({ feed }) => {
           </Icon>
           <Icon onClick={handleComment}>
             <FaRegComment />
-            <Example />
           </Icon>
         </IconContainer>
         <UserName>{feed.username}</UserName>

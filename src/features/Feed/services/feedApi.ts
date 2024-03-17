@@ -8,8 +8,9 @@ export async function getFeedList(lastPostId?: number): Promise<Feed[]> {
   return response.data;
 }
 
-export async function getComments(page: number): Promise<Comment[]> {
-  const response = await axios.get(`/api/comments?page=${page}`);
+export async function getComments(lastCommentId: number): Promise<Comment[]> {
+  const response = await axios.get(`/api/comments?page=${lastCommentId}`);
+  console.log('response.data: ', response.data);
   return response.data;
 }
 

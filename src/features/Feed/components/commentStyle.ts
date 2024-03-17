@@ -47,3 +47,24 @@ export const EmojiButton = styled.button`
 export const ReadMoreButton = styled.button`
   text-sm text-blue-500 cursor-pointer ml-1;
 `;
+
+export const StyledForm = styled.form`
+  fixed bottom-0 left-0 right-0
+  bg-white p-4
+  shadow-md
+`;
+
+export const Input = styled.input`
+  w-full px-4 py-2 mb-4
+  border border-gray-300
+  rounded-md
+  focus:outline-none focus:ring-2 focus:ring-blue-500
+`;
+
+export const SubmitButton = styled.button`
+  w-full px-4 py-2
+  bg-blue-500 text-white
+  rounded-md
+  hover:bg-blue-600
+  focus:outline-none focus:ring-2 focus:ring-blue-500
+`;

@@ -25,12 +25,25 @@ export const handlers = [
     return HttpResponse.json(paginatedFeedData);
   }),
   http.get('/api/comments', (request) => {
-    const page = extractQueryParam(request.request.url, 'page');
-    const parsedPage = page ? parseInt(page, 10) : 1;
-    const paginatedComments = comments.slice(
-      (parsedPage - 1) * 10,
-      parsedPage * 10,
+    const size = extractQueryParam(request.request.url, 'size');
+    const lastCommentId = extractQueryParam(
+      request.request.url,
+      'lastCommentId',
     );
+
+    let filteredComments = comments;
+    if (lastCommentId) {
+      const parsedLastCommentId = parseInt(lastCommentId, 10);
+      const lastCommentIndex = comments.findIndex(
+        (comment) => comment.id === parsedLastCommentId,
+      );
+      if (lastCommentIndex !== -1) {
+        filteredComments = comments.slice(lastCommentIndex + 1);
+      }
+    }
+
+    const parsedSize = size ? parseInt(size, 10) : 10;
+    const paginatedComments = filteredComments.slice(0, parsedSize);
 
     return HttpResponse.json(paginatedComments);
   }),

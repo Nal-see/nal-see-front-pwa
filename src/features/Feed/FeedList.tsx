@@ -4,6 +4,7 @@ import FeedCard from './components/FeedCard';
 import { useInView } from 'react-intersection-observer';
 import { getFeedList } from './services/feedApi';
 import { Feed } from '@/types/feed';
+import CommentSheet from './components/bottonDrawer';
 
 const FeedListPage = () => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
@@ -36,6 +37,7 @@ const FeedListPage = () => {
 
   return (
     <div>
+      <CommentSheet />
       {data?.pages.map((page, pageIndex) => (
         <React.Fragment key={pageIndex}>
           {page.map((feed: Feed) => (
