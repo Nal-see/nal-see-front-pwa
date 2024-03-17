@@ -1,161 +1,76 @@
-import { Badge, TabBar } from 'antd-mobile';
-import { useCallback, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { cn } from '@/lib/utility';
+import { Link, useLocation } from 'react-router-dom';
 import {
+  ChatIcon,
+  CreatePostIcon,
   FeedIcon,
   HomeIcon,
-  MessageIcon,
   MypageIcon,
-  NewPostIcon,
-} from './icons';
+} from './Icon';
 
-const Tabbar = () => {
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
-  const [activeKey, setActiveKey] = useState<string>('');
-  const userId = '1';
+const NavBar = () => {
+  const location = useLocation();
+  const isActive = (pathname: string) => {
+    // `/chat`으로 시작하는 모든 경로를 활성화시키기 위한 특별한 처리
+    if (pathname.startsWith('/chat')) {
+      return location.pathname.startsWith('/chat');
+    }
+    // 그 외의 일반적인 경로 비교
+    return location.pathname === pathname;
+  };
 
   const tabs = [
     {
       key: 'home',
-      title: '홈',
-      icon: (
-        <HomeIcon
-          mainColor={
-            activeKey === 'home' ? 'var(--accent)' : 'var(--secondary)'
-          }
-        />
-      ),
+      label: '홈',
+      link: '/home',
+      icon: <HomeIcon isActive={isActive('/home')} />,
     },
     {
-      key: 'feeds',
-      title: '피드',
-      icon: (
-        <FeedIcon
-          mainColor={
-            activeKey === 'feeds' ? 'var(--accent)' : 'var(--secondary)'
-          }
-          subColor={
-            activeKey === 'feeds'
-              ? 'var(--accent-foreground)'
-              : 'var(--secondary-foreground)'
-          }
-        />
-      ),
+      key: 'feed',
+      label: '홈',
+      link: '/feeds',
+      icon: <FeedIcon isActive={isActive('/feeds')} />,
     },
     {
-      key: 'newPost',
-      title: '새 게시물',
-      icon: (
-        <NewPostIcon
-          mainColor={
-            activeKey === 'newPost' ? 'var(--accent)' : 'var(--secondary)'
-          }
-          subColor={
-            activeKey === 'newPost'
-              ? 'var(--accent-foreground)'
-              : 'var(--secondary-foreground)'
-          }
-        />
-      ),
+      key: 'create',
+      label: '새 게시물',
+      link: '/posts/create',
+      icon: <CreatePostIcon isActive={isActive('/posts/create')} />,
     },
     {
       key: 'chat',
-      title: '메시지',
-      icon: (
-        <MessageIcon
-          mainColor={activeKey === 'chat' ? 'var(--accent)' : 'var(--secondary'}
-          subColor={
-            activeKey === 'chat'
-              ? 'var(--accent-foreground)'
-              : 'var(--secondary-foreground'
-          }
-        />
-      ),
-      badge: Badge.dot,
+      label: '메시지',
+      link: '/chat',
+      icon: <ChatIcon isActive={isActive('/chat')} />,
     },
     {
-      key: 'user',
-      title: '마이페이지',
-      icon: (
-        <MypageIcon
-          mainColor={activeKey === 'user' ? 'var(--accent)' : 'var(--secondary'}
-          subColor={
-            activeKey === 'user'
-              ? 'var(--accent-foreground)'
-              : 'var(--secondary-foreground'
-          }
-        />
-      ),
+      key: 'mypage',
+      label: '마이페이지',
+      link: '/user',
+      icon: <MypageIcon isActive={isActive('/user')} />,
     },
   ];
 
-  /*
-    주소창으로 접속 시 or 새로고침 : pathname으로 tab 자동 선택 (activeKey값 설정)
-  */
-  const syncTabWithPath = useCallback((pathname: string) => {
-    if (pathname === '/posts/create') setActiveKey('newPost');
-    else if (pathname.split('/')[2] === userId) setActiveKey('user');
-    else {
-      switch (pathname.split('/')[1]) {
-        case 'home':
-          setActiveKey('home');
-          break;
-        case 'feeds':
-          setActiveKey('feeds');
-          break;
-        case 'chat':
-          setActiveKey('chat');
-          break;
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    syncTabWithPath(pathname);
-  }, [pathname]);
-
-  /*
-    탭 Item 선택 시 해당 화면으로 Navigate
-  */
-  const navigateRoute = useCallback(
-    (key: string) => {
-      setActiveKey(key);
-
-      // Navigate
-      switch (key) {
-        case 'home':
-          navigate('/home');
-          break;
-        case 'feeds':
-          navigate('/feeds');
-          break;
-        case 'newPost':
-          navigate('/posts/create');
-          break;
-        case 'chat':
-          navigate('/chat');
-          break;
-        case 'user':
-          navigate(`/user/${userId}`); // current user Id로 넣어줘야 함!!!
-          break;
-      }
-    },
-    [userId],
-  );
-
   return (
-    <TabBar onChange={navigateRoute} activeKey={activeKey}>
-      {tabs.map((item) => (
-        <TabBar.Item
-          key={item.key}
-          icon={item.icon}
-          title={item.title}
-          badge={item.badge}
-        />
+    <div className="inline-flex h-20 items-center justify-center gap-5 border-t border-neutral-300 px-7 py-2">
+      {tabs.map((tab) => (
+        <Link key={tab.key} to={tab.link}>
+          <div className="inline-flex flex-col items-center justify-center gap-0.5">
+            {tab.icon}
+            <div
+              className={cn(
+                'w-[52px] text-center text-xs font-medium leading-none tracking-tight',
+                isActive(tab.link) ? 'text-accent' : 'text-secondary',
+              )}
+            >
+              {tab.label}
+            </div>
+          </div>
+        </Link>
       ))}
-    </TabBar>
+    </div>
   );
 };
 
-export default Tabbar;
+export default NavBar;
