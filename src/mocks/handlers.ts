@@ -1,6 +1,7 @@
 import { http, HttpResponse } from 'msw';
 import { feedData } from '@/features/Feed/data/feedData';
 import { extractQueryParam } from '@/features/Feed/utils/RegExp';
+import comments from '@/features/Feed/data/commentData';
 
 export const handlers = [
   http.get('/api/posts', (request) => {
@@ -22,5 +23,15 @@ export const handlers = [
     const paginatedFeedData = filteredFeedData.slice(0, parsedSize);
 
     return HttpResponse.json(paginatedFeedData);
+  }),
+  http.get('/api/comments', (request) => {
+    const page = extractQueryParam(request.request.url, 'page');
+    const parsedPage = page ? parseInt(page, 10) : 1;
+    const paginatedComments = comments.slice(
+      (parsedPage - 1) * 10,
+      parsedPage * 10,
+    );
+
+    return HttpResponse.json(paginatedComments);
   }),
 ];
