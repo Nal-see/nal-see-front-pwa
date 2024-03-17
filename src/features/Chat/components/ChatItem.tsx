@@ -1,6 +1,8 @@
 import CircleProfileImg from '@/components/CircleProfileImg';
+import { useNavigate } from 'react-router-dom';
 
 interface IChatItemProps {
+  chatId: string;
   username: string;
   profileImgUrl: string;
   lastMessage: string;
@@ -9,14 +11,24 @@ interface IChatItemProps {
 }
 
 const ChatItem = ({
+  chatId,
   username,
   profileImgUrl,
   lastMessage,
   lastUpdatedDate,
   read,
 }: IChatItemProps) => {
+  const navigate = useNavigate();
+
+  const enterChatRoom = () => {
+    navigate(`/chat/${chatId}`);
+  };
+
   return (
-    <div className="flex w-dvw flex-row items-center justify-between px-7 py-5 active:bg-accent-foreground">
+    <div
+      onClick={enterChatRoom}
+      className="flex w-dvw flex-row items-center justify-between px-7 py-5 active:bg-accent-foreground"
+    >
       <div className="flex w-[85%] flex-row items-center gap-5">
         <CircleProfileImg size="size-[50px]" profileImgUrl={profileImgUrl} />
         <div className="flex w-[70%] flex-col justify-start">

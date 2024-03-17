@@ -28,7 +28,7 @@ const NavBar = () => {
     },
     {
       key: 'feed',
-      label: '홈',
+      label: '피드',
       link: '/feeds',
       icon: <FeedIcon isActive={isActive('/feeds')} />,
     },

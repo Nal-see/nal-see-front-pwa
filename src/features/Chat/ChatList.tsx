@@ -4,10 +4,11 @@ import ChatContainer from './components/ChatContainer';
 
 const ChatListPage = () => {
   return (
-    <div className="relative">
+    <div className="flex-1">
       <BackBtnHeader title="메시지" />
       <ChatContainer>
         <ChatItem
+          chatId="1"
           profileImgUrl="public/icon-32x32.png"
           username="User Kim"
           lastMessage="Last messagedfsersdfasefsdfsfefasdfefsfsefsfsf..."
@@ -15,6 +16,7 @@ const ChatListPage = () => {
           read={false}
         />
         <ChatItem
+          chatId="1"
           profileImgUrl="public/icon-32x32.png"
           username="User Kim"
           lastMessage="Last messagedfsersdfasefsdfsfefasdfefsfsefsfsf..."
@@ -22,6 +24,7 @@ const ChatListPage = () => {
           read={true}
         />
         <ChatItem
+          chatId="1"
           profileImgUrl="public/icon-32x32.png"
           username="User Kim"
           lastMessage="Last messagedfsersdfasefsdfsfefasdfefsfsefsfsf..."
@@ -29,6 +32,7 @@ const ChatListPage = () => {
           read={false}
         />
         <ChatItem
+          chatId="1"
           profileImgUrl="public/icon-32x32.png"
           username="User Kim"
           lastMessage="Last messagedfsersdfasefsdfsfefasdfefsfsefsfsf..."
@@ -36,6 +40,7 @@ const ChatListPage = () => {
           read={true}
         />
         <ChatItem
+          chatId="1"
           profileImgUrl="public/icon-32x32.png"
           username="User Kim"
           lastMessage="Last messagedfsersdfasefsdfsfefasdfefsfsefsfsf..."
@@ -43,6 +48,7 @@ const ChatListPage = () => {
           read={true}
         />
         <ChatItem
+          chatId="1"
           profileImgUrl="public/icon-32x32.png"
           username="User Kim"
           lastMessage="Last messagedfsersdfasefsdfsfefasdfefsfsefsfsf..."
@@ -50,6 +56,7 @@ const ChatListPage = () => {
           read={true}
         />
         <ChatItem
+          chatId="1"
           profileImgUrl="public/icon-32x32.png"
           username="User Kim"
           lastMessage="Last messagedfsersdfasefsdfsfefasdfefsfsefsfsf..."
@@ -57,6 +64,7 @@ const ChatListPage = () => {
           read={true}
         />
         <ChatItem
+          chatId="1"
           profileImgUrl="public/icon-32x32.png"
           username="User Kim"
           lastMessage="Last messagedfsersdfasefsdfsfefasdfefsfsefsfsf..."
@@ -64,6 +72,7 @@ const ChatListPage = () => {
           read={true}
         />
         <ChatItem
+          chatId="1"
           profileImgUrl="public/icon-32x32.png"
           username="User Kim"
           lastMessage="Last messagedfsersdfasefsdfsfefasdfefsfsefsfsf..."
