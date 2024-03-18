@@ -1,11 +1,30 @@
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 import useAuthStore from '../store/useAuthStore';
+import { useEffect } from 'react';
+import { getUserInfo } from '@/services/api/auth.service';
 
 const PublicRoute = () => {
-  // Replace with your auth condition
-  const { isAuthenticated } = useAuthStore();
+  const navigate = useNavigate();
+  const { user, setUser } = useAuthStore();
 
-  return isAuthenticated ? <Navigate to="/home" /> : <Outlet />;
+  useEffect(() => {
+    getUserInfo().then((res) => {
+      console.log(res);
+      const userData = res?.data;
+      setUser({
+        user: {
+          userId: userData.id,
+          username: userData.username,
+          email: userData.eamil,
+          isNewUser: userData.newUser,
+        },
+      });
+
+      navigate('/');
+    });
+  }, []);
+
+  return user ? <Navigate to="/home" /> : <Outlet />;
 };
 
 export default PublicRoute;

@@ -3,7 +3,7 @@ import React from 'react';
 
 const NotificationsPage = () => {
   return (
-    <div>
+    <div className="flex-1">
       <BackBtnHeader title="알림" />
     </div>
   );
