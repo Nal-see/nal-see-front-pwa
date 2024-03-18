@@ -40,5 +40,6 @@ module.exports = {
         callees: ['cn', 'cva'],
       },
     ],
+    'tailwindcss/no-custom-classname': 'off',
   },
 };
