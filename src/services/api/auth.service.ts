@@ -8,6 +8,6 @@ export const getUserInfo = async () => {
       return response;
     }
   } catch (error) {
-    console.error(error);
+    return null;
   }
 };

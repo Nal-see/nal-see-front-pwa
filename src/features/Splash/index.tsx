@@ -2,15 +2,18 @@ import { KakaoIcon } from '@/components/Icon';
 import { Button } from '@/components/ui/button';
 
 const SplashPage = () => {
-  const navigateToOauthProvider = () => {
-    window.location.assign(
-      'http://ec2-43-203-106-91.ap-northeast-2.compute.amazonaws.com:8080/login',
-    );
+  const handleOauthLogin = (provider: string) => {
+    const googleLoginURL = `${import.meta.env.VITE_API_BASE_URL}/oauth2/authorization/${provider}`;
+    window.location.href = googleLoginURL;
   };
 
   return (
     <div className="flex h-dvh flex-col items-center ">
-      <Button variant="kakao" size="kakao" onClick={navigateToOauthProvider}>
+      <Button
+        variant="kakao"
+        size="kakao"
+        onClick={() => handleOauthLogin('kakao')}
+      >
         <div className="h-[18px] w-[19.03px]">
           <KakaoIcon />
         </div>
