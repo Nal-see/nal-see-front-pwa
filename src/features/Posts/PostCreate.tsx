@@ -1,6 +1,9 @@
+import PostCreateHeader from './components/PostCreateHeader';
+
 const PostCreatePage = () => {
   return (
-    <div>
+    <div className="flex-1">
+      <PostCreateHeader />
       <p>Post Create Page</p>
     </div>
   );

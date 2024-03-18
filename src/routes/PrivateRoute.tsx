@@ -3,8 +3,8 @@ import useAuthStore from '../store/useAuthStore';
 import Tabbar from '@/components/Tabbar';
 
 const PrivateRoute = () => {
-  const { isAuthenticated } = useAuthStore();
-  return isAuthenticated ? (
+  const { user } = useAuthStore();
+  return user ? (
     <div className="flex h-dvh flex-col">
       <Outlet />
       <Tabbar />

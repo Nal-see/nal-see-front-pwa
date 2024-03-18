@@ -20,10 +20,8 @@ export const getUserInfo = async () => {
   try {
     const response = await api.get('/index');
     if (response.status === 200) {
-      // 스토어에 유저 정보 저장
+      return response;
     }
-
-    return response;
   } catch (error) {
     console.error(error);
   }
