@@ -19,31 +19,25 @@ module.exports = {
     'tailwindcss/classnames-order': [
       'warn',
       {
-        callees: ['cn'],
+        callees: ['cn', 'cva'],
       },
     ],
     'tailwindcss/enforces-negative-arbitrary-values': [
       'warn',
       {
-        callees: ['cn'],
+        callees: ['cn', 'cva'],
       },
     ],
     'tailwindcss/enforces-shorthand': [
       'warn',
       {
-        callees: ['cn'],
+        callees: ['cn', 'cva'],
       },
     ],
     'tailwindcss/no-contradicting-classname': [
       'warn',
       {
-        callees: ['cn'],
-      },
-    ],
-    'tailwindcss/no-custom-classname': [
-      'warn',
-      {
-        callees: ['cn'],
+        callees: ['cn', 'cva'],
       },
     ],
   },

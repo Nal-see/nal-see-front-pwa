@@ -1,22 +1,29 @@
 import { create } from 'zustand';
 
-interface AuthState {
-  isAuthenticated: boolean;
+interface IUserState {
+  user: {
+    userId: string;
+    userName: string;
+    email: string;
+    isNewUser: boolean;
+  } | null;
 }
 
-export interface AuthStore extends AuthState {
-  setIsAuthenticated: (args: AuthState['isAuthenticated']) => void;
+interface IUserStore extends IUserState {
+  setUser: (user: IUserState) => void;
+  removeUser: () => void;
 }
 
-const initialState: Pick<AuthStore, keyof AuthState> = {
-  isAuthenticated: true,
+const initialState: IUserState = {
+  user: null,
 };
 
-const useAuthStore = create<AuthStore>((set) => ({
+const useAuthStore = create<IUserStore>((set) => ({
   ...initialState,
-  setIsAuthenticated: (isAuthenticated) => {
-    set(() => ({ isAuthenticated }));
+  setUser: (user) => {
+    set(user);
   },
+  removeUser: () => set({ user: null }),
 }));
 
 export default useAuthStore;

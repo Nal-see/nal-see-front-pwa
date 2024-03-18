@@ -1,15 +1,13 @@
-import { type LoginBody } from '@/types/auth';
+import { api } from '@/lib/api';
 
-// Dummy login request that will resolve in 2 seconds
-export const login = async (body: LoginBody) => {
-  const res = new Promise<boolean>((resolve, reject) => {
-    if (body.username !== 'user' || body.password !== 'user') {
-      reject(new Error('Invalid username or password'));
+// GET : 유저 정보 fetching
+export const getUserInfo = async () => {
+  try {
+    const response = await api.get('/index');
+    if (response.status === 200) {
+      return response;
     }
-
-    setTimeout(() => {
-      resolve(true);
-    }, 2000);
-  });
-  return await res;
+  } catch (error) {
+    return null;
+  }
 };

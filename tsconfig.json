@@ -5,6 +5,7 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
+    "types": ["vite-plugin-svgr/client"],
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -21,7 +22,8 @@
       "@/types/*": ["types/*"],
       "@/hooks/*": ["hooks/*"],
       "@/store/*": ["store/*"],
-      "@/services/*": ["services/*"]
+      "@/services/*": ["services/*"],
+      "@/assets/*": ["assets/*"]
     },
 
     /* Linting */
@@ -30,5 +32,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["./src"]
+  "include": ["./src", "svg.d.ts"]
 }
