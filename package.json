@@ -75,10 +75,5 @@
     "workerDirectory": [
       "public"
     ]
-  },
-  "msw": {
-    "workerDirectory": [
-      "public"
-    ]
   }
 }
