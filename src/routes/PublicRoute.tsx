@@ -9,7 +9,7 @@ const PublicRoute = () => {
 
   useEffect(() => {
     getUserInfo().then((res) => {
-      console.log(res);
+      console.log(res?.data);
       const userData = res?.data;
       setUser({
         user: {

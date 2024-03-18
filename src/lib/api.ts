@@ -8,6 +8,7 @@ const axiosRequestConfig: AxiosRequestConfig = {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
   },
+  withCredentials: true,
 };
 
 const api: AxiosInstance = axios.create(axiosRequestConfig);

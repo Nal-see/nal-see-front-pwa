@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 const SplashPage = () => {
   const navigateToOauthProvider = () => {
     window.location.assign(
-      'http://ec2-43-203-106-91.ap-northeast-2.compute.amazonaws.com:8080/login',
+      `${import.meta.env.VITE_API_END_POINT}/oauth2/authorization/kakao`,
     );
   };
 
