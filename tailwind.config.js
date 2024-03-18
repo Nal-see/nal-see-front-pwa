@@ -1,4 +1,5 @@
 import tailwindcssAnimate from 'tailwindcss-animate';
+import scrollbarHide from 'tailwind-scrollbar-hide';
 /** @type {import('tailwindcss').Config} */
 export const darkMode = ['class'];
 export const content = [
@@ -28,8 +29,8 @@ export const theme = {
         foreground: 'var(--primary-foreground)',
       },
       secondary: {
-        DEFAULT: 'hsl(var(--secondary))',
-        foreground: 'hsl(var(--secondary-foreground))',
+        DEFAULT: 'var(--secondary)',
+        foreground: 'var(--secondary-foreground)',
       },
       destructive: {
         DEFAULT: 'hsl(var(--destructive))',
@@ -73,4 +74,4 @@ export const theme = {
     },
   },
 };
-export const plugins = [tailwindcssAnimate];
+export const plugins = [tailwindcssAnimate, scrollbarHide];

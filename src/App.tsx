@@ -9,7 +9,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       {/* font 설정, 100dvh설정 등등 */}
-      <div>
+      <div className="">
         <Router />
       </div>
       <ToastContainer />
