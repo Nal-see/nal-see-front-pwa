@@ -2,12 +2,14 @@ import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios';
 import { errorInterceptor } from './interceptors';
 
 const axiosRequestConfig: AxiosRequestConfig = {
-  baseURL: import.meta.env.VITE_API_BASE_URL,
+  // baseURL: `${import.meta.env.VITE_API_END_POINT}/api`,
+  baseURL: `${import.meta.env.VITE_API_BASE_URL}`,
   responseType: 'json',
   headers: {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
   },
+  withCredentials: true,
 };
 
 const api: AxiosInstance = axios.create(axiosRequestConfig);
