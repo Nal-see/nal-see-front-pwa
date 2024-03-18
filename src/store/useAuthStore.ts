@@ -3,7 +3,7 @@ import { create } from 'zustand';
 interface IUserState {
   user: {
     userId: string;
-    username: string;
+    userName: string;
     email: string;
     isNewUser: boolean;
   } | null;
