@@ -9,7 +9,9 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "mock": "npx tsx watch ./src/mocks/http.ts",
-    "icons": "npx @svgr/cli --template ./svgr.template.cjs --ext tsx --out-dir src/components/icons -- src/assets/icons"
+    "icons": "npx @svgr/cli --template ./svgr.template.cjs --ext tsx --out-dir src/components/icons -- src/assets/icons",
+    "deploy": "aws s3 sync ./dist s3://nal-see --profile=nal-see-user",
+    "invalidate": "aws cloudfront create-invalidation --profile=nal-see-user --distribution-id E2E2XKDJOF53CZ --paths \"/*\""
   },
   "dependencies": {
     "@mswjs/http-middleware": "^0.9.2",

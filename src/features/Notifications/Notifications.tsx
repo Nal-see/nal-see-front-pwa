@@ -1,5 +1,4 @@
 import BackBtnHeader from '@/components/BackBtnHeader';
-import React from 'react';
 
 const NotificationsPage = () => {
   return (
