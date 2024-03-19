@@ -4,9 +4,8 @@ import FeedCard from './components/FeedCard';
 import { useInView } from 'react-intersection-observer';
 import { getFeedList } from './services/feedApi';
 import { Feed } from '@/types/feed';
-import CommentSheet from './components/bottonDrawer';
 
-const FeedListPage = () => {
+const FeedList = () => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery<Feed[], string[], string | undefined>({
       queryKey: ['feedList'],
@@ -27,6 +26,7 @@ const FeedListPage = () => {
 
   const [ref, inView] = useInView({
     threshold: 0,
+    rootMargin: '200px',
   });
 
   React.useEffect(() => {
@@ -35,9 +35,9 @@ const FeedListPage = () => {
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
+  // if (!data?.pages) return <div>Loading...</div>;
   return (
-    <div>
-      <CommentSheet />
+    <div className="max-h-full w-10/12">
       {data?.pages.map((page, pageIndex) => (
         <React.Fragment key={pageIndex}>
           {page.map((feed: Feed) => (
@@ -51,4 +51,4 @@ const FeedListPage = () => {
   );
 };
 
-export default FeedListPage;
+export default FeedList;

@@ -1,11 +1,12 @@
 import styled from 'tailwind-styled-components';
 
+//border border-gray-300 rounded-md
 export const FeedCardContainer = styled.div`
-  border border-gray-300 rounded-md mb-4
+   mb-4
 `;
 
 export const FeedCardHeader = styled.div`
-  flex items-center p-3 bg-gray-100
+  flex items-center p-3
 `;
 
 export const ProfileImage = styled.img`
@@ -29,7 +30,7 @@ export const UploadTime = styled.span`
 `;
 
 export const FeedImage = styled.img`
-  w-full h-auto
+  w-full h-auto rounded-md
 `;
 
 export const FeedCardFooter = styled.div`
@@ -41,7 +42,7 @@ export const IconContainer = styled.div`
 `;
 
 export const Icon = styled.span`
-  mr-2 cursor-pointer
+  mr-2 cursor-pointer z-10
 `;
 
 export const Content = styled.p`

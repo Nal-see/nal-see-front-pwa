@@ -3,20 +3,8 @@ const contents = [
   'world',
   'this is a comment',
   'I like this post',
-  'I love this post',
-  'I hate this post',
   'I don’t care about this postI don’t care about this postI don’t care about this postI don’t care about this postI don’t care about this postI don’t care about this postI don’t care about this postI don’t care about this postI don’t care about this postI don’t care about this post',
   'I’m indifferent to this post',
-  'I’m not sure about this post',
-  'I’m sure about this post',
-  'I’m not sure about this post',
-  'I’m sure about this post',
-  'I’m not sure about this post',
-  'I’m sure about this post',
-  'I’m not sure about this post',
-  'I’m sure about this post',
-  'I’m not sure about this post',
-  'I’m sure about this post',
 ];
 
 const usernames = [

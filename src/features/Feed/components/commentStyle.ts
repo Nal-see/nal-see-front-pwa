@@ -49,8 +49,9 @@ export const ReadMoreButton = styled.button`
 `;
 
 export const StyledForm = styled.form`
-  fixed bottom-0 left-0 right-0
-  bg-white p-4
+  fixed bottom-20 flex
+  rounded-md
+  bg-black p-4
   shadow-md
 `;
 
