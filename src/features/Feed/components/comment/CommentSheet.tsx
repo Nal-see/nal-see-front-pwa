@@ -30,7 +30,7 @@ const CommentSheet: React.FC<CommentSheetProps> = ({
     queryFn: async () => {
       const response = await getComments(postId);
       console.log('response: ', response);
-      return response;
+      return response as unknown as Comment[]; // 타입 단언 사용
     },
     enabled: open,
   });

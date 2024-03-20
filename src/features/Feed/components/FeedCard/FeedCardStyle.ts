@@ -42,7 +42,7 @@ export const IconContainer = styled.div`
 `;
 
 export const Icon = styled.span`
-  mr-2 cursor-pointer z-10
+  mr-2 cursor-pointer z-0
 `;
 
 export const Content = styled.p`
