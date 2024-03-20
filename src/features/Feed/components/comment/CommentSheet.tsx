@@ -6,7 +6,7 @@ import { Comment } from '../../data/commentData';
 import { useQuery } from '@tanstack/react-query';
 import CommentBox from './comment';
 import { Input } from 'antd-mobile';
-import { StyledForm, SubmitButton } from './commentStyle';
+import { StyledForm } from './commentStyle';
 import { FaRegComment } from 'react-icons/fa';
 import { ProfileImage } from '../FeedCard/FeedCardStyle';
 
@@ -55,19 +55,12 @@ const CommentSheet: React.FC<CommentSheetProps> = ({
       >
         <div
           ref={sheetRef}
-          className="z-40 max-h-full overflow-y-auto p-4 pb-20"
-          // style={{
-          //   maxHeight: '100%',
-          //   overflowY: 'auto',
-          //   padding: '16px',
-          //   paddingBottom: '80px',
-
-          // }}
+          className="z-40 h-[calc(100vh-183px)] overflow-y-auto p-4"
         >
           {isLoading ? (
             <div>Loading...</div>
           ) : (
-            comments?.map((comment) => (
+            comments?.map((comment: Comment) => (
               <CommentBox key={comment.id} comment={comment} />
             ))
           )}
@@ -81,7 +74,7 @@ const CommentSheet: React.FC<CommentSheetProps> = ({
               console.log('e.value: ', e);
               setNewComment(e);
             }}
-            placeholder="Add a comment"
+            placeholder="댓글을 입력해주세요."
             className="mt-2"
           />
         </StyledForm>

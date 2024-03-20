@@ -36,14 +36,6 @@ export const Content = styled.p`
   text-sm mt-1;
 `;
 
-export const EmojiContainer = styled.div`
-  flex items-center space-x-1 mt-1;
-`;
-
-export const EmojiButton = styled.button`
-  text-lg;
-`;
-
 export const ReadMoreButton = styled.button`
   text-sm text-blue-500 cursor-pointer ml-1;
 `;
@@ -52,7 +44,7 @@ export const StyledForm = styled.form`
   flex
   rounded-md
   w-full
-  bg-black p-4
+  p-4
   shadow-md
 `;
 
