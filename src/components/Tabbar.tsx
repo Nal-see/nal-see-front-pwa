@@ -53,7 +53,7 @@ const NavBar = () => {
   ];
 
   return (
-    <div className="inline-flex h-20 items-center justify-center gap-5 border-t border-neutral-300 px-7 py-2 pb-8">
+    <div className="inline-flex h-20 items-center justify-center gap-5 border-t border-neutral-300 bg-white px-7 py-2 pb-8">
       {tabs.map((tab) => (
         <Link key={tab.key} to={tab.link}>
           <div className="inline-flex flex-col items-center justify-center gap-0.5">
