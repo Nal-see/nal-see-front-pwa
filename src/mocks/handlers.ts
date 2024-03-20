@@ -2,17 +2,12 @@ import { http, HttpResponse } from 'msw';
 
 export const handlers = [
   http.get('/index', () => {
-    return HttpResponse.json(
-      {
-        id: '2',
-        username: 'TestUser',
-        email: 'test@example.com',
-        newUser: true,
-      },
-      {
-        status: 200,
-      },
-    );
+    return HttpResponse.json({
+      id: '2',
+      username: 'TestUser',
+      email: 'test@example.com',
+      newUser: true,
+    });
 
     // access token 만료
     // return HttpResponse.json(null, {

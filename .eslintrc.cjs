@@ -40,11 +40,6 @@ module.exports = {
         callees: ['cn', 'cva'],
       },
     ],
-    'tailwindcss/no-custom-classname': [
-      'warn',
-      {
-        callees: ['cn', 'cva'],
-      },
-    ],
+    'tailwindcss/no-custom-classname': 'off',
   },
 };
