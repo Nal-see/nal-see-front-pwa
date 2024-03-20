@@ -1,6 +1,6 @@
 const ChatRoomPage = () => {
   return (
-    <div>
+    <div className="flex-1 ">
       <p>ChatRoomPage</p>
     </div>
   );

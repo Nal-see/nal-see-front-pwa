@@ -3,13 +3,15 @@ import PublicRoute from './PublicRoute';
 import PrivateRoute from './PrivateRoute';
 import SplashPage from '@/features/Splash';
 import HomePage from '@/features/Home';
-import FeedListPage from '@/features/Feed/FeedList';
 import PostCreatePage from '@/features/Posts/PostCreate';
 import ChatListPage from '@/features/Chat/ChatList';
 import UserFeedPage from '@/features/Feed/UserFeed';
 import PostDetailPage from '@/features/Posts/PostDetail';
 import PostEditPage from '@/features/Posts/PostEdit';
 import ChatRoomPage from '@/features/Chat/ChatRoom';
+import NotificationsPage from '@/features/Notifications/Notifications';
+// import OauthRedirectPage from '@/features/OauthRedirect';
+import FeedListPage from '@/features/Feed/FeedPage';
 
 const Router = () => {
   return (
@@ -17,6 +19,7 @@ const Router = () => {
       <Routes>
         <Route element={<PublicRoute />}>
           <Route path="/" element={<SplashPage />} />
+          {/* <Route path="/oauth2/redirect" element={<OauthRedirectPage />} /> */}
         </Route>
         <Route element={<PrivateRoute />}>
           <Route path="/home" element={<HomePage />} />
@@ -33,6 +36,7 @@ const Router = () => {
           <Route path="/user">
             <Route path=":userId" element={<UserFeedPage />} />
           </Route>
+          <Route path="/notifications" element={<NotificationsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
