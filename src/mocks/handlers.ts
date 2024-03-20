@@ -24,28 +24,26 @@ export const handlers = [
 
     return HttpResponse.json(paginatedFeedData);
   }),
-  http.get('/api/comments', (request) => {
-    const size = extractQueryParam(request.request.url, 'size');
-    const lastCommentId = extractQueryParam(
-      request.request.url,
-      'lastCommentId',
-    );
+  // http.get('/api/posts/:postId/comments', (request, context) => {
+  //   console.log('request.params: ', request.params);
 
-    let filteredComments = comments;
-    if (lastCommentId) {
-      const parsedLastCommentId = parseInt(lastCommentId, 10);
-      const lastCommentIndex = comments.findIndex(
-        (comment) => comment.id === parsedLastCommentId,
-      );
-      if (lastCommentIndex !== -1) {
-        filteredComments = comments.slice(lastCommentIndex + 1);
-      }
-    }
+  //   const filteredComments = comments;
 
-    const parsedSize = size ? parseInt(size, 10) : 10;
-    const paginatedComments = filteredComments.slice(0, parsedSize);
-
-    return HttpResponse.json(paginatedComments);
+  //   console.log('filteredComment: ', filteredComments);
+  //   return HttpResponse.json(
+  //     context.status(200),
+  //     context.json({
+  //       success: true,
+  //       message: '요청에 성공했습니다.',
+  //       results: filteredComments,
+  //     }),
+  //   );
+  // }),
+  http.get('/api/posts/:postId/comments', (request, response, context) => {
+    console.log('request.params: ', request.params);
+    const filteredComments = comments;
+    console.log('filteredComment: ', filteredComments);
+    return HttpResponse.json(filteredComments);
   }),
   http.get('/index', () => {
     return HttpResponse.json({

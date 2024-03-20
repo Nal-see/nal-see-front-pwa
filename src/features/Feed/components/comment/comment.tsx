@@ -12,7 +12,7 @@ import {
   UserImage,
   Username,
 } from './commentStyle';
-import { Comment as CommentType } from '../data/commentData';
+import { Comment as CommentType } from '../../data/commentData';
 
 interface CommentProps {
   comment: CommentType;

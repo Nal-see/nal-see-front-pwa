@@ -33,22 +33,22 @@ export type Comment = {
 };
 
 // Remove the existing declaration of comments: const comments: Comment[] = [];
+const comments = { results: [] as Comment[] };
+comments.results = [];
 
-const comments: Comment[] = [];
-
-for (let i = 1; i <= 105; i++) {
+for (let i = 0; i <= 50; i++) {
   const comment: Comment = {
     id: i,
     content: contents[i % contents.length],
     likeCNT: 20,
     createDate: '2024-03-14T21:37:21.988414',
-    userId: 1,
+    userId: i,
     userImage: 'https://placehold.co/92x62',
-    username: usernames[i % usernames.length],
+    username: usernames[i % usernames.length] + i,
     postId: i,
     isLiked: i % 2 === 0 ? true : false,
   };
-  comments.push(comment);
+  comments.results.push(comment);
 }
 
 export default comments;

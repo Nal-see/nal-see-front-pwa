@@ -19,8 +19,8 @@ import {
   Content,
   ToggleButton,
 } from './FeedCardStyle';
-import { formatDate } from '../utils/formatDate';
-import CommentSheet from './CommentSheet';
+import { formatDate } from '../../utils/formatDate';
+import CommentSheet from '../comment/CommentSheet';
 
 interface FeedCardProps {
   feed: Feed;
@@ -42,10 +42,6 @@ const FeedCard: React.FC<FeedCardProps> = ({ feed }) => {
   const handleToggleLike = (event: React.MouseEvent<HTMLSpanElement>) => {
     event.stopPropagation();
     setIsLiked(!isLiked);
-  };
-
-  const handleComment = () => {
-    console.log('Comment icon clicked');
   };
 
   const displayedContent = showFullContent
@@ -87,7 +83,11 @@ const FeedCard: React.FC<FeedCardProps> = ({ feed }) => {
             {isLiked ? <FaHeart color="red" /> : <FaRegHeart />}
           </Icon>
           <Icon>
-            <CommentSheet />
+            <CommentSheet
+              postId={Number(feed.id)}
+              username={feed.username}
+              userImage={feed.userImage}
+            />
           </Icon>
         </IconContainer>
         <UserName>{feed.username}</UserName>

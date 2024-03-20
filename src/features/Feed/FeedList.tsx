@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import React from 'react';
-import FeedCard from './components/FeedCard';
+import FeedCard from './components/FeedCard/FeedCard';
 import { useInView } from 'react-intersection-observer';
 import { getFeedList } from './services/feedApi';
 import { Feed } from '@/types/feed';
@@ -35,7 +35,6 @@ const FeedList = () => {
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  console.log(data);
   // if (!data?.pages) return <div>Loading...</div>;
   return (
     <div className="h-[calc(100vh-183px)] w-10/12 overflow-y-scroll scrollbar-hide">
