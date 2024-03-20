@@ -6,7 +6,7 @@ const PostCreateHeader = () => {
 
   return (
     <div
-      className={`sticky top-auto flex w-full flex-row items-center justify-between gap-2 p-6 pt-16`}
+      className={`sticky top-auto flex w-full flex-row items-center justify-between gap-2 p-6`}
     >
       <LeftOutline fontSize={24} onClick={() => navigate(-1)} />
       <p className="text-xl font-bold">새 게시물</p>
