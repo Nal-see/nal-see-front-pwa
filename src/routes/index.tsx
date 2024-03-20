@@ -11,7 +11,7 @@ import PostDetailPage from '@/features/Posts/PostDetail';
 import PostEditPage from '@/features/Posts/PostEdit';
 import ChatRoomPage from '@/features/Chat/ChatRoom';
 import NotificationsPage from '@/features/Notifications/Notifications';
-import OauthRedirectPage from '@/features/OauthRedirect';
+// import OauthRedirectPage from '@/features/OauthRedirect';
 
 const Router = () => {
   return (
@@ -19,7 +19,7 @@ const Router = () => {
       <Routes>
         <Route element={<PublicRoute />}>
           <Route path="/" element={<SplashPage />} />
-          <Route path="/oauth2/redirect" element={<OauthRedirectPage />} />
+          {/* <Route path="/oauth2/redirect" element={<OauthRedirectPage />} /> */}
         </Route>
         <Route element={<PrivateRoute />}>
           <Route path="/home" element={<HomePage />} />
