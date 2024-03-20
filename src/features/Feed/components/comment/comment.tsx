@@ -13,19 +13,33 @@ import {
 } from './commentStyle';
 import { Comment as CommentType } from '../../data/commentData';
 import { ToggleButton } from '../FeedCard/FeedCardStyle';
+import { addCommentLike, cancelCommentLike } from '../../services/feedApi';
 
 interface CommentProps {
   comment: CommentType;
+  postId: number;
 }
 
-const Comment: React.FC<CommentProps> = ({ comment }) => {
+const Comment: React.FC<CommentProps> = ({ comment, postId }) => {
   const [isLiked, setIsLiked] = useState(comment.isLiked);
   const [likeCount, setLikeCount] = useState(comment.likeCNT);
   const [showFullContent, setShowFullContent] = useState(false);
 
-  const toggleLike = () => {
-    setIsLiked(!isLiked);
-    setLikeCount(isLiked ? likeCount - 1 : likeCount + 1);
+  const toggleLike = async () => {
+    const newIsLiked = !isLiked;
+    setIsLiked(newIsLiked);
+    setLikeCount(newIsLiked ? likeCount + 1 : likeCount - 1);
+    try {
+      if (newIsLiked) {
+        await addCommentLike(postId, comment.id);
+      } else {
+        await cancelCommentLike(postId, comment.id);
+      }
+    } catch (error) {
+      console.error('댓글 좋아요 토글 실패:', error);
+      setIsLiked(!newIsLiked);
+      setLikeCount(newIsLiked ? likeCount - 1 : likeCount + 1);
+    }
   };
 
   const toggleContent = () => {

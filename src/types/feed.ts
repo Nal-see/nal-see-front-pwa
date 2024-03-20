@@ -10,5 +10,5 @@ export interface Feed {
   isLiked: boolean;
   likeCnt: number;
   weather: string;
-  temp: number;
+  temperature: number;
 }

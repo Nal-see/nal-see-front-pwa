@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { BottomSheet } from 'react-spring-bottom-sheet';
 import 'react-spring-bottom-sheet/dist/style.css';
-import { getComments } from '../../services/feedApi';
 import { Comment } from '../../data/commentData';
 import { useQuery } from '@tanstack/react-query';
 import CommentBox from './comment';
@@ -9,6 +8,7 @@ import { Input } from 'antd-mobile';
 import { StyledForm } from './commentStyle';
 import { FaRegComment } from 'react-icons/fa';
 import { ProfileImage } from '../FeedCard/FeedCardStyle';
+import { getComments } from '../../services/feedApi';
 
 interface CommentSheetProps {
   postId: number;
@@ -62,7 +62,7 @@ const CommentSheet: React.FC<CommentSheetProps> = ({
             <div>Loading...</div>
           ) : (
             comments?.map((comment: Comment) => (
-              <CommentBox key={comment.id} comment={comment} />
+              <CommentBox key={comment.id} comment={comment} postId={postId} />
             ))
           )}
         </div>

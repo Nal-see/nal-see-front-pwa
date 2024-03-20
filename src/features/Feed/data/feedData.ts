@@ -1,7 +1,6 @@
 import { Feed } from '@/types/feed';
 
-export const feedData: Feed[] = [];
-
+const feedData: Feed[] = [];
 const userNames = [
   '홍길동',
   '김철수',
@@ -54,7 +53,7 @@ const uploadTimes = [
   '2024-03-19 10:10:10',
 ];
 
-const weathers = ['맑음', '흐림', '비', '눈', '바람', '안개'];
+const weathers = ['Thunderstorm', 'Rain', 'Snow', 'Fog', 'Clear', 'Clouds'];
 
 for (let i = 0; i <= 100; i++) {
   feedData.push({
@@ -73,6 +72,7 @@ for (let i = 0; i <= 100; i++) {
     isLiked: false,
     likeCnt: 0,
     weather: weathers[i % weathers.length],
-    temp: i % 30,
+    temperature: i % 30,
   });
 }
+export const FeedDataList = { results: feedData };

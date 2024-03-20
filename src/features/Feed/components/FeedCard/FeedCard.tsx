@@ -21,6 +21,7 @@ import {
 } from './FeedCardStyle';
 import { formatDate } from '../../utils/formatDate';
 import CommentSheet from '../comment/CommentSheet';
+import { addPostLike, cancelPostLike } from '../../services/feedApi';
 
 interface FeedCardProps {
   feed: Feed;
@@ -39,9 +40,20 @@ const FeedCard: React.FC<FeedCardProps> = ({ feed }) => {
     setShowFullContent(!showFullContent);
   };
 
-  const handleToggleLike = (event: React.MouseEvent<HTMLSpanElement>) => {
+  const handleToggleLike = async (event: React.MouseEvent<HTMLSpanElement>) => {
     event.stopPropagation();
-    setIsLiked(!isLiked);
+    const newIsLiked = !isLiked;
+    setIsLiked(newIsLiked);
+    try {
+      if (newIsLiked) {
+        await addPostLike(Number(feed.id));
+      } else {
+        await cancelPostLike(Number(feed.id));
+      }
+    } catch (error) {
+      console.error('게시물 좋아요 토글 실패:', error);
+      setIsLiked(!newIsLiked); // 게시물 좋아요 토글 실패 시 이전 상태로 되돌림
+    }
   };
 
   const displayedContent = showFullContent
