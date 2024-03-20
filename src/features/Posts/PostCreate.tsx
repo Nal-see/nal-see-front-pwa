@@ -4,7 +4,9 @@ const PostCreatePage = () => {
   return (
     <div className="flex-1">
       <PostCreateHeader />
-      <p>Post Create Page</p>
+      <div className="h-[calc(100dvh-156px)] overflow-y-scroll scrollbar-hide">
+        <p>Post Create Page</p>
+      </div>
     </div>
   );
 };
