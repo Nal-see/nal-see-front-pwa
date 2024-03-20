@@ -7,14 +7,10 @@ import { Feed } from '@/types/feed';
 
 const FeedList = () => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery<Feed[], string[], string | undefined>({
+    useInfiniteQuery<Feed[], string[]>({
       queryKey: ['feedList'],
-      queryFn: async ({
-        pageParam = -1,
-      }: {
-        pageParam?: number | undefined;
-      }) => {
-        const response = await getFeedList(pageParam);
+      queryFn: async ({ pageParam = -1 }) => {
+        const response = await getFeedList(pageParam as number);
         return response;
       },
       getNextPageParam: (lastPage) => {

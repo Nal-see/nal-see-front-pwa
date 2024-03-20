@@ -52,6 +52,7 @@ const CommentSheet: React.FC<CommentSheetProps> = ({
         open={open}
         onDismiss={() => setOpen(false)}
         snapPoints={({ maxHeight }) => [maxHeight * 0.9]}
+        style={{ zIndex: 10 }}
       >
         <div
           ref={sheetRef}
