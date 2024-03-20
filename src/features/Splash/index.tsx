@@ -1,4 +1,3 @@
-import SplashSun from '@/assets/splash-sun.png';
 import SplashGirl from '@/assets/splash-girl2.png';
 import { IoChatbubbleSharp } from 'react-icons/io5';
 
