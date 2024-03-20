@@ -54,6 +54,8 @@ const uploadTimes = [
   '2024-03-19 10:10:10',
 ];
 
+const weathers = ['맑음', '흐림', '비', '눈', '바람', '안개'];
+
 for (let i = 1; i <= 100; i++) {
   feedData.push({
     id: i.toString(),
@@ -71,5 +73,6 @@ for (let i = 1; i <= 100; i++) {
     isLiked: false,
     likeCnt: 0,
     weather: '맑음',
+    temp: 20,
   });
 }
