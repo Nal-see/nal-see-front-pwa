@@ -10,7 +10,7 @@ const FeedList = () => {
     useInfiniteQuery<Feed[], string[], string | undefined>({
       queryKey: ['feedList'],
       queryFn: async ({
-        pageParam = 10,
+        pageParam = -1,
       }: {
         pageParam?: number | undefined;
       }) => {
@@ -35,18 +35,21 @@ const FeedList = () => {
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
+  console.log(data);
   // if (!data?.pages) return <div>Loading...</div>;
   return (
-    <div className="max-h-full w-10/12">
-      {data?.pages.map((page, pageIndex) => (
-        <React.Fragment key={pageIndex}>
-          {page.map((feed: Feed) => (
-            <FeedCard key={feed.id} feed={feed} />
-          ))}
-        </React.Fragment>
-      ))}
-      {isFetchingNextPage && <div>Loading...</div>}
-      <div ref={ref} />
+    <div className="h-[calc(100vh-183px)] w-10/12 overflow-y-scroll scrollbar-hide">
+      <div className="space-y-4">
+        {data?.pages.map((page, pageIndex) => (
+          <React.Fragment key={pageIndex}>
+            {page.map((feed: Feed) => (
+              <FeedCard key={feed.id} feed={feed} />
+            ))}
+          </React.Fragment>
+        ))}
+        {isFetchingNextPage && <div>Loading...</div>}
+        <div ref={ref} className="h-10" />
+      </div>
     </div>
   );
 };
