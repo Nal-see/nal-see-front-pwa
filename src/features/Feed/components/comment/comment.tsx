@@ -8,11 +8,11 @@ import {
   LikeButton,
   LikeCount,
   LikeIcon,
-  ReadMoreButton,
   UserImage,
   Username,
 } from './commentStyle';
 import { Comment as CommentType } from '../../data/commentData';
+import { ToggleButton } from '../FeedCard/FeedCardStyle';
 
 interface CommentProps {
   comment: CommentType;
@@ -48,9 +48,9 @@ const Comment: React.FC<CommentProps> = ({ comment }) => {
         <Content>
           {displayedContent}
           {isContentLong && (
-            <ReadMoreButton onClick={toggleContent}>
+            <ToggleButton onClick={toggleContent}>
               {showFullContent ? '접기' : '더보기'}
-            </ReadMoreButton>
+            </ToggleButton>
           )}
         </Content>
       </CommentContent>

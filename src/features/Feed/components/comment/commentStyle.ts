@@ -5,7 +5,7 @@ export const CommentContainer = styled.div`
 `;
 
 export const UserImage = styled.img`
-  w-10 h-10 rounded-full flex-shrink-0;
+  w-10 h-30 rounded-full flex-shrink-0;
 `;
 
 export const CommentContent = styled.div`

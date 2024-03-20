@@ -50,9 +50,9 @@ export const Content = styled.p`
 `;
 
 export const MoreButton = styled.button`
-  text-sm text-blue-500 ml-1 focus:outline-none
+  text-sm text-gray-500 ml-1 focus:outline-none
 `;
 
 export const ToggleButton = styled.button`
-  text-sm text-blue-500 ml-1 focus:outline-none
+  text-sm text-gray-500 ml-1 focus:outline-none
 `;

@@ -32,7 +32,7 @@ const FeedCard: React.FC<FeedCardProps> = ({ feed }) => {
   const maxContentLength = 100; // 초기에 보여줄 content의 최대 길이
 
   const moveProfile = () => {
-    console.log('Profile image clicked');
+    console.log('프로필 이동하는 함수 실행 예정');
   };
 
   const toggleContent = () => {
@@ -90,7 +90,7 @@ const FeedCard: React.FC<FeedCardProps> = ({ feed }) => {
             />
           </Icon>
         </IconContainer>
-        <UserName>{feed.username}</UserName>
+        <UserName onClick={moveProfile}>{feed.username}</UserName>
         <Content>
           {displayedContent}
           {feed.content.length > maxContentLength && (
