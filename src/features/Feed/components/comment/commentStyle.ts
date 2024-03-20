@@ -1,11 +1,11 @@
 import styled from 'tailwind-styled-components';
 
 export const CommentContainer = styled.div`
-  flex space-x-2 mb-4 justify-between;
+  flex space-x-2 pb-3 mb-4 justify-between;
 `;
 
 export const UserImage = styled.img`
-  w-10 h-30 rounded-full flex-shrink-0;
+  w-10 h-10 rounded-full mr-4;
 `;
 
 export const CommentContent = styled.div`
@@ -41,24 +41,9 @@ export const ReadMoreButton = styled.button`
 `;
 
 export const StyledForm = styled.form`
-  flex
-  rounded-md
-  w-full
-  p-4
-  shadow-md
+  flex items-center w-full py-2 px-4 bg-white shadow-md rounded-lg;
 `;
 
 export const Input = styled.input`
-  w-full px-4 py-2 mb-4
-  border border-gray-300
-  rounded-md
-  focus:outline-none focus:ring-2 focus:ring-blue-500
-`;
-
-export const SubmitButton = styled.button`
-  w-full px-4 py-2
-  bg-blue-500 text-white
-  rounded-2xl
-  hover:bg-blue-600
-  focus:outline-none focus:ring-2 focus:ring-blue-500
+  flex-grow mt-1 px-4 py-2 ml-3 border border-gray-300 rounded-3xl focus:outline-none focus:border-transparent;
 `;

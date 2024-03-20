@@ -43,7 +43,7 @@ for (let i = 0; i <= 50; i++) {
     likeCNT: 20,
     createDate: '2024-03-14T21:37:21.988414',
     userId: i,
-    userImage: 'https://placehold.co/92x62',
+    userImage: 'https://placehold.co/40x40',
     username: usernames[i % usernames.length] + i,
     postId: i,
     isLiked: i % 2 === 0 ? true : false,

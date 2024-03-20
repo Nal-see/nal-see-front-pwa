@@ -4,10 +4,8 @@ import 'react-spring-bottom-sheet/dist/style.css';
 import { Comment } from '../../data/commentData';
 import { useQuery } from '@tanstack/react-query';
 import CommentBox from './comment';
-import { Input } from 'antd-mobile';
-import { StyledForm } from './commentStyle';
+import { Input, StyledForm, UserImage } from './commentStyle';
 import { FaRegComment } from 'react-icons/fa';
-import { ProfileImage } from '../FeedCard/FeedCardStyle';
 import { getComments } from '../../services/feedApi';
 
 interface CommentSheetProps {
@@ -67,16 +65,15 @@ const CommentSheet: React.FC<CommentSheetProps> = ({
           )}
         </div>
         <StyledForm onSubmit={handleSubmit}>
-          <ProfileImage onClick={moveProfile} src={userImage} alt={username} />
+          <UserImage onClick={moveProfile} src={userImage} alt={username} />
           <Input
             type="text"
             value={newComment}
             onChange={(e) => {
-              console.log('e.value: ', e);
-              setNewComment(e);
+              console.log('e.value: ', e.target.value);
+              setNewComment(e.target.value);
             }}
             placeholder="댓글을 입력해주세요."
-            className="mt-2"
           />
         </StyledForm>
       </BottomSheet>

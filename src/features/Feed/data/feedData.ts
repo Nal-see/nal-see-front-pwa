@@ -60,7 +60,7 @@ for (let i = 0; i <= 100; i++) {
     id: i.toString(),
     userId: i,
     username: userNames[i % userNames.length] + i,
-    userImage: 'https://placeholder.co/92x62',
+    userImage: 'https://placeholder.co/50x50',
     place: places[i % places.length],
     createDate: uploadTimes[i % uploadTimes.length],
     content: descriptions[i % descriptions.length],
