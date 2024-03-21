@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-interface IUserState {
+export interface IUserState {
   user: {
     userId: string;
     userName: string;
