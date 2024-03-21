@@ -11,7 +11,7 @@ import {
   UserImage,
   Username,
 } from './commentStyle';
-import { Comment as CommentType } from '../../data/commentData';
+import { Comment as CommentType } from '../../../../mocks/data/commentData';
 import { ToggleButton } from '../FeedCard/FeedCardStyle';
 import { addCommentLike, cancelCommentLike } from '../../services/feedApi';
 

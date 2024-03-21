@@ -1,7 +1,7 @@
 import { http, HttpResponse } from 'msw';
 import { extractQueryParam } from '@/features/Feed/utils/RegExp';
-import comments, { Comment } from '@/features/Feed/data/commentData';
-import { FeedDataList } from '@/features/Feed/data/feedData';
+import comments, { Comment } from 'mocks/data/commentData';
+import { FeedDataList } from 'mocks/data/feedData';
 
 export const handlers = [
   http.get('/api/posts', (request) => {

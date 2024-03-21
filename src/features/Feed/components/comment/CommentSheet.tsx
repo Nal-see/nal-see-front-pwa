@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { BottomSheet } from 'react-spring-bottom-sheet';
 import 'react-spring-bottom-sheet/dist/style.css';
-import { Comment } from '../../data/commentData';
+import { Comment } from '../../../../mocks/data/commentData';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import CommentBox from './comment';
 import { Input, StyledForm, UserImage } from './commentStyle';
@@ -31,7 +31,6 @@ const CommentSheet: React.FC<CommentSheetProps> = ({
     queryKey: ['comments', postId],
     queryFn: async () => {
       const response = await getComments(postId);
-      console.log('response: ', response);
       return response as unknown as Comment[]; // 타입 단언 사용
     },
     enabled: open,
