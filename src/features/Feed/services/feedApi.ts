@@ -14,9 +14,21 @@ export async function getComments(postId: number): Promise<Comment[]> {
   console.log('response.data: ', response.data);
   return response.data.results;
 }
-
-export async function postComment(comment: { content: string }): Promise<void> {
-  await axios.post('/api/comments', comment);
+// /api/posts/{postId}/comments
+export async function postComment(
+  postId: number,
+  content: string,
+  userId: string | undefined,
+): Promise<void> {
+  console.log('userId: ', userId);
+  console.log('postId: ', postId);
+  console.log('content: ', content);
+  if (!userId) throw new Error('User not found');
+  const response = await axios.post(`/api/posts/${postId}/comments`, {
+    content,
+    userId,
+  });
+  console.log('response.data: ', response.data);
 }
 
 // feedApi.ts

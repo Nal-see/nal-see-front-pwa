@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw';
 import { extractQueryParam } from '@/features/Feed/utils/RegExp';
-import comments from '@/features/Feed/data/commentData';
+import comments, { Comment } from '@/features/Feed/data/commentData';
 import { FeedDataList } from '@/features/Feed/data/feedData';
 
 export const handlers = [
@@ -74,6 +74,74 @@ export const handlers = [
       results: [],
     });
   }),
+  // http.post('/api/posts/:postId/comments', (request, context) => {
+  //   console.log('request: ', request);
+  //   const { postId } = request.params;
+  //   const { content, userId } = request.body as {
+  //     content: string;
+  //     userId: number;
+  //   };
+
+  //   // 새로운 댓글 객체 생성
+  //   const newComment: Comment = {
+  //     id: comments.results.length + 1,
+  //     content,
+  //     likeCNT: 0,
+  //     createDate: new Date().toISOString(),
+  //     userId,
+  //     userImage: 'https://placehold.co/40x40',
+  //     username: `User${userId}`,
+  //     postId: parseInt(postId as string, 10),
+  //     isLiked: false,
+  //   };
+
+  //   // 기존 댓글 배열에 새로운 댓글 추가
+  //   comments.results.push(newComment);
+
+  //   return HttpResponse.json(
+  //     context.status(201),
+  //     context.json({
+  //       success: true,
+  //       message: '댓글이 성공적으로 생성되었습니다.',
+  //       results: newComment,
+  //     }),
+  //   );
+  // }),
+  http.post('/api/posts/:postId/comments', async (request, context) => {
+    const { postId } = request.params;
+
+    // Read and parse the JSON body once
+    const requestBody = await request.request.json();
+
+    // Now it's safe to log the requestBody after it's been read
+    console.log('requestBody: ', requestBody);
+
+    const { content, userId } = requestBody;
+
+    // 새로운 댓글 객체 생성
+    const newComment = {
+      // Assuming 'comments' is defined somewhere in your scope
+      id: comments.results.length + 1,
+      content,
+      likeCNT: 0,
+      createDate: new Date().toISOString(),
+      userId,
+      userImage: 'https://placehold.co/40x40',
+      username: `User${userId}`,
+      postId: parseInt(postId, 10),
+      isLiked: false,
+    };
+
+    // 기존 댓글 배열에 새로운 댓글 추가
+    comments.results.push(newComment);
+
+    return HttpResponse.json({
+      success: true,
+      message: '댓글이 성공적으로 생성되었습니다.',
+      results: newComment,
+    });
+  }),
+
   http.get('/index', () => {
     return HttpResponse.json({
       id: '2',

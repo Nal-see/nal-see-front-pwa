@@ -2,11 +2,12 @@ import React, { useRef, useState } from 'react';
 import { BottomSheet } from 'react-spring-bottom-sheet';
 import 'react-spring-bottom-sheet/dist/style.css';
 import { Comment } from '../../data/commentData';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import CommentBox from './comment';
 import { Input, StyledForm, UserImage } from './commentStyle';
 import { FaRegComment } from 'react-icons/fa';
-import { getComments } from '../../services/feedApi';
+import { getComments, postComment } from '../../services/feedApi';
+import useAuthStore from '@/store/useAuthStore';
 
 interface CommentSheetProps {
   postId: number;
@@ -19,9 +20,12 @@ const CommentSheet: React.FC<CommentSheetProps> = ({
   username,
   userImage,
 }) => {
+  const { user } = useAuthStore();
+  const userId = user?.userId;
   const [open, setOpen] = useState(false);
   const [newComment, setNewComment] = useState('');
   const sheetRef = useRef<HTMLDivElement>(null);
+  const queryClient = useQueryClient();
 
   const { data: comments, isLoading } = useQuery<Comment[]>({
     queryKey: ['comments', postId],
@@ -33,13 +37,23 @@ const CommentSheet: React.FC<CommentSheetProps> = ({
     enabled: open,
   });
 
+  const createCommentMutation = useMutation({
+    mutationFn: ({ postId, content }: { postId: number; content: string }) =>
+      postComment(postId, content, userId),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ['comments', variables.postId],
+        exact: true,
+      });
+    },
+  });
   const moveProfile = () => {
     console.log('Profile image clicked');
   };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log('newComment: ', newComment);
-    // postCommentMutation.mutate({ content: newComment });
+    createCommentMutation.mutate({ postId, content: newComment });
     setNewComment('');
   };
 
