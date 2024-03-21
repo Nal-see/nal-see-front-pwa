@@ -5,13 +5,14 @@ import SplashPage from '@/features/Splash';
 import HomePage from '@/features/Home';
 import PostCreatePage from '@/features/Posts/PostCreate';
 import ChatListPage from '@/features/Chat/ChatList';
-import UserFeedPage from '@/features/Feed/UserFeed';
+import UserProfilePage from '@/features/Profile/UserProfile';
 import PostDetailPage from '@/features/Posts/PostDetail';
 import PostEditPage from '@/features/Posts/PostEdit';
 import ChatRoomPage from '@/features/Chat/ChatRoom';
 import NotificationsPage from '@/features/Notifications/Notifications';
 import FeedListPage from '@/features/Feed/FeedPage';
 import { getUserInfo } from '@/services/api/auth.service';
+import MyProfilePage from '@/features/Profile/MyProfile';
 
 const userLoader = async () => {
   const userInfo = await getUserInfo();
@@ -71,8 +72,17 @@ const router = createBrowserRouter([
             ],
           },
           {
-            path: 'user/:userId',
-            element: <UserFeedPage />,
+            path: 'user',
+            children: [
+              {
+                index: true,
+                element: <MyProfilePage />,
+              },
+              {
+                path: ':userId',
+                element: <UserProfilePage />,
+              },
+            ],
           },
           {
             path: 'notifications',
