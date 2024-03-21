@@ -1,10 +1,4 @@
-import {
-  Navigate,
-  Outlet,
-  useLoaderData,
-  useLocation,
-  useNavigate,
-} from 'react-router-dom';
+import { Navigate, Outlet, useLoaderData } from 'react-router-dom';
 import useAuthStore from '../store/useAuthStore';
 import { useEffect } from 'react';
 import { IUserInfoResponse } from '@/types/auth';
@@ -12,8 +6,6 @@ import { IUserInfoResponse } from '@/types/auth';
 const PublicRoute = () => {
   const userData = useLoaderData() as IUserInfoResponse;
   const { setUser } = useAuthStore();
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (userData) {
@@ -25,10 +17,6 @@ const PublicRoute = () => {
           isNewUser: userData.newUser,
         },
       });
-    }
-
-    if (pathname === '/hello' && userData) {
-      navigate('/home');
     }
   }, []);
 

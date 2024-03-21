@@ -21,14 +21,14 @@ const userLoader = async () => {
 
 const router = createBrowserRouter([
   {
+    path: 'hello',
+    element: <SplashPage />,
+  },
+  {
     element: <PublicRoute />,
     loader: userLoader,
     id: 'user',
     children: [
-      {
-        path: 'hello',
-        element: <SplashPage />,
-      },
       {
         path: '/',
         element: <PrivateRoute />,
