@@ -1,7 +1,8 @@
 import { http, HttpResponse } from 'msw';
 import { extractQueryParam } from '@/features/Feed/utils/RegExp';
-import comments, { Comment } from 'mocks/data/commentData';
+import comments from 'mocks/data/commentData';
 import { FeedDataList } from 'mocks/data/feedData';
+import { profileFeedData, profileUserData } from './data/profileFeedData';
 
 export const handlers = [
   http.get('/api/posts', (request) => {
@@ -26,21 +27,6 @@ export const handlers = [
 
     return HttpResponse.json(paginatedFeedData);
   }),
-  // http.get('/api/posts/:postId/comments', (request, context) => {
-  //   console.log('request.params: ', request.params);
-
-  //   const filteredComments = comments;
-
-  //   console.log('filteredComment: ', filteredComments);
-  //   return HttpResponse.json(
-  //     context.status(200),
-  //     context.json({
-  //       success: true,
-  //       message: '요청에 성공했습니다.',
-  //       results: filteredComments,
-  //     }),
-  //   );
-  // }),
   http.get('/api/posts/:postId/comments', () => {
     const filteredComments = comments;
     console.log('filteredComment: ', filteredComments);
@@ -74,53 +60,17 @@ export const handlers = [
       results: [],
     });
   }),
-  // http.post('/api/posts/:postId/comments', (request, context) => {
-  //   console.log('request: ', request);
-  //   const { postId } = request.params;
-  //   const { content, userId } = request.body as {
-  //     content: string;
-  //     userId: number;
-  //   };
 
-  //   // 새로운 댓글 객체 생성
-  //   const newComment: Comment = {
-  //     id: comments.results.length + 1,
-  //     content,
-  //     likeCNT: 0,
-  //     createDate: new Date().toISOString(),
-  //     userId,
-  //     userImage: 'https://placehold.co/40x40',
-  //     username: `User${userId}`,
-  //     postId: parseInt(postId as string, 10),
-  //     isLiked: false,
-  //   };
-
-  //   // 기존 댓글 배열에 새로운 댓글 추가
-  //   comments.results.push(newComment);
-
-  //   return HttpResponse.json(
-  //     context.status(201),
-  //     context.json({
-  //       success: true,
-  //       message: '댓글이 성공적으로 생성되었습니다.',
-  //       results: newComment,
-  //     }),
-  //   );
-  // }),
   http.post('/api/posts/:postId/comments', async (request, context) => {
     const { postId } = request.params;
 
-    // Read and parse the JSON body once
     const requestBody = await request.request.json();
 
-    // Now it's safe to log the requestBody after it's been read
     console.log('requestBody: ', requestBody);
 
     const { content, userId } = requestBody;
 
-    // 새로운 댓글 객체 생성
     const newComment = {
-      // Assuming 'comments' is defined somewhere in your scope
       id: comments.results.length + 1,
       content,
       likeCNT: 0,
@@ -132,7 +82,6 @@ export const handlers = [
       isLiked: false,
     };
 
-    // 기존 댓글 배열에 새로운 댓글 추가
     comments.results.push(newComment);
 
     return HttpResponse.json({
@@ -140,6 +89,60 @@ export const handlers = [
       message: '댓글이 성공적으로 생성되었습니다.',
       results: newComment,
     });
+  }),
+  // /api/posts/users/1?lastPostId=20
+  // http.get('/api/posts/users/:userId', (request) => {
+  //   const lastPostId = extractQueryParam(request.request.url, 'lastPostId');
+
+  //   let filteredPostList = profileFeedData.results;
+
+  //   if (lastPostId) {
+  //     const parsedLastPostId = parseInt(lastPostId, 10);
+  //     const lastPostIndex = filteredPostList.findIndex(
+  //       (post) => post.postId === parsedLastPostId,
+  //     );
+
+  //     if (lastPostIndex !== -1) {
+  //       filteredPostList = filteredPostList.slice(lastPostIndex + 1);
+  //     }
+  //   }
+
+  //   const responseData = {
+  //     results: filteredPostList.slice(0, 10), // 한 번에 10개의 게시물만 반환
+  //   };
+
+  //   console.log('responseData: ', responseData);
+
+  //   return HttpResponse.json(responseData);
+  // }),
+
+  http.get('/api/posts/users/:userId', (request) => {
+    const lastPostId = extractQueryParam(request.request.url, 'lastPostId');
+
+    let filteredPostList = profileFeedData.results;
+
+    if (lastPostId) {
+      const parsedLastPostId = parseInt(lastPostId, 10);
+      const lastPostIndex = filteredPostList.findIndex(
+        (post) => post.postId === parsedLastPostId,
+      );
+
+      if (lastPostIndex !== -1) {
+        filteredPostList = filteredPostList.slice(lastPostIndex + 1);
+      }
+    }
+
+    const responseData = {
+      results: filteredPostList.slice(0, 10), // 한 번에 10개의 게시물만 반환
+    };
+
+    console.log('responseData: ', responseData);
+
+    return HttpResponse.json(responseData);
+  }),
+  // 프로필 유저 정보 데이터
+  http.get('/api/users/:userId/feed', () => {
+    return HttpResponse.json(profileUserData);
   }),
 
   http.get('/index', () => {

@@ -1,11 +1,11 @@
 import BackBtnHeader from '@/components/BackBtnHeader';
-import React from 'react';
 import ProfileHeader from './components/ProfileHeader';
 import FollowMesgComp from './components/FollowMesgComp';
+import ProfileFeedList from './components/ProfileFeedList';
 
 const MyProfilePage = () => {
   return (
-    <div>
+    <div className="h-[100dvh-183px] overflow-y-scroll">
       <BackBtnHeader title="My Profile" />
       <ProfileHeader
         userImage="https://via.placeholder.com/150"
@@ -14,6 +14,7 @@ const MyProfilePage = () => {
         followerCount={'300'}
       />
       <FollowMesgComp />
+      <ProfileFeedList />
     </div>
   );
 };

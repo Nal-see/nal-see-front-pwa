@@ -5,7 +5,7 @@ export async function getFeedList(lastPostId?: number): Promise<Feed[]> {
   const response = await axios.get(
     `/api/posts?lastPostId=${lastPostId}&size=10`,
   );
-  console.log('response: ', response);
+  console.log('response: 피드 리스트', response);
   return response.data.results;
 }
 
