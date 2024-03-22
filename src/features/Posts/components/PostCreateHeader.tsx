@@ -1,12 +1,8 @@
 import { Button } from '@/components/ui/button';
+import { IPostCreateHeader } from '@/types/postCreate';
 import { CloseOutline, LeftOutline } from 'antd-mobile-icons';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-interface IPostCreateHeader {
-  step: number;
-  setStep: (step: number) => void;
-}
 
 const PostCreateHeader = ({ step, setStep }: IPostCreateHeader) => {
   const navigate = useNavigate();
