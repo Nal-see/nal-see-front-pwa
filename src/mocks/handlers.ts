@@ -90,31 +90,6 @@ export const handlers = [
       results: newComment,
     });
   }),
-  // /api/posts/users/1?lastPostId=20
-  // http.get('/api/posts/users/:userId', (request) => {
-  //   const lastPostId = extractQueryParam(request.request.url, 'lastPostId');
-
-  //   let filteredPostList = profileFeedData.results;
-
-  //   if (lastPostId) {
-  //     const parsedLastPostId = parseInt(lastPostId, 10);
-  //     const lastPostIndex = filteredPostList.findIndex(
-  //       (post) => post.postId === parsedLastPostId,
-  //     );
-
-  //     if (lastPostIndex !== -1) {
-  //       filteredPostList = filteredPostList.slice(lastPostIndex + 1);
-  //     }
-  //   }
-
-  //   const responseData = {
-  //     results: filteredPostList.slice(0, 10), // 한 번에 10개의 게시물만 반환
-  //   };
-
-  //   console.log('responseData: ', responseData);
-
-  //   return HttpResponse.json(responseData);
-  // }),
 
   http.get('/api/posts/users/:userId', (request) => {
     const lastPostId = extractQueryParam(request.request.url, 'lastPostId');
