@@ -1,19 +1,35 @@
 import BackBtnHeader from '@/components/BackBtnHeader';
 import ProfileHeader from './components/ProfileHeader';
-import FollowMesgComp from './components/FollowMesgComp';
 import ProfileFeedList from './components/ProfileFeedList';
+import { getProfileUserData } from './services/profileApi';
+import useAuthStore from '@/store/useAuthStore';
+import { useEffect, useState } from 'react';
 
 const MyProfilePage = () => {
+  const { user } = useAuthStore();
+  const userId = user?.userId;
+
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (userId) {
+        const response = await getProfileUserData(userId);
+        setUserData(response.results); // fetched 데이터를 상태에 저장
+      }
+    };
+
+    fetchData();
+  }, [userId]);
+
+  if (!userData) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="h-[100dvh-183px] overflow-y-scroll">
       <BackBtnHeader title="My Profile" />
-      <ProfileHeader
-        userImage="https://via.placeholder.com/150"
-        feedCount={'100'}
-        followingCount={'200'}
-        followerCount={'300'}
-      />
-      <FollowMesgComp />
+      <ProfileHeader userProfileData={userData} />
       <ProfileFeedList />
     </div>
   );

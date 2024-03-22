@@ -117,6 +117,7 @@ export const handlers = [
   }),
   // 프로필 유저 정보 데이터
   http.get('/api/users/:userId/feed', () => {
+    console.log('profileUserData: ', profileUserData);
     return HttpResponse.json(profileUserData);
   }),
 
