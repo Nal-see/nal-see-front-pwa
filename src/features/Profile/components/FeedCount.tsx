@@ -7,7 +7,7 @@ type FeedCountProp = {
 
 const FeedCount: React.FC<FeedCountProp> = ({ count, counterName }) => {
   return (
-    <div className="flex flex-col items-center justify-center p-4">
+    <div className="flex flex-col items-center justify-center">
       <p className="font-bold">{count}</p>
       <h3>{counterName}</h3>
     </div>
