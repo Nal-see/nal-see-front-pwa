@@ -8,12 +8,22 @@ export interface ProfileFeedData {
 
 export interface ProfileData {
   results: {
-    feedCount: 10;
-    followingCount: 100;
-    followerCount: 200;
-    userId: 1;
-    username: '다은';
-    userImage: 'https://placeholder.co/50x50';
+    feedCount: number;
+    followingCount: number;
+    followerCount: number;
+    userId: number;
+    username: string;
+    userImage: string | null;
     followed: false;
   };
+}
+
+export interface UserProfilePageProps {
+  userId: string;
+  feedCount: number;
+  followerCount: number;
+  followingCount: number;
+  followed: boolean;
+  username: string;
+  userImage: string | null;
 }

@@ -4,12 +4,13 @@ import ProfileFeedList from './components/ProfileFeedList';
 import { getProfileUserData } from './services/profileApi';
 import useAuthStore from '@/store/useAuthStore';
 import { useEffect, useState } from 'react';
+import { UserProfilePageProps } from '@/types/profile';
 
 const MyProfilePage = () => {
   const { user } = useAuthStore();
   const userId = user?.userId;
 
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState<UserProfilePageProps | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {

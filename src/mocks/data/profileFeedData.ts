@@ -18,7 +18,7 @@ const profileUserData: ProfileData = {
     followingCount: 100,
     followerCount: 200,
     userId: 1,
-    username: '다은',
+    username: '김철수',
     userImage: 'https://placeholder.co/50x50',
     followed: false,
   },
