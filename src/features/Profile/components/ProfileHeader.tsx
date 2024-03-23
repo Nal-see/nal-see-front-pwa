@@ -12,14 +12,14 @@ type ProfileHeaderProps = {
 
 const ProfileHeader: React.FC<ProfileHeaderProps> = ({ userProfileData }) => {
   return (
-    <div>
+    <div className="mb-2">
       <div className="flex items-center justify-around pb-2">
         <img
-          className="ml-3 size-20 rounded-full"
+          className="mx-5 size-20 rounded-full"
           src={userProfileData.userImage}
           alt="user"
         />
-        <div className="flex">
+        <div className="flex flex-auto justify-around">
           <FeedCount count={userProfileData.feedCount} counterName="Posts" />
           <FeedCount
             count={userProfileData.followerCount}
@@ -31,9 +31,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ userProfileData }) => {
           />
         </div>
       </div>
-      <h1 className="ml-3 text-left text-xl font-bold ">
-        {userProfileData.username}
-      </h1>
+      <h1 className="ml-7 text-lg font-bold">{userProfileData.username}</h1>
     </div>
   );
 };
