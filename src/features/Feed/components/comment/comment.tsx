@@ -14,6 +14,7 @@ import {
 import { Comment as CommentType } from '../../../../mocks/data/commentData';
 import { ToggleButton } from '../FeedCard/FeedCardStyle';
 import { addCommentLike, cancelCommentLike } from '../../services/feedApi';
+import { useNavigate } from 'react-router-dom';
 
 interface CommentProps {
   comment: CommentType;
@@ -24,6 +25,12 @@ const Comment: React.FC<CommentProps> = ({ comment, postId }) => {
   const [isLiked, setIsLiked] = useState(comment.isLiked);
   const [likeCount, setLikeCount] = useState(comment.likeCNT);
   const [showFullContent, setShowFullContent] = useState(false);
+
+  const navigate = useNavigate();
+
+  const moveProfile = () => {
+    navigate(`/user/${comment.userId}`);
+  };
 
   const toggleLike = async () => {
     const newIsLiked = !isLiked;
@@ -54,10 +61,14 @@ const Comment: React.FC<CommentProps> = ({ comment, postId }) => {
 
   return (
     <CommentContainer>
-      <UserImage src={comment.userImage} alt={comment.username} />
+      <UserImage
+        onClick={moveProfile}
+        src={comment.userImage}
+        alt={comment.username}
+      />
       <CommentContent>
         <CommentHeader>
-          <Username>{comment.username}</Username>
+          <Username onClick={moveProfile}>{comment.username}</Username>
         </CommentHeader>
         <Content>
           {displayedContent}

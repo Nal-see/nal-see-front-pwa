@@ -14,7 +14,7 @@ export async function getComments(postId: number): Promise<Comment[]> {
   console.log('response.data: ', response.data);
   return response.data.results;
 }
-// /api/posts/{postId}/comments
+
 export async function postComment(
   postId: number,
   content: string,

@@ -46,9 +46,7 @@ const CommentSheet: React.FC<CommentSheetProps> = ({
       });
     },
   });
-  const moveProfile = () => {
-    console.log('Profile image clicked');
-  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log('newComment: ', newComment);
@@ -78,7 +76,7 @@ const CommentSheet: React.FC<CommentSheetProps> = ({
           )}
         </div>
         <StyledForm onSubmit={handleSubmit}>
-          <UserImage onClick={moveProfile} src={userImage} alt={username} />
+          <UserImage src={userImage} alt={username} />
           <Input
             type="text"
             value={newComment}

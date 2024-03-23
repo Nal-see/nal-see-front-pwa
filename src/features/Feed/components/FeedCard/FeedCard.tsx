@@ -22,6 +22,7 @@ import {
 import { formatDate } from '../../utils/formatDate';
 import CommentSheet from '../comment/CommentSheet';
 import { addPostLike, cancelPostLike } from '../../services/feedApi';
+import { useNavigate } from 'react-router-dom';
 
 interface FeedCardProps {
   feed: Feed;
@@ -32,8 +33,10 @@ const FeedCard: React.FC<FeedCardProps> = ({ feed }) => {
   const [showFullContent, setShowFullContent] = useState(false);
   const maxContentLength = 100; // 초기에 보여줄 content의 최대 길이
 
+  const navigate = useNavigate();
+
   const moveProfile = () => {
-    console.log('프로필 이동하는 함수 실행 예정');
+    navigate(`/user/${feed.userId}`);
   };
 
   const toggleContent = () => {
