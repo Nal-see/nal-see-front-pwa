@@ -1,8 +1,14 @@
 import { api } from '@/lib/api';
 import { Feed } from '@/types/feed';
 
-export async function getFeedList(lastPostId?: number): Promise<Feed[]> {
-  const response = await api.get(`/api/posts?lastPostId=${lastPostId}&size=10`);
+export async function getFeedList(
+  lastPostId: number,
+  nowLongitude: number,
+  nowLatitude: number,
+): Promise<Feed[]> {
+  const response = await api.get(
+    `/api/posts?lastPostId=${lastPostId}&nowLongitude=${nowLongitude}&nowLatitude=${nowLatitude});`,
+  );
   console.log('response: 피드 리스트', response);
   return response.data.results;
 }

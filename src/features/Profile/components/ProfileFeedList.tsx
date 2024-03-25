@@ -26,7 +26,6 @@ const ProfileFeedList = () => {
 
   const [ref, inView] = useInView({
     threshold: 0,
-    rootMargin: '00px',
   });
 
   React.useEffect(() => {
@@ -35,8 +34,11 @@ const ProfileFeedList = () => {
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
+  if (feedList.length === 0) {
+    return <div className="mt-4 border-t-2">Loading...</div>;
+  }
   return (
-    <div>
+    <div className="mt-4 border-t-2">
       <div className="flex flex-wrap overflow-y-scroll scrollbar-hide">
         {feedList.map((feed) => (
           <div key={feed.postId} className="w-1/3">

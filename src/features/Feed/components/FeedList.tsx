@@ -4,19 +4,27 @@ import FeedCard from './FeedCard/FeedCard';
 import { useInView } from 'react-intersection-observer';
 import { getFeedList } from '../services/feedApi';
 import { Feed } from '@/types/feed';
+import { useCurrentLocation } from '@/hooks/useCurrentLocation';
 
 const FeedList = () => {
+  const { longtitude, latitude, errorMsg } = useCurrentLocation();
+
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery<Feed[], string[]>({
       queryKey: ['feedList'],
       queryFn: async ({ pageParam = -1 }) => {
-        const response = await getFeedList(pageParam as number);
+        const response = await getFeedList(
+          pageParam as number,
+          longtitude as number,
+          latitude as number,
+        );
         return response;
       },
       getNextPageParam: (lastPage) => {
         const lastFeed = lastPage[lastPage.length - 1];
         return lastFeed ? lastFeed.id : undefined;
       },
+      enabled: longtitude !== undefined && latitude !== undefined,
       initialPageParam: undefined, // Add this line
     });
 
@@ -31,7 +39,10 @@ const FeedList = () => {
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  // if (!data?.pages) return <div>Loading...</div>;
+  if (errorMsg || !longtitude || !latitude || !data) {
+    return <div>{errorMsg}</div>;
+  }
+
   return (
     <div className="h-[calc(100vh-183px)] w-10/12 overflow-y-scroll scrollbar-hide">
       <div className="space-y-4">

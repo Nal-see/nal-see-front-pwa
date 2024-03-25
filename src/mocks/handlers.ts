@@ -6,7 +6,6 @@ import { profileFeedData, profileUserData } from './data/profileFeedData';
 
 export const handlers = [
   http.get('/api/posts', (request) => {
-    const size = extractQueryParam(request.request.url, 'size');
     const lastPostId = extractQueryParam(request.request.url, 'lastPostId');
 
     let filteredFeedData = FeedDataList.results;
@@ -20,7 +19,7 @@ export const handlers = [
       }
     }
 
-    const parsedSize = size ? parseInt(size, 10) : 10;
+    const parsedSize = 10;
     const paginatedFeedData = {
       results: filteredFeedData.slice(0, parsedSize),
     };
