@@ -1,4 +1,4 @@
-import FeedList from './FeedList';
+import FeedList from './components/FeedList';
 import Navbar from '../../components/NalSeeNavbar';
 
 const FeedListPage = () => {

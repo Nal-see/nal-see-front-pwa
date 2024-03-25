@@ -9,16 +9,16 @@ export const formatDate = (dateString: string): string => {
   const days = Math.floor(hours / 24);
 
   if (days >= 30) {
-    return '한 달 전';
+    return '한달전';
   } else if (days >= 7) {
-    return '일주일 전';
+    return '일주일전';
   } else if (days > 0) {
-    return `${days}일 전`;
+    return `${days}일전`;
   } else if (hours > 0) {
-    return `${hours}시간 전`;
+    return `${hours}시간전`;
   } else if (minutes > 0) {
-    return `${minutes}분 전`;
+    return `${minutes}분전`;
   } else {
-    return '방금 전';
+    return '방금';
   }
 };

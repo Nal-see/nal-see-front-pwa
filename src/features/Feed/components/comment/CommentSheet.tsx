@@ -1,12 +1,13 @@
 import React, { useRef, useState } from 'react';
 import { BottomSheet } from 'react-spring-bottom-sheet';
 import 'react-spring-bottom-sheet/dist/style.css';
-import { Comment } from '../../data/commentData';
-import { useQuery } from '@tanstack/react-query';
+import { Comment } from '../../../../mocks/data/commentData';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import CommentBox from './comment';
 import { Input, StyledForm, UserImage } from './commentStyle';
 import { FaRegComment } from 'react-icons/fa';
-import { getComments } from '../../services/feedApi';
+import useAuthStore from '@/store/useAuthStore';
+import { getComments, postComment } from '../../services/commentApi';
 
 interface CommentSheetProps {
   postId: number;
@@ -19,27 +20,38 @@ const CommentSheet: React.FC<CommentSheetProps> = ({
   username,
   userImage,
 }) => {
+  const { user } = useAuthStore();
+  const userId = user?.userId;
+  console.log('userId: ', userId);
   const [open, setOpen] = useState(false);
   const [newComment, setNewComment] = useState('');
   const sheetRef = useRef<HTMLDivElement>(null);
+  const queryClient = useQueryClient();
 
   const { data: comments, isLoading } = useQuery<Comment[]>({
     queryKey: ['comments', postId],
     queryFn: async () => {
       const response = await getComments(postId);
-      console.log('response: ', response);
       return response as unknown as Comment[]; // 타입 단언 사용
     },
     enabled: open,
   });
 
-  const moveProfile = () => {
-    console.log('Profile image clicked');
-  };
+  const createCommentMutation = useMutation({
+    mutationFn: ({ postId, content }: { postId: number; content: string }) =>
+      postComment(postId, content, Number(userId)),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ['comments', variables.postId],
+        exact: true,
+      });
+    },
+  });
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log('newComment: ', newComment);
-    // postCommentMutation.mutate({ content: newComment });
+    createCommentMutation.mutate({ postId, content: newComment });
     setNewComment('');
   };
 
@@ -60,12 +72,17 @@ const CommentSheet: React.FC<CommentSheetProps> = ({
             <div>Loading...</div>
           ) : (
             comments?.map((comment: Comment) => (
-              <CommentBox key={comment.id} comment={comment} postId={postId} />
+              <CommentBox
+                key={comment.id}
+                comment={comment}
+                postId={postId}
+                isMyComment={comment.userId === Number(userId)}
+              />
             ))
           )}
         </div>
         <StyledForm onSubmit={handleSubmit}>
-          <UserImage onClick={moveProfile} src={userImage} alt={username} />
+          <UserImage src={userImage} alt={username} />
           <Input
             type="text"
             value={newComment}

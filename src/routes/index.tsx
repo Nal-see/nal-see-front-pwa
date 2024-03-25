@@ -40,6 +40,12 @@ const router = createBrowserRouter([
           {
             path: 'feeds',
             element: <FeedListPage />,
+            children: [
+              {
+                path: ':feedId',
+                element: <PostDetailPage />,
+              },
+            ],
           },
           {
             path: 'posts',
