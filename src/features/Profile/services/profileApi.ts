@@ -6,6 +6,7 @@ export async function getProfileFeed({
   lastPostId,
 }: {
   userId: string | undefined;
+  lastPostId: number;
 }): Promise<ProfileFeedData> {
   console.log('lastPostId: ', lastPostId);
   const response = await api.get(
