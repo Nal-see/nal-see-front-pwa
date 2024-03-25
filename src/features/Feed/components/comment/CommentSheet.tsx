@@ -6,8 +6,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import CommentBox from './comment';
 import { Input, StyledForm, UserImage } from './commentStyle';
 import { FaRegComment } from 'react-icons/fa';
-import { getComments, postComment } from '../../services/feedApi';
 import useAuthStore from '@/store/useAuthStore';
+import { getComments, postComment } from '../../services/commentApi';
 
 interface CommentSheetProps {
   postId: number;
@@ -22,6 +22,7 @@ const CommentSheet: React.FC<CommentSheetProps> = ({
 }) => {
   const { user } = useAuthStore();
   const userId = user?.userId;
+  console.log('userId: ', userId);
   const [open, setOpen] = useState(false);
   const [newComment, setNewComment] = useState('');
   const sheetRef = useRef<HTMLDivElement>(null);
@@ -38,7 +39,7 @@ const CommentSheet: React.FC<CommentSheetProps> = ({
 
   const createCommentMutation = useMutation({
     mutationFn: ({ postId, content }: { postId: number; content: string }) =>
-      postComment(postId, content, userId),
+      postComment(postId, content, Number(userId)),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({
         queryKey: ['comments', variables.postId],
@@ -71,7 +72,12 @@ const CommentSheet: React.FC<CommentSheetProps> = ({
             <div>Loading...</div>
           ) : (
             comments?.map((comment: Comment) => (
-              <CommentBox key={comment.id} comment={comment} postId={postId} />
+              <CommentBox
+                key={comment.id}
+                comment={comment}
+                postId={postId}
+                isMyComment={comment.userId === Number(userId)}
+              />
             ))
           )}
         </div>

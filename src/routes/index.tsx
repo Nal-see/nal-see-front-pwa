@@ -13,17 +13,12 @@ import NotificationsPage from '@/features/Notifications/Notifications';
 import FeedListPage from '@/features/Feed/FeedPage';
 import { getUserInfo } from '@/services/api/auth.service';
 import MyProfilePage from '@/features/Profile/MyProfile';
-import { getProfileUserData } from '@/features/Profile/services/profileApi';
 
 const userLoader = async () => {
   const userInfo = await getUserInfo();
   return userInfo ? userInfo.data : null;
 };
 
-const userProfileLoader = async (userId: string) => {
-  const userProfileInfo = await getProfileUserData(userId);
-  return userProfileInfo;
-};
 const router = createBrowserRouter([
   {
     path: 'hello',
@@ -45,6 +40,12 @@ const router = createBrowserRouter([
           {
             path: 'feeds',
             element: <FeedListPage />,
+            children: [
+              {
+                path: ':feedId',
+                element: <PostDetailPage />,
+              },
+            ],
           },
           {
             path: 'posts',
