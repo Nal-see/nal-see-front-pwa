@@ -1,24 +1,22 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import PostCreateHeader from './components/PostCreateHeader';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { IPostCreateForm, PostCreateFormSchema } from '@/types/postCreate';
+import {
+  IPostCreateForm,
+  ISelectedLocation,
+  PostCreateFormSchema,
+} from '@/types/postCreate';
 import PostImagePreview from './components/PostImagePreview';
 import { AddOutline } from 'antd-mobile-icons';
 import { Toaster, toast } from 'sonner';
-import { useCurrentLocation } from '@/hooks/useCurrentLocation';
 import LocationSelector from './components/LocationSelector';
-
-declare global {
-  interface Window {
-    kakao: any;
-  }
-}
 
 const PostCreatePage = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [imgFiles, setImgFiles] = useState<globalThis.File[]>([]);
-  const { longtitude, latitude, errorMsg } = useCurrentLocation();
+  const [selectedLocation, setSelectedLocation] =
+    useState<ISelectedLocation | null>(null);
 
   const {
     register,
@@ -73,9 +71,10 @@ const PostCreatePage = () => {
       <div className="h-[calc(100dvh-156px)] overflow-y-scroll scrollbar-hide">
         {/* Form */}
         <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
+          {/* STEP 1 : 사진 선택 */}
           {currentStep === 0 && (
             <div className="flex h-[calc(100dvh-156px)] flex-col items-center justify-center gap-5 p-4">
-              {/* Preview Uploaded Images */}
+              {/* 업로드한 이미지 프리뷰 */}
               {imgFiles.map((file) => (
                 <PostImagePreview
                   key={file.name}
@@ -84,7 +83,7 @@ const PostCreatePage = () => {
                 />
               ))}
 
-              {/* Image File Input */}
+              {/* 사진 업로드를 위한 File Input */}
               {imgFiles.length < 3 && (
                 <>
                   <label htmlFor="photos">
@@ -107,10 +106,13 @@ const PostCreatePage = () => {
             </div>
           )}
 
+          {/* STEP 2 : 위치 선택 */}
           {currentStep === 1 && (
-            <div className="flex h-[calc(100dvh-156px)] flex-col justify-between">
-              <div className="">위치</div>
-              <LocationSelector longtitude={longtitude} latitude={latitude} />
+            <div className="h-[calc(100dvh-156px)]">
+              <LocationSelector
+                selectedLocation={selectedLocation}
+                setSelectedLocation={setSelectedLocation}
+              />
             </div>
           )}
 
