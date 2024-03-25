@@ -26,7 +26,7 @@ export const Place = styled.span`
 `;
 
 export const UploadTime = styled.span`
-  text-gray-500 ml-auto
+  text-gray-500 ml-auto text-sm
 `;
 
 export const FeedImage = styled.img`

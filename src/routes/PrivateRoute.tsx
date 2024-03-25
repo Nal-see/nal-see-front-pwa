@@ -1,16 +1,32 @@
-import { Navigate, Outlet } from 'react-router-dom';
-import useAuthStore from '../store/useAuthStore';
+import {
+  Navigate,
+  Outlet,
+  useLocation,
+  useNavigate,
+  useRouteLoaderData,
+} from 'react-router-dom';
 import Tabbar from '@/components/Tabbar';
+import { IUserInfoResponse } from '@/types/auth';
+import { useEffect } from 'react';
 
 const PrivateRoute = () => {
-  const { user } = useAuthStore();
-  return user ? (
+  const userData = useRouteLoaderData('user') as IUserInfoResponse;
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (pathname === '/') {
+      navigate('/home');
+    }
+  }, []);
+
+  return userData ? (
     <div className="flex h-dvh flex-col">
       <Outlet />
       <Tabbar />
     </div>
   ) : (
-    <Navigate to="/" />
+    <Navigate to="/hello" />
   );
 };
 

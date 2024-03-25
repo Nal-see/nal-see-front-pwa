@@ -22,18 +22,21 @@ import {
 import { formatDate } from '../../utils/formatDate';
 import CommentSheet from '../comment/CommentSheet';
 import { addPostLike, cancelPostLike } from '../../services/feedApi';
+import { useNavigate } from 'react-router-dom';
 
 interface FeedCardProps {
   feed: Feed;
 }
 
 const FeedCard: React.FC<FeedCardProps> = ({ feed }) => {
-  const [isLiked, setIsLiked] = useState(feed.isLiked);
+  const [isLiked, setIsLiked] = useState(feed.liked);
   const [showFullContent, setShowFullContent] = useState(false);
   const maxContentLength = 100; // 초기에 보여줄 content의 최대 길이
 
+  const navigate = useNavigate();
+
   const moveProfile = () => {
-    console.log('프로필 이동하는 함수 실행 예정');
+    navigate(`/user/${feed.userId}`);
   };
 
   const toggleContent = () => {
@@ -78,14 +81,14 @@ const FeedCard: React.FC<FeedCardProps> = ({ feed }) => {
         />
         <UserInfo onClick={moveProfile}>
           <UserName>{feed.username}</UserName>
-          <Place>{feed.place}</Place>
+          <Place>{feed.address}</Place>
         </UserInfo>
         <UploadTime>{formatDate(feed.createDate)}</UploadTime>
       </FeedCardHeader>
       <Slider {...sliderSettings}>
         {feed.pictureList.map((picture, index) => (
           <div key={index}>
-            <FeedImage src={picture} alt={`${feed.place} ${index + 1}`} />
+            <FeedImage src={picture} alt={`${feed.address} ${index + 1}`} />
           </div>
         ))}
       </Slider>

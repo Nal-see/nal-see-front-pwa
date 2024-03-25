@@ -61,7 +61,7 @@ for (let i = 0; i <= 100; i++) {
     userId: i,
     username: userNames[i % userNames.length] + i,
     userImage: 'https://placeholder.co/50x50',
-    place: places[i % places.length],
+    address: places[i % places.length],
     createDate: uploadTimes[i % uploadTimes.length],
     content: descriptions[i % descriptions.length],
     pictureList: [
@@ -69,7 +69,7 @@ for (let i = 0; i <= 100; i++) {
       'https://placehold.co/350x265',
       'https://placehold.co/350x265',
     ],
-    isLiked: false,
+    liked: false,
     likeCnt: 0,
     weather: weathers[i % weathers.length],
     temperature: i % 30,
