@@ -12,6 +12,7 @@
     "icons": "npx @svgr/cli --template ./svgr.template.cjs --ext tsx --out-dir src/components/icons -- src/assets/icons"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.3.4",
     "@mswjs/http-middleware": "^0.9.2",
     "@radix-ui/react-slot": "^1.0.2",
     "@tanstack/react-query": "^5.28.0",
@@ -27,6 +28,7 @@
     "path": "^0.12.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.51.1",
     "react-icons": "^5.0.1",
     "react-intersection-observer": "^9.8.1",
     "react-router-dom": "^6.22.3",
@@ -34,13 +36,14 @@
     "react-spring-bottom-sheet": "^3.4.1",
     "react-toastify": "^10.0.4",
     "slick-carousel": "^1.8.1",
+    "sonner": "^1.4.41",
     "styled-components": "^6.1.8",
     "tailwind-merge": "^2.2.1",
     "tailwind-scrollbar-hide": "^1.1.7",
     "tailwind-styled-components": "^2.2.0",
     "tailwindcss-animate": "^1.0.7",
     "vite-tsconfig-paths": "^4.3.1",
-    "yup": "^1.4.0",
+    "zod": "^3.22.4",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
