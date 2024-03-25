@@ -13,7 +13,7 @@ const ProfileFeedList = () => {
     useInfiniteQuery<ProfileFeedData>({
       queryKey: ['profileFeed'],
       queryFn: ({ pageParam = -1 }) =>
-        getProfileFeed({ userId, lastPostId: pageParam }),
+        getProfileFeed({ userId, lastPostId: Number(pageParam) }),
       getNextPageParam: (lastPage) => {
         const lastPostId = lastPage.results[lastPage.results.length - 1];
         return lastPostId ? lastPostId.postId : undefined;
