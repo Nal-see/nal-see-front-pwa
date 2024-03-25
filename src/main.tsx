@@ -14,7 +14,7 @@ async function enableMocking() {
 const container = document.getElementById('root') as HTMLElement;
 const root = createRoot(container);
 
-root.render(<App />);
-// enableMocking().then(() => {
-//   root.render(<App />);
-// });
+// root.render(<App />);
+enableMocking().then(() => {
+  root.render(<App />);
+});
