@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import PostCreateHeader from './components/PostCreateHeader';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -6,10 +6,19 @@ import { IPostCreateForm, PostCreateFormSchema } from '@/types/postCreate';
 import PostImagePreview from './components/PostImagePreview';
 import { AddOutline } from 'antd-mobile-icons';
 import { Toaster, toast } from 'sonner';
+import { useCurrentLocation } from '@/hooks/useCurrentLocation';
+import LocationSelector from './components/LocationSelector';
+
+declare global {
+  interface Window {
+    kakao: any;
+  }
+}
 
 const PostCreatePage = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [imgFiles, setImgFiles] = useState<globalThis.File[]>([]);
+  const { longtitude, latitude, errorMsg } = useCurrentLocation();
 
   const {
     register,
@@ -98,7 +107,12 @@ const PostCreatePage = () => {
             </div>
           )}
 
-          {currentStep === 1 && <div>위치</div>}
+          {currentStep === 1 && (
+            <div className="flex h-[calc(100dvh-156px)] flex-col justify-between">
+              <div className="">위치</div>
+              <LocationSelector longtitude={longtitude} latitude={latitude} />
+            </div>
+          )}
 
           {currentStep === 2 && <div>그 외 정보들</div>}
         </form>
