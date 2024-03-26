@@ -7,7 +7,7 @@ export async function getFeedList(
   nowLatitude: number,
 ): Promise<Feed[]> {
   const response = await api.get(
-    `/api/posts?lastPostId=${lastPostId}&nowLongitude=${nowLongitude}&nowLatitude=${nowLatitude});`,
+    `/api/posts?lastPostId=${lastPostId}&nowLatitude=${nowLatitude}&nowLongitude=${nowLongitude}`,
   );
   console.log('response: 피드 리스트', response);
   return response.data.results;

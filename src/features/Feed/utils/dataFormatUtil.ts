@@ -22,3 +22,11 @@ export const formatDate = (dateString: string): string => {
     return '방금';
   }
 };
+
+export const formatLikeCnt = (likeCnt: number): string => {
+  if (likeCnt >= 1000) {
+    return `${Math.floor(likeCnt / 1000)}k`;
+  } else {
+    return likeCnt.toString();
+  }
+};

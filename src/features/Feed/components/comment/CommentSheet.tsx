@@ -5,7 +5,7 @@ import { Comment } from '../../../../mocks/data/commentData';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import CommentBox from './comment';
 import { Input, StyledForm, UserImage } from './commentStyle';
-import { FaRegComment } from 'react-icons/fa';
+import { TfiComment } from 'react-icons/tfi';
 import useAuthStore from '@/store/useAuthStore';
 import { getComments, postComment } from '../../services/commentApi';
 
@@ -57,7 +57,7 @@ const CommentSheet: React.FC<CommentSheetProps> = ({
 
   return (
     <>
-      <FaRegComment onClick={() => setOpen(true)}>Open Comments</FaRegComment>
+      <TfiComment className="mt-1 size-4" onClick={() => setOpen(true)} />
       <BottomSheet
         open={open}
         onDismiss={() => setOpen(false)}
