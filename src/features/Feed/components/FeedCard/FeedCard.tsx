@@ -14,7 +14,6 @@ interface FeedCardProps {
 }
 
 const FeedListCard: React.FC<FeedCardProps> = ({ feed }) => {
-  console.log('feed: ', feed);
   const [isLiked, setIsLiked] = useState(false);
   const [likeCnt, setLikeCnt] = useState(feed.likeCnt);
   const [currentSlide, setCurrentSlide] = useState(0);

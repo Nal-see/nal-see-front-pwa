@@ -6,9 +6,10 @@ import useAuthStore from '@/store/useAuthStore';
 import { useInView } from 'react-intersection-observer';
 import React from 'react';
 
-const ProfileFeedList = () => {
+const ProfileFeedList = ({ userId }: { userId: string | number }) => {
   const { user } = useAuthStore();
-  const userId = user?.userId;
+  userId = userId ? userId : Number(user?.userId);
+  console.log('userId: ', userId);
   const { data, isFetchingNextPage, fetchNextPage, hasNextPage } =
     useInfiniteQuery<ProfileFeedData>({
       queryKey: ['profileFeed'],

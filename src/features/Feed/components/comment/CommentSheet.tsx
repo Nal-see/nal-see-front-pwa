@@ -24,7 +24,6 @@ const CommentSheet: React.FC<CommentSheetProps> = ({
 }) => {
   const { user } = useAuthStore();
   const userId = user?.userId;
-  console.log('userId: ', userId);
   const [open, setOpen] = useState(false);
   const [newComment, setNewComment] = useState('');
   const sheetRef = useRef<HTMLDivElement>(null);

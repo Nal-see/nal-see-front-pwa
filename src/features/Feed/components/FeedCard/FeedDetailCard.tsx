@@ -9,13 +9,16 @@ import CommentSheet from '../comment/CommentSheet';
 import { addPostLike, cancelPostLike } from '../../services/feedApi';
 import { useNavigate } from 'react-router-dom';
 import WeatherAnimation from '../weather/WeatherIcon';
-
+import useAuthStore from '@/store/useAuthStore';
+import { GoPencil } from 'react-icons/go';
+import { FaTrashAlt } from 'react-icons/fa';
 interface FeedCardProps {
   feed: FeedDetail;
 }
 
 const FeedDetailCard: React.FC<FeedCardProps> = ({ feed }) => {
-  console.log('feed:asdsajdnakjdsandna ', feed);
+  const { user } = useAuthStore();
+  const isMyFeed = feed.postResponseDto.userId === Number(user?.userId);
   const [isLiked, setIsLiked] = useState(false);
   const [likeCnt, setLikeCnt] = useState(feed.postResponseDto.likeCnt);
   const [showFullContent, setShowFullContent] = useState(false);
@@ -30,6 +33,21 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed }) => {
 
   const toggleContent = () => {
     setShowFullContent(!showFullContent);
+  };
+
+  const handleDelete = async () => {
+    try {
+      if (feed) {
+        // await deletePost(Number(feed.postResponseDto.id));
+        navigate('/');
+      }
+    } catch (error) {
+      console.error('게시물 삭제 실패:', error);
+    }
+  };
+
+  const handleEdit = () => {
+    navigate(`/feed/${feed.postResponseDto.id}/edit`);
   };
 
   const handleToggleLike = async (event: React.MouseEvent<HTMLSpanElement>) => {
@@ -82,6 +100,12 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed }) => {
             {feed.postResponseDto.address}
           </span>
         </div>
+        {isMyFeed ? (
+          <>
+            <GoPencil onClick={handleEdit} />
+            <FaTrashAlt onClick={handleDelete} />
+          </>
+        ) : null}
         <span className="ml-auto text-sm text-gray-500">
           {formatDate(feed.postResponseDto.createDate)}
         </span>
