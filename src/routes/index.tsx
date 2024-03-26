@@ -13,6 +13,7 @@ import NotificationsPage from '@/features/Notifications/Notifications';
 import FeedListPage from '@/features/Feed/FeedPage';
 import { getUserInfo } from '@/services/api/auth.service';
 import MyProfilePage from '@/features/Profile/MyProfile';
+import FeedDetailPage from '@/features/Feed/FeedDetailPage';
 
 const userLoader = async () => {
   const userInfo = await getUserInfo();
@@ -40,12 +41,10 @@ const router = createBrowserRouter([
           {
             path: 'feeds',
             element: <FeedListPage />,
-            children: [
-              {
-                path: ':feedId',
-                element: <PostDetailPage />,
-              },
-            ],
+          },
+          {
+            path: 'feeds/:feedId',
+            element: <FeedDetailPage />,
           },
           {
             path: 'posts',

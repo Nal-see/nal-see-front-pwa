@@ -28,7 +28,7 @@ const FeedListCard: React.FC<FeedCardProps> = ({ feed }) => {
   };
 
   const moveToDetailPage = () => {
-    navigate(`/feed/${feed.id}`);
+    navigate(`/feeds/${feed.id}`);
   };
 
   const handleToggleLike = async (event: React.MouseEvent<HTMLSpanElement>) => {

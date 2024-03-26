@@ -89,6 +89,13 @@ export const handlers = [
       results: newComment,
     });
   }),
+  http.get('/api/posts/:postId', (request) => {
+    const { postId } = request.params;
+    const feed = FeedDataList.results.find((feed) => feed.id === postId);
+    console.log('feed: ', feed);
+
+    return HttpResponse.json(feed);
+  }),
 
   http.get('/api/posts/users/:userId', (request) => {
     const lastPostId = extractQueryParam(request.request.url, 'lastPostId');
