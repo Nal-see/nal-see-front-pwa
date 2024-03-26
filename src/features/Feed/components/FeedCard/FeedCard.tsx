@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
-import { Feed } from '@/types/feed';
+import { PostResponseDto } from '@/types/feed';
 import { PiHeartStraightFill, PiHeartStraightLight } from 'react-icons/pi';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { formatDate, formatLikeCnt } from '../../utils/dataFormatUtil';
+import { formatLikeCnt } from '../../utils/dataFormatUtil';
 import CommentSheet from '../comment/CommentSheet';
 import { addPostLike, cancelPostLike } from '../../services/feedApi';
 import { useNavigate } from 'react-router-dom';
 
 interface FeedCardProps {
-  feed: Feed;
+  feed: PostResponseDto;
 }
 
 const FeedListCard: React.FC<FeedCardProps> = ({ feed }) => {
+  console.log('feed: ', feed);
   const [isLiked, setIsLiked] = useState(false);
   const [likeCnt, setLikeCnt] = useState(feed.likeCnt);
-  const [showFullContent, setShowFullContent] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const maxContentLength = 15;
   const navigate = useNavigate();
@@ -74,7 +74,7 @@ const FeedListCard: React.FC<FeedCardProps> = ({ feed }) => {
   };
 
   const displayedContent =
-    feed && showFullContent
+    feed?.content.length < maxContentLength
       ? feed.content
       : feed?.content.slice(0, maxContentLength);
 
@@ -108,12 +108,7 @@ const FeedListCard: React.FC<FeedCardProps> = ({ feed }) => {
               {formatDate(feed.createDate)}
             </span> */}
           </div>
-          <p className="m-0">
-            {displayedContent}
-            {feed.content.length > maxContentLength && (
-              <>{!showFullContent ? '...' : ''}</>
-            )}
-          </p>
+          <p className="m-0">{displayedContent}</p>
         </div>
       </div>
       <div className="mb-2 flex">

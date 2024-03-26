@@ -23,7 +23,7 @@ const FeedList = () => {
       },
       getNextPageParam: (lastPage) => {
         const lastFeed = lastPage[lastPage.length - 1];
-        return lastFeed ? lastFeed.id : undefined;
+        return lastFeed ? lastFeed.postResponseDto.id : undefined;
       },
       enabled: longtitude !== undefined && latitude !== undefined,
       initialPageParam: undefined, // Add this line
@@ -68,7 +68,10 @@ const FeedList = () => {
         {data?.pages.map((page, pageIndex) => (
           <React.Fragment key={pageIndex}>
             {page.map((feed: Feed) => (
-              <FeedListCard key={feed.id} feed={feed} />
+              <FeedListCard
+                key={feed.postResponseDto.id}
+                feed={feed.postResponseDto}
+              />
             ))}
           </React.Fragment>
         ))}

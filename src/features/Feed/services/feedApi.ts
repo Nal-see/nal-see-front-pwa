@@ -1,5 +1,5 @@
 import { api } from '@/lib/api';
-import { Feed } from '@/types/feed';
+import { Feed, FeedDetail } from '@/types/feed';
 
 export async function getFeedList(
   lastPostId: number,
@@ -13,10 +13,10 @@ export async function getFeedList(
   return response.data.results;
 }
 
-export async function getFeedDetail(postId: number): Promise<Feed> {
+export async function getFeedDetail(postId: number): Promise<FeedDetail> {
   const response = await api.get(`/api/posts/${postId}`);
   console.log('response.data: ', response.data);
-  return response.data;
+  return response.data.results;
 }
 
 // feedApi.ts

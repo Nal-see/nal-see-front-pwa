@@ -1,4 +1,6 @@
-export interface Feed {
+import { Comment } from 'mocks/data/commentData';
+
+export interface PostResponseDto {
   id: string;
   userId: number;
   username: string;
@@ -6,11 +8,15 @@ export interface Feed {
   address: string;
   createDate: string;
   content: string;
-  pictureList: string[];
   liked: boolean;
   likeCnt: number;
   weather: string;
   temperature: number;
+  pictureList: string[];
+}
+
+export interface Feed {
+  postResponseDto: PostResponseDto;
 
   // id": 2,
   //   "pictureList": [
@@ -26,4 +32,16 @@ export interface Feed {
   //   "username": "지연",
   //   "userImage": null,
   //   "liked": false
+}
+
+export interface FeedDetail extends Feed {
+  comments: Comment[];
+  userInfo: {
+    height: number;
+    weight: number;
+    bodyShape: string;
+    constitution: string;
+    style: string[];
+    gender: string;
+  };
 }

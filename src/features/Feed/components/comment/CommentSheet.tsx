@@ -13,12 +13,14 @@ interface CommentSheetProps {
   postId: number;
   username: string;
   userImage: string;
+  isDetail?: boolean;
 }
 
 const CommentSheet: React.FC<CommentSheetProps> = ({
   postId,
   username,
   userImage,
+  isDetail = false,
 }) => {
   const { user } = useAuthStore();
   const userId = user?.userId;
@@ -57,7 +59,10 @@ const CommentSheet: React.FC<CommentSheetProps> = ({
 
   return (
     <>
-      <TfiComment className="mt-1 size-4" onClick={() => setOpen(true)} />
+      <TfiComment
+        className={`${isDetail ? 'mt-1.5 size-6' : 'mt-1 size-4'}`}
+        onClick={() => setOpen(true)}
+      />
       <BottomSheet
         open={open}
         onDismiss={() => setOpen(false)}

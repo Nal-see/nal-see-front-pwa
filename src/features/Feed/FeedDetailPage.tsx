@@ -2,13 +2,13 @@ import BackBtnHeader from '@/components/BackBtnHeader';
 import { useParams } from 'react-router-dom';
 import { getFeedDetail } from './services/feedApi';
 import { useEffect, useState } from 'react';
-import { Feed } from '@/types/feed';
 import FeedDetailCard from './components/FeedCard/FeedDetailCard';
 import FeedDetailSkeletonCard from './components/FeedCard/FeedDetailSkeletonCard';
+import { FeedDetail } from '@/types/feed';
 
 const FeedDetailPage = () => {
   const { feedId } = useParams<{ feedId: string }>();
-  const [feed, setFeed] = useState<Feed | null>(null);
+  const [feed, setFeed] = useState<FeedDetail | null>(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -26,10 +26,10 @@ const FeedDetailPage = () => {
   }
 
   return (
-    <>
+    <div className="h-screen ">
       <BackBtnHeader title="상세페이지" />
       <FeedDetailCard feed={feed} />
-    </>
+    </div>
   );
 };
 
