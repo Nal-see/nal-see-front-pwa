@@ -4,9 +4,6 @@ import { errorInterceptor } from './interceptors';
 const axiosRequestConfig: AxiosRequestConfig = {
   baseURL: `${import.meta.env.VITE_API_BASE_URL}`,
   responseType: 'json',
-  headers: {
-    'Content-Type': 'application/json',
-  },
   withCredentials: true,
 };
 
