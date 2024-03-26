@@ -1,16 +1,22 @@
 import { api } from '@/lib/api';
-import { Feed } from '@/types/feed';
+import { Feed, FeedDetail } from '@/types/feed';
 
-export async function getFeedList(lastPostId?: number): Promise<Feed[]> {
-  const response = await api.get(`/api/posts?lastPostId=${lastPostId}&size=10`);
+export async function getFeedList(
+  lastPostId: number,
+  nowLongitude: number,
+  nowLatitude: number,
+): Promise<Feed[]> {
+  const response = await api.get(
+    `/api/posts?lastPostId=${lastPostId}&nowLatitude=${nowLatitude}&nowLongitude=${nowLongitude}`,
+  );
   console.log('response: 피드 리스트', response);
   return response.data.results;
 }
 
-export async function getFeedDetail(postId: number): Promise<Feed> {
+export async function getFeedDetail(postId: number): Promise<FeedDetail> {
   const response = await api.get(`/api/posts/${postId}`);
   console.log('response.data: ', response.data);
-  return response.data;
+  return response.data.results;
 }
 
 // feedApi.ts

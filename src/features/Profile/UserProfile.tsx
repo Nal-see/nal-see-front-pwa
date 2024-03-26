@@ -9,6 +9,7 @@ import { UserProfilePageProps } from '@/types/profile';
 
 const UserProfilePage = () => {
   const userId = useParams().userId;
+  console.log('userId: ', userId);
 
   const [userData, setUserData] = useState<UserProfilePageProps | null>(null);
 
@@ -28,11 +29,11 @@ const UserProfilePage = () => {
   }
 
   return (
-    <div className="h-[100dvh-183px] overflow-y-scroll">
+    <div className="h-dvh overflow-y-scroll">
       <BackBtnHeader title={userData.username} />
       <ProfileHeader userProfileData={userData} />
       <FollowMesgComp followed={userData.followed} key={userId} />
-      <ProfileFeedList />
+      <ProfileFeedList userId={String(userId)} />
     </div>
   );
 };

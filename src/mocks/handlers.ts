@@ -6,7 +6,6 @@ import { profileFeedData, profileUserData } from './data/profileFeedData';
 
 export const handlers = [
   http.get('/api/posts', (request) => {
-    const size = extractQueryParam(request.request.url, 'size');
     const lastPostId = extractQueryParam(request.request.url, 'lastPostId');
 
     let filteredFeedData = FeedDataList.results;
@@ -20,7 +19,7 @@ export const handlers = [
       }
     }
 
-    const parsedSize = size ? parseInt(size, 10) : 10;
+    const parsedSize = 10;
     const paginatedFeedData = {
       results: filteredFeedData.slice(0, parsedSize),
     };
@@ -89,6 +88,13 @@ export const handlers = [
       message: '댓글이 성공적으로 생성되었습니다.',
       results: newComment,
     });
+  }),
+  http.get('/api/posts/:postId', (request) => {
+    const { postId } = request.params;
+    const feed = FeedDataList.results.find((feed) => feed.id === postId);
+    console.log('feed: ', feed);
+
+    return HttpResponse.json(feed);
   }),
 
   http.get('/api/posts/users/:userId', (request) => {

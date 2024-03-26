@@ -65,12 +65,12 @@ for (let i = 0; i <= 100; i++) {
     createDate: uploadTimes[i % uploadTimes.length],
     content: descriptions[i % descriptions.length],
     pictureList: [
-      'https://placehold.co/350x265',
-      'https://placehold.co/350x265',
-      'https://placehold.co/350x265',
+      'https://placehold.co/300x400',
+      'https://placehold.co/300x400',
+      'https://placehold.co/300x400',
     ],
     liked: false,
-    likeCnt: 0,
+    likeCnt: i * 10,
     weather: weathers[i % weathers.length],
     temperature: i % 30,
   });

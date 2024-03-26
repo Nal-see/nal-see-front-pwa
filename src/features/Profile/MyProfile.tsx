@@ -28,7 +28,7 @@ const MyProfilePage = () => {
   }
 
   return (
-    <div className="h-[100dvh-183px] overflow-y-scroll">
+    <div className="h-[100dvh-183px] flex-1 overflow-y-scroll">
       <BackBtnHeader title="My Profile" />
       <ProfileHeader userProfileData={userData} />
       <ProfileFeedList />

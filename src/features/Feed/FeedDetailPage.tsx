@@ -1,17 +1,34 @@
 import BackBtnHeader from '@/components/BackBtnHeader';
 import { useParams } from 'react-router-dom';
 import { getFeedDetail } from './services/feedApi';
-import FeedCard from './components/FeedCard/FeedCard';
+import { useEffect, useState } from 'react';
+import FeedDetailCard from './components/FeedCard/FeedDetailCard';
+import FeedDetailSkeletonCard from './components/FeedCard/FeedDetailSkeletonCard';
+import { FeedDetail } from '@/types/feed';
 
 const FeedDetailPage = () => {
-  const { id } = useParams<{ id: string }>();
-  const data = getFeedDetail(Number(id));
-  const feed = data.results;
+  const { feedId } = useParams<{ feedId: string }>();
+  const [feed, setFeed] = useState<FeedDetail | null>(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      if (feedId) {
+        const data = await getFeedDetail(Number(feedId));
+        setFeed(data);
+      }
+    }
+
+    fetchData();
+  }, [feedId]);
+
+  if (!feed) {
+    return <FeedDetailSkeletonCard />;
+  }
 
   return (
-    <div className="h-[100dvh-183px] overflow-y-scroll">
+    <div className="h-screen ">
       <BackBtnHeader title="상세페이지" />
-      <FeedCard feed={feed} />
+      <FeedDetailCard feed={feed} />
     </div>
   );
 };
