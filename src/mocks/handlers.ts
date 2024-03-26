@@ -145,4 +145,30 @@ export const handlers = [
     //   status: 403,
     // });
   }),
+
+  http.get('/api/users/userInfo', () => {
+    return HttpResponse.json({
+      success: true,
+      message: '요청에 성공했습니다.',
+      results: {
+        height: 170,
+        weight: 60,
+        constitution: 'heatSensitive',
+        style: ['Minimal', 'Street'],
+        gender: 'M',
+      },
+    });
+  }),
+  http.post('/api/posts', (request) => {
+    return HttpResponse.json(
+      {
+        success: true,
+        message: '요청에 성공했습니다.',
+        results: null,
+      },
+      {
+        status: 200,
+      },
+    );
+  }),
 ];
