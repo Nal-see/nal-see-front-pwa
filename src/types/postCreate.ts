@@ -6,24 +6,30 @@ export interface IPostCreateHeader {
 }
 
 export interface IPostCreateForm {
-  requestDto: {
-    userId: string;
-    content: string;
-    latitude: number;
-    longitude: number;
-    userInfo: {
-      height: number;
-      weight: number;
-      bodyShape: string;
-      constitution: string;
-      style: string;
-      gender: string;
-    };
-  };
+  content: string;
+  address: string;
+  latitude: number;
+  longtitude: number;
+  height: number;
+  weight: number;
+  constitution: string;
+  style: string[];
+  gender: string;
   photos: File[] | null;
 }
 
-export const PostCreateFormSchema = z.object({});
+export const PostCreateFormSchema = z.object({
+  content: z.string().min(10, '글을 10자 이상 작성해주세요.'),
+  address: z.string(),
+  latitude: z.number(),
+  longtitude: z.number(),
+  height: z.number(),
+  weight: z.number(),
+  constitution: z.string(),
+  style: z.array(z.string()),
+  gender: z.string(),
+  photos: z.array(z.instanceof(File)),
+});
 
 export interface ISelectedLocation {
   lng: number;
