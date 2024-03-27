@@ -12,6 +12,7 @@ export interface IUserState {
 interface IUserStore extends IUserState {
   setUser: (user: IUserState) => void;
   removeUser: () => void;
+  // setTestUser: () => void;
 }
 
 const initialState: IUserState = {
@@ -24,6 +25,16 @@ const useAuthStore = create<IUserStore>((set) => ({
     set(user);
   },
   removeUser: () => set({ user: null }),
+  // setTestUser: () => {
+  //   set({
+  //     user: {
+  //       userId: '9',
+  //       userName: 'test',
+  //       email: 'qwer@qwer.com',
+  //       isNewUser: false,
+  //     },
+  //   });
+  // },
 }));
 
 export default useAuthStore;

@@ -28,10 +28,13 @@ export async function updateComment(
   content: string,
   userId: number,
 ): Promise<void> {
-  const response = await api.put(`/api/posts/${postId}/comments/${commentId}`, {
-    content,
-    userId,
-  });
+  const response = await api.patch(
+    `/api/posts/${postId}/comments/${commentId}`,
+    {
+      content,
+      userId,
+    },
+  );
   console.log('response.data: ', response.data);
 }
 

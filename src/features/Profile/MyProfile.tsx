@@ -5,6 +5,7 @@ import { getProfileUserData } from './services/profileApi';
 import useAuthStore from '@/store/useAuthStore';
 import { useEffect, useState } from 'react';
 import { UserProfilePageProps } from '@/types/profile';
+import EmptyPage from '@/components/EmptyPage';
 
 const MyProfilePage = () => {
   const { user } = useAuthStore();
@@ -24,14 +25,14 @@ const MyProfilePage = () => {
   }, [userId]);
 
   if (!userData) {
-    return <div>Loading...</div>;
+    return <EmptyPage />;
   }
 
   return (
     <div className="h-[100dvh-183px] flex-1 overflow-y-scroll">
       <BackBtnHeader title="My Profile" />
       <ProfileHeader userProfileData={userData} />
-      <ProfileFeedList />
+      <ProfileFeedList userId={String(userId)} />
     </div>
   );
 };

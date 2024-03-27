@@ -6,18 +6,25 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { formatDate } from '../../utils/dataFormatUtil';
 import CommentSheet from '../comment/CommentSheet';
-import { addPostLike, cancelPostLike } from '../../services/feedApi';
+import {
+  addPostLike,
+  cancelPostLike,
+  deletePost,
+} from '../../services/feedApi';
 import { useNavigate } from 'react-router-dom';
-import WeatherAnimation from '../weather/WeatherIcon';
 import useAuthStore from '@/store/useAuthStore';
 import { GoPencil } from 'react-icons/go';
 import { FaTrashAlt } from 'react-icons/fa';
+import { WeatherBar } from '@/components/WeatherCard';
 interface FeedCardProps {
   feed: FeedDetail;
 }
 
 const FeedDetailCard: React.FC<FeedCardProps> = ({ feed }) => {
   const { user } = useAuthStore();
+
+  //테스트 데이터
+
   const isMyFeed = feed.postResponseDto.userId === Number(user?.userId);
   const [isLiked, setIsLiked] = useState(false);
   const [likeCnt, setLikeCnt] = useState(feed.postResponseDto.likeCnt);
@@ -38,8 +45,9 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed }) => {
   const handleDelete = async () => {
     try {
       if (feed) {
-        // await deletePost(Number(feed.postResponseDto.id));
-        navigate('/');
+        await deletePost(Number(feed.postResponseDto.id));
+        alert('게시물이 삭제되었습니다.');
+        navigate('/feeds');
       }
     } catch (error) {
       console.error('게시물 삭제 실패:', error);
@@ -84,36 +92,36 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed }) => {
   };
 
   return (
-    <div className="mb-4 overflow-x-hidden overflow-y-scroll scrollbar-hide">
-      <div className="flex items-center p-3 px-4">
-        <img
-          className="mr-3 size-10 cursor-pointer rounded-full"
-          onClick={moveProfile}
-          src={feed.postResponseDto.userImage}
-          alt={feed.postResponseDto.username}
-        />
-        <div className="flex cursor-pointer flex-col" onClick={moveProfile}>
-          <span className="mr-2 font-bold">
-            {feed.postResponseDto.username}
-          </span>
-          <span className="mr-2 text-gray-600">
-            {feed.postResponseDto.address}
+    <div className="mb-4 h-[calc(100vh-173px)] overflow-x-hidden overflow-y-scroll scrollbar-hide">
+      <div className="flex items-center justify-between p-3 px-4">
+        <div className="flex">
+          <img
+            className="mr-3 size-10 cursor-pointer rounded-full"
+            onClick={moveProfile}
+            src={feed.postResponseDto.userImage}
+            alt={feed.postResponseDto.username}
+          />
+          <div className="flex cursor-pointer flex-col" onClick={moveProfile}>
+            <span className="mr-2 font-bold">
+              {feed.postResponseDto.username}
+            </span>
+            <span className="mr-2 text-gray-600">
+              {feed.postResponseDto.address}
+            </span>
+          </div>
+        </div>
+        <div className="flex items-center gap-3">
+          {isMyFeed ? (
+            <>
+              <GoPencil onClick={handleEdit} />
+              <FaTrashAlt onClick={handleDelete} />
+            </>
+          ) : null}
+          <span className=" text-sm text-gray-500">
+            {formatDate(feed.postResponseDto.createDate)}
           </span>
         </div>
-        {isMyFeed ? (
-          <>
-            <GoPencil onClick={handleEdit} />
-            <FaTrashAlt onClick={handleDelete} />
-          </>
-        ) : null}
-        <span className="ml-auto text-sm text-gray-500">
-          {formatDate(feed.postResponseDto.createDate)}
-        </span>
       </div>
-      <WeatherAnimation
-        weather={feed.postResponseDto.weather}
-        temperature={String(feed.postResponseDto.temperature)}
-      />
       <Slider {...sliderSettings}>
         {feed.postResponseDto.pictureList.map((picture, index) => (
           <div key={index}>
@@ -162,6 +170,14 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed }) => {
           )}
         </p>
       </div>
+      {/* <WeatherAnimation
+        weather={feed.postResponseDto.weather}
+        temperature={String(feed.postResponseDto.temperature)}
+      /> */}
+      <WeatherBar
+        weather={feed.postResponseDto.weather}
+        temperature={String(feed.postResponseDto.temperature)}
+      />
     </div>
   );
 };
