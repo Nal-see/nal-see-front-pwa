@@ -29,3 +29,8 @@ export async function cancelPostLike(postId: number): Promise<void> {
   const response = await api.post(`/api/posts/${postId}/likes/cancel`);
   console.log('response.data: ', response.data);
 }
+
+export async function deletePost(postId: number): Promise<void> {
+  const response = await api.delete(`/api/posts/${postId}`);
+  console.log('response.data: ', response.data);
+}

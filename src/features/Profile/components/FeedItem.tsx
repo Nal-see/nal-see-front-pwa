@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaClone } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 type FeedItemProps = {
   postId: string | number;
@@ -8,8 +9,13 @@ type FeedItemProps = {
 };
 
 const FeedItem = ({ item }: { item: FeedItemProps }) => {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`/feeds/${item.postId}`);
+  };
+
   return (
-    <div className="relative">
+    <div className="relative" onClick={handleClick}>
       <img src={item.postPicture} alt="user" className="h-auto w-full" />
       {item.many && (
         <div className="absolute right-2 top-2">

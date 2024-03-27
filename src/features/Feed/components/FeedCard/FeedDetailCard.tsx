@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FeedDetail } from '@/types/feed';
 import { PiHeartStraightFill, PiHeartStraightLight } from 'react-icons/pi';
 import Slider from 'react-slick';
@@ -6,18 +6,29 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { formatDate } from '../../utils/dataFormatUtil';
 import CommentSheet from '../comment/CommentSheet';
-import { addPostLike, cancelPostLike } from '../../services/feedApi';
+import {
+  addPostLike,
+  cancelPostLike,
+  deletePost,
+} from '../../services/feedApi';
 import { useNavigate } from 'react-router-dom';
 import WeatherAnimation from '../weather/WeatherIcon';
 import useAuthStore from '@/store/useAuthStore';
 import { GoPencil } from 'react-icons/go';
 import { FaTrashAlt } from 'react-icons/fa';
+import { WeatherBar } from '@/components/WeatherCard';
 interface FeedCardProps {
   feed: FeedDetail;
 }
 
 const FeedDetailCard: React.FC<FeedCardProps> = ({ feed }) => {
-  const { user } = useAuthStore();
+  const { user, setTestUser } = useAuthStore();
+
+  //테스트 데이터
+  useEffect(() => {
+    setTestUser();
+  }, []);
+
   const isMyFeed = feed.postResponseDto.userId === Number(user?.userId);
   const [isLiked, setIsLiked] = useState(false);
   const [likeCnt, setLikeCnt] = useState(feed.postResponseDto.likeCnt);
@@ -38,8 +49,9 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed }) => {
   const handleDelete = async () => {
     try {
       if (feed) {
-        // await deletePost(Number(feed.postResponseDto.id));
-        navigate('/');
+        await deletePost(Number(feed.postResponseDto.id));
+        alert('게시물이 삭제되었습니다.');
+        navigate('/feeds');
       }
     } catch (error) {
       console.error('게시물 삭제 실패:', error);
@@ -84,8 +96,8 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed }) => {
   };
 
   return (
-    <div className="mb-4 overflow-x-hidden overflow-y-scroll scrollbar-hide">
-      <div className="flex items-center p-3 px-4">
+    <div className="mb-4 h-[calc(100vh-183px)] overflow-x-hidden overflow-y-scroll scrollbar-hide">
+      <div className="flex items-center justify-between p-3 px-4">
         <img
           className="mr-3 size-10 cursor-pointer rounded-full"
           onClick={moveProfile}
@@ -100,6 +112,7 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed }) => {
             {feed.postResponseDto.address}
           </span>
         </div>
+        <div></div>
         {isMyFeed ? (
           <>
             <GoPencil onClick={handleEdit} />
@@ -110,10 +123,6 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed }) => {
           {formatDate(feed.postResponseDto.createDate)}
         </span>
       </div>
-      <WeatherAnimation
-        weather={feed.postResponseDto.weather}
-        temperature={String(feed.postResponseDto.temperature)}
-      />
       <Slider {...sliderSettings}>
         {feed.postResponseDto.pictureList.map((picture, index) => (
           <div key={index}>
@@ -162,6 +171,15 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed }) => {
           )}
         </p>
       </div>
+      <WeatherAnimation
+        weather={feed.postResponseDto.weather}
+        temperature={String(feed.postResponseDto.temperature)}
+      />
+      <WeatherBar
+        weather={feed.postResponseDto.weather}
+        temperature={String(feed.postResponseDto.temperature)}
+        address={feed.postResponseDto.address}
+      />
     </div>
   );
 };

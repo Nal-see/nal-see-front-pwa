@@ -20,12 +20,6 @@ const FeedListCard: React.FC<FeedCardProps> = ({ feed }) => {
   const maxContentLength = 15;
   const navigate = useNavigate();
 
-  const moveProfile = () => {
-    if (feed) {
-      navigate(`/user/${feed.userId}`);
-    }
-  };
-
   const moveToDetailPage = () => {
     navigate(`/feeds/${feed.id}`);
   };
@@ -95,11 +89,10 @@ const FeedListCard: React.FC<FeedCardProps> = ({ feed }) => {
           <div className="mb-1 flex items-center">
             <img
               className="mr-2 size-5 cursor-pointer rounded-full"
-              onClick={moveProfile}
               src={feed.userImage}
               alt={feed.username}
             />
-            <div className="flex cursor-pointer" onClick={moveProfile}>
+            <div className="flex cursor-pointer">
               <span className="mr-2 font-medium">{feed.username}</span>
               {/* <span className="mr-2 text-gray-600">{feed.address}</span> */}
             </div>
@@ -107,7 +100,10 @@ const FeedListCard: React.FC<FeedCardProps> = ({ feed }) => {
               {formatDate(feed.createDate)}
             </span> */}
           </div>
-          <p className="m-0">{displayedContent}</p>
+          <p className="m-0">
+            {displayedContent}
+            {feed.content.length > maxContentLength && '...'}
+          </p>
         </div>
       </div>
       <div className="mb-2 flex">

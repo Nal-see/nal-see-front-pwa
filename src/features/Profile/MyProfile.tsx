@@ -31,7 +31,7 @@ const MyProfilePage = () => {
     <div className="h-[100dvh-183px] flex-1 overflow-y-scroll">
       <BackBtnHeader title="My Profile" />
       <ProfileHeader userProfileData={userData} />
-      <ProfileFeedList />
+      <ProfileFeedList userId={String(userId)} />
     </div>
   );
 };

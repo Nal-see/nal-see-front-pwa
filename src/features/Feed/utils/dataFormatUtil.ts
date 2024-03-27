@@ -69,6 +69,25 @@ export const formatWeatherToIcon = (weather: string): string => {
   }
 };
 
+export const formatWeatherToImage = (weather: string): string => {
+  switch (weather) {
+    case 'Thunderstorm':
+      return '/public/weatherImage/thunder.png';
+    case 'Rain':
+      return '/public/weatherImage/rain.png';
+    case 'Snow':
+      return '/public/weatherImage/snow.png';
+    case 'Fog':
+      return '/public/weatherImage/fog.png';
+    case 'Clear':
+      return '/public/weatherImage/clear.png';
+    case 'Clouds':
+      return '/public/weatherImage/cloud.png';
+    default:
+      return '';
+  }
+};
+
 const weatherSelector = (weather: string) => {
   // ['Thunderstorm', 'Rain', 'Snow', 'Fog', 'Clear', 'Clouds']
   if (weather === 'Thunderstorm') {
