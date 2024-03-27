@@ -10,11 +10,11 @@ export interface IPostCreateForm {
   address: string;
   latitude: number;
   longtitude: number;
-  height: number;
-  weight: number;
-  constitution: string;
+  height: number | null;
+  weight: number | null;
+  constitution: string | null;
   style: string[];
-  gender: string;
+  gender: string | null;
   photos: File[] | null;
 }
 
@@ -23,11 +23,11 @@ export const PostCreateFormSchema = z.object({
   address: z.string(),
   latitude: z.number(),
   longtitude: z.number(),
-  height: z.number(),
-  weight: z.number(),
-  constitution: z.string(),
-  style: z.array(z.string()),
-  gender: z.string(),
+  height: z.string().optional(),
+  weight: z.string().optional(),
+  constitution: z.array(z.string()).optional(),
+  style: z.array(z.string()).optional(),
+  gender: z.array(z.string()).optional(),
   photos: z.array(z.instanceof(File)),
 });
 
