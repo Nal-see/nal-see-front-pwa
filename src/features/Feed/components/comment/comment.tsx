@@ -111,7 +111,11 @@ const Comment: React.FC<CommentProps> = ({ comment, postId, isMyComment }) => {
     <CommentContainer>
       <UserImage
         onClick={moveProfile}
-        src={comment.userImage}
+        src={
+          comment.userImage
+            ? comment.userImage
+            : '/public/weatherImage/placeholder.jpg'
+        }
         alt={comment.username}
       />
       <CommentContent>

@@ -26,7 +26,7 @@ const FeedDetailPage = () => {
   }
 
   return (
-    <div className="h-screen ">
+    <div>
       <BackBtnHeader title="상세페이지" />
       <FeedDetailCard feed={feed} />
     </div>
