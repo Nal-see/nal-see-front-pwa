@@ -5,6 +5,8 @@ import { ProfileFeedData } from '@/types/profile';
 import useAuthStore from '@/store/useAuthStore';
 import { useInView } from 'react-intersection-observer';
 import React from 'react';
+import EmptyPage from '@/components/EmptyPage';
+import { SyncLoader } from 'react-spinners';
 
 const ProfileFeedList = ({ userId }: { userId: string | number }) => {
   const { user } = useAuthStore();
@@ -36,7 +38,7 @@ const ProfileFeedList = ({ userId }: { userId: string | number }) => {
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   if (feedList.length === 0) {
-    return <div className="mt-4 border-t-2">Loading...</div>;
+    return <EmptyPage />;
   }
   return (
     <div className="mt-4 border-t-2">
@@ -47,7 +49,7 @@ const ProfileFeedList = ({ userId }: { userId: string | number }) => {
           </div>
         ))}
       </div>
-      {isFetchingNextPage && <div>Loading...</div>}
+      {isFetchingNextPage && <SyncLoader color="#3ba5ff" />}
       <div ref={ref} />
     </div>
   );

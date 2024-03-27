@@ -5,6 +5,7 @@ import { getProfileUserData } from './services/profileApi';
 import useAuthStore from '@/store/useAuthStore';
 import { useEffect, useState } from 'react';
 import { UserProfilePageProps } from '@/types/profile';
+import EmptyPage from '@/components/EmptyPage';
 
 const MyProfilePage = () => {
   const { user } = useAuthStore();
@@ -24,7 +25,7 @@ const MyProfilePage = () => {
   }, [userId]);
 
   if (!userData) {
-    return <div>Loading...</div>;
+    return <EmptyPage />;
   }
 
   return (

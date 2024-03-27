@@ -8,6 +8,7 @@ import { Input, StyledForm, UserImage } from './commentStyle';
 import { TfiComment } from 'react-icons/tfi';
 import useAuthStore from '@/store/useAuthStore';
 import { getComments, postComment } from '../../services/commentApi';
+import { SyncLoader } from 'react-spinners';
 
 interface CommentSheetProps {
   postId: number;
@@ -73,7 +74,7 @@ const CommentSheet: React.FC<CommentSheetProps> = ({
           className="z-40 h-[calc(100vh-183px)] overflow-y-auto p-4"
         >
           {isLoading ? (
-            <div>Loading...</div>
+            <SyncLoader className="bg-accent" />
           ) : (
             comments?.map((comment: Comment) => (
               <CommentBox

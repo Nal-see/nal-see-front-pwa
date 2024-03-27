@@ -6,7 +6,7 @@ import { Feed } from '@/types/feed';
 import { useCurrentLocation } from '@/hooks/useCurrentLocation';
 import FeedSkeletonCard from './FeedCard/FeedSkeletionCard';
 import FeedListCard from './FeedCard/FeedCard';
-
+import { SyncLoader } from 'react-spinners';
 const FeedList = () => {
   const { longtitude, latitude, errorMsg } = useCurrentLocation();
 
@@ -44,7 +44,7 @@ const FeedList = () => {
     return <div>{errorMsg}</div>;
   }
 
-  if (!longtitude || !latitude || !data) {
+  if (!longtitude || !latitude) {
     return (
       <div className="h-[calc(100vh-183px)] w-full overflow-y-scroll scrollbar-hide">
         <div className="flex flex-wrap items-center justify-between px-4">
@@ -62,6 +62,10 @@ const FeedList = () => {
     );
   }
 
+  if (!data) {
+    return <SyncLoader color="#3ba5ff" />;
+  }
+
   return (
     <div className="h-[calc(100vh-183px)] w-full overflow-y-scroll scrollbar-hide">
       <div className="flex flex-wrap items-center justify-center">
@@ -75,7 +79,7 @@ const FeedList = () => {
             ))}
           </React.Fragment>
         ))}
-        {isFetchingNextPage && <div>Loading...</div>}
+        {isFetchingNextPage && <SyncLoader color="#3ba5ff" />}
         <div ref={ref} className="h-10" />
       </div>
     </div>

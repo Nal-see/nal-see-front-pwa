@@ -96,18 +96,9 @@ const FeedListCard: React.FC<FeedCardProps> = ({ feed }) => {
               }
               size="size-5 mr-2"
             />
-            {/* <img
-              className="mr-2 size-5 cursor-pointer rounded-full"
-              src={feed.userImage}
-              alt={feed.username}
-            /> */}
             <div className="flex cursor-pointer">
               <span className="mr-2 font-medium">{feed.username}</span>
-              {/* <span className="mr-2 text-gray-600">{feed.address}</span> */}
             </div>
-            {/* <span className="ml-auto text-sm text-gray-500">
-              {formatDate(feed.createDate)}
-            </span> */}
           </div>
           <p className="m-0">
             {displayedContent}
