@@ -26,7 +26,7 @@ const FeedList = () => {
         return lastFeed ? lastFeed.postResponseDto.id : undefined;
       },
       enabled: longtitude !== undefined && latitude !== undefined,
-      initialPageParam: undefined, // Add this line
+      initialPageParam: undefined,
     });
 
   const [ref, inView] = useInView({
