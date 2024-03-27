@@ -11,19 +11,74 @@ import {
   UserImage,
   Username,
 } from './commentStyle';
-import { Comment as CommentType } from '../../data/commentData';
+import { Comment as CommentType } from '../../../../mocks/data/commentData';
 import { ToggleButton } from '../FeedCard/FeedCardStyle';
-import { addCommentLike, cancelCommentLike } from '../../services/feedApi';
+import { useNavigate } from 'react-router-dom';
+import {
+  addCommentLike,
+  cancelCommentLike,
+  deleteComment,
+  updateComment,
+} from '../../services/commentApi';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface CommentProps {
   comment: CommentType;
   postId: number;
+  isMyComment: boolean;
 }
 
-const Comment: React.FC<CommentProps> = ({ comment, postId }) => {
+const Comment: React.FC<CommentProps> = ({ comment, postId, isMyComment }) => {
   const [isLiked, setIsLiked] = useState(comment.isLiked);
   const [likeCount, setLikeCount] = useState(comment.likeCNT);
   const [showFullContent, setShowFullContent] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedContent, setEditedContent] = useState(comment.content);
+
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  const deleteCommentMutation = useMutation({
+    mutationFn: () => deleteComment(postId, comment.id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['comments', postId] });
+    },
+  });
+
+  const updateCommentMutation = useMutation({
+    mutationFn: () =>
+      updateComment(postId, comment.id, editedContent, comment.userId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['comments', postId] });
+      setIsEditing(false);
+    },
+  });
+  const moveProfile = () => {
+    navigate(`/user/${comment.userId}`);
+  };
+
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
+  const handleSave = () => {
+    updateCommentMutation.mutate();
+    setIsEditing(false);
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+    setEditedContent(comment.content);
+  };
+
+  const handleDelete = () => {
+    try {
+      console.log('댓글 삭제');
+      deleteCommentMutation.mutate();
+    } catch (error) {
+      console.error('댓글 삭제 실패:', error);
+    }
+  };
 
   const toggleLike = async () => {
     const newIsLiked = !isLiked;
@@ -54,19 +109,52 @@ const Comment: React.FC<CommentProps> = ({ comment, postId }) => {
 
   return (
     <CommentContainer>
-      <UserImage src={comment.userImage} alt={comment.username} />
+      <UserImage
+        onClick={moveProfile}
+        src={
+          comment.userImage
+            ? comment.userImage
+            : '/public/weatherImage/placeholder.jpg'
+        }
+        alt={comment.username}
+      />
       <CommentContent>
         <CommentHeader>
-          <Username>{comment.username}</Username>
-        </CommentHeader>
-        <Content>
-          {displayedContent}
-          {isContentLong && (
-            <ToggleButton onClick={toggleContent}>
-              {showFullContent ? '접기' : '더보기'}
-            </ToggleButton>
+          <Username onClick={moveProfile}>{comment.username}</Username>
+          {isMyComment && (
+            <div className="ml-4 flex gap-3">
+              {isEditing ? (
+                <>
+                  <div onClick={handleSave}>저장</div>
+                  <div onClick={handleCancel}>취소</div>
+                </>
+              ) : (
+                <>
+                  <div onClick={handleEdit}>수정</div>
+                  <div onClick={handleDelete}>삭제</div>
+                </>
+              )}
+            </div>
           )}
-        </Content>
+        </CommentHeader>
+        {isEditing ? (
+          <Content>
+            <input
+              type="text"
+              value={editedContent}
+              onChange={(e) => setEditedContent(e.target.value)}
+            />
+          </Content>
+        ) : (
+          <Content>
+            {displayedContent}
+            {isContentLong && (
+              <ToggleButton onClick={toggleContent}>
+                {showFullContent ? '접기' : '더보기'}
+              </ToggleButton>
+            )}
+          </Content>
+        )}
       </CommentContent>
       <LikeButton onClick={toggleLike}>
         <LikeIcon>

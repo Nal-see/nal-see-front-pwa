@@ -1,16 +1,55 @@
-import { LeftOutline } from 'antd-mobile-icons';
+import { Button } from '@/components/ui/button';
+import { IPostCreateHeader } from '@/types/postCreate';
+import { CloseOutline, LeftOutline } from 'antd-mobile-icons';
+import { MouseEvent, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const PostCreateHeader = () => {
+const PostCreateHeader = ({ step, setStep }: IPostCreateHeader) => {
   const navigate = useNavigate();
+
+  const setPrevious = useCallback(() => {
+    setStep(step - 1);
+  }, [step]);
+
+  const setNext = useCallback(
+    (e: MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      setStep(step + 1);
+    },
+    [step],
+  );
 
   return (
     <div
-      className={`sticky top-auto flex w-full flex-row items-center justify-between gap-2 p-6`}
+      className={`border-b-primary-foreground/30 sticky top-auto flex w-full flex-row items-center justify-between gap-2 border p-6`}
     >
-      <LeftOutline fontSize={24} onClick={() => navigate(-1)} />
-      <p className="text-xl font-bold">새 게시물</p>
-      <button>Next</button>
+      {step === 0 ? (
+        <CloseOutline fontSize={20} onClick={() => navigate(-1)} />
+      ) : (
+        <LeftOutline fontSize={20} onClick={setPrevious} />
+      )}
+
+      <p className="pl-2 text-xl font-bold">새 게시물</p>
+      {step < 2 ? (
+        <Button
+          type="button"
+          onClick={setNext}
+          variant="textOnly"
+          size="textOnly"
+          className="text-md text-base font-bold"
+        >
+          Next
+        </Button>
+      ) : (
+        <Button
+          type="submit"
+          variant="textOnly"
+          size="textOnly"
+          className="text-base font-bold text-accent"
+        >
+          등록
+        </Button>
+      )}
     </div>
   );
 };

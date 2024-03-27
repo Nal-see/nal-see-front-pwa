@@ -1,51 +1,68 @@
 import React, { useRef, useState } from 'react';
 import { BottomSheet } from 'react-spring-bottom-sheet';
 import 'react-spring-bottom-sheet/dist/style.css';
-import { Comment } from '../../data/commentData';
-import { useQuery } from '@tanstack/react-query';
+import { Comment } from '../../../../mocks/data/commentData';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import CommentBox from './comment';
 import { Input, StyledForm, UserImage } from './commentStyle';
-import { FaRegComment } from 'react-icons/fa';
-import { getComments } from '../../services/feedApi';
+import { TfiComment } from 'react-icons/tfi';
+import useAuthStore from '@/store/useAuthStore';
+import { getComments, postComment } from '../../services/commentApi';
+import { SyncLoader } from 'react-spinners';
 
 interface CommentSheetProps {
   postId: number;
   username: string;
   userImage: string;
+  isDetail?: boolean;
 }
 
 const CommentSheet: React.FC<CommentSheetProps> = ({
   postId,
   username,
   userImage,
+  isDetail = false,
 }) => {
+  const { user } = useAuthStore();
+  const userId = user?.userId;
   const [open, setOpen] = useState(false);
   const [newComment, setNewComment] = useState('');
   const sheetRef = useRef<HTMLDivElement>(null);
+  const queryClient = useQueryClient();
 
   const { data: comments, isLoading } = useQuery<Comment[]>({
     queryKey: ['comments', postId],
     queryFn: async () => {
       const response = await getComments(postId);
-      console.log('response: ', response);
       return response as unknown as Comment[]; // 타입 단언 사용
     },
     enabled: open,
   });
 
-  const moveProfile = () => {
-    console.log('Profile image clicked');
-  };
+  const createCommentMutation = useMutation({
+    mutationFn: ({ postId, content }: { postId: number; content: string }) =>
+      postComment(postId, content, Number(userId)),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ['comments', variables.postId],
+        exact: true,
+      });
+    },
+  });
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log('newComment: ', newComment);
-    // postCommentMutation.mutate({ content: newComment });
+    createCommentMutation.mutate({ postId, content: newComment });
     setNewComment('');
   };
 
   return (
     <>
-      <FaRegComment onClick={() => setOpen(true)}>Open Comments</FaRegComment>
+      <TfiComment
+        className={`${isDetail ? 'mt-1.5 size-6' : 'mt-1 size-4'}`}
+        onClick={() => setOpen(true)}
+      />
       <BottomSheet
         open={open}
         onDismiss={() => setOpen(false)}
@@ -57,15 +74,20 @@ const CommentSheet: React.FC<CommentSheetProps> = ({
           className="z-40 h-[calc(100vh-183px)] overflow-y-auto p-4"
         >
           {isLoading ? (
-            <div>Loading...</div>
+            <SyncLoader className="bg-accent" />
           ) : (
             comments?.map((comment: Comment) => (
-              <CommentBox key={comment.id} comment={comment} postId={postId} />
+              <CommentBox
+                key={comment.id}
+                comment={comment}
+                postId={postId}
+                isMyComment={comment.userId === Number(userId)}
+              />
             ))
           )}
         </div>
         <StyledForm onSubmit={handleSubmit}>
-          <UserImage onClick={moveProfile} src={userImage} alt={username} />
+          <UserImage src={userImage} alt={username} />
           <Input
             type="text"
             value={newComment}

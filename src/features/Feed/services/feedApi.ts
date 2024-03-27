@@ -1,52 +1,36 @@
-import { Feed } from '@/types/feed';
-import axios from 'axios';
+import { api } from '@/lib/api';
+import { Feed, FeedDetail } from '@/types/feed';
 
-export async function getFeedList(lastPostId?: number): Promise<Feed[]> {
-  const response = await axios.get(
-    `/api/posts?lastPostId=${lastPostId}&size=10`,
+export async function getFeedList(
+  lastPostId: number,
+  nowLongitude: number,
+  nowLatitude: number,
+): Promise<Feed[]> {
+  const response = await api.get(
+    `/api/posts?lastPostId=${lastPostId}&nowLatitude=${nowLatitude}&nowLongitude=${nowLongitude}`,
   );
-  console.log('response: ', response);
+  console.log('response: 피드 리스트', response);
   return response.data.results;
 }
 
-export async function getComments(postId: number): Promise<Comment[]> {
-  const response = await axios.get(`/api/posts/${postId}/comments`);
+export async function getFeedDetail(postId: number): Promise<FeedDetail> {
+  const response = await api.get(`/api/posts/${postId}`);
   console.log('response.data: ', response.data);
   return response.data.results;
-}
-
-export async function postComment(comment: { content: string }): Promise<void> {
-  await axios.post('/api/comments', comment);
 }
 
 // feedApi.ts
 export async function addPostLike(postId: number): Promise<void> {
-  const response = await axios.post(`/api/posts/${postId}/likes`);
+  const response = await api.post(`/api/posts/${postId}/likes`);
   console.log('response.data: ', response.data);
 }
 
 export async function cancelPostLike(postId: number): Promise<void> {
-  const response = await axios.post(`/api/posts/${postId}/likes/cancel`);
+  const response = await api.post(`/api/posts/${postId}/likes/cancel`);
   console.log('response.data: ', response.data);
 }
 
-// feedApi.ts
-export async function addCommentLike(
-  postId: number,
-  commentId: number,
-): Promise<void> {
-  const response = await axios.post(
-    `/api/posts/${postId}/comment/${commentId}/likes`,
-  );
-  console.log('response.data: ', response.data);
-}
-
-export async function cancelCommentLike(
-  postId: number,
-  commentId: number,
-): Promise<void> {
-  const response = await axios.post(
-    `/api/posts/${postId}/comment/${commentId}/likes/cancel`,
-  );
+export async function deletePost(postId: number): Promise<void> {
+  const response = await api.delete(`/api/posts/${postId}`);
   console.log('response.data: ', response.data);
 }

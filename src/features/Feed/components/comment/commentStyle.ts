@@ -9,7 +9,7 @@ export const UserImage = styled.img`
 `;
 
 export const CommentContent = styled.div`
-  flex-grow flex-1;
+  w-full ml-10;
 `;
 
 export const CommentHeader = styled.div`
