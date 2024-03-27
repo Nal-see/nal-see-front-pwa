@@ -8,6 +8,7 @@ import { formatLikeCnt } from '../../utils/dataFormatUtil';
 import CommentSheet from '../comment/CommentSheet';
 import { addPostLike, cancelPostLike } from '../../services/feedApi';
 import { useNavigate } from 'react-router-dom';
+import CircleProfileImg from '@/components/CircleProfileImg';
 
 interface FeedCardProps {
   feed: PostResponseDto;
@@ -57,7 +58,7 @@ const FeedListCard: React.FC<FeedCardProps> = ({ feed }) => {
       const isActive = i === currentSlide;
       return (
         <div
-          className={`mx-1 size-3 cursor-pointer opacity-50 transition-opacity duration-300 hover:opacity-100 ${
+          className={`size-3 h-1 cursor-pointer px-3 opacity-50 transition-opacity duration-300 hover:opacity-100 ${
             isActive ? 'bg-primary' : 'bg-white'
           }`}
         ></div>
@@ -76,9 +77,9 @@ const FeedListCard: React.FC<FeedCardProps> = ({ feed }) => {
       <div onClick={moveToDetailPage} className="cursor-pointer">
         <Slider {...sliderSettings}>
           {feed.pictureList.map((picture, index) => (
-            <div key={index} className="">
+            <div key={index} className="relative h-60 bg-primary-foreground">
               <img
-                className="size-full"
+                className="absolute left-0 top-0 size-full object-cover"
                 src={picture}
                 alt={`${feed.address} ${index + 1}`}
               />
@@ -87,11 +88,19 @@ const FeedListCard: React.FC<FeedCardProps> = ({ feed }) => {
         </Slider>
         <div>
           <div className="mb-1 flex items-center">
-            <img
+            <CircleProfileImg
+              profileImgUrl={
+                feed.userImage
+                  ? feed.userImage
+                  : '/public/weatherImage/placeholder.jpg'
+              }
+              size="size-5 mr-2"
+            />
+            {/* <img
               className="mr-2 size-5 cursor-pointer rounded-full"
               src={feed.userImage}
               alt={feed.username}
-            />
+            /> */}
             <div className="flex cursor-pointer">
               <span className="mr-2 font-medium">{feed.username}</span>
               {/* <span className="mr-2 text-gray-600">{feed.address}</span> */}

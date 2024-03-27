@@ -42,7 +42,7 @@ const ProfileFeedList = ({ userId }: { userId: string | number }) => {
     <div className="mt-4 border-t-2">
       <div className="flex flex-wrap overflow-y-scroll scrollbar-hide">
         {feedList.map((feed) => (
-          <div key={feed.postId} className="w-1/3">
+          <div key={feed.postId} className="w-1/3 ">
             <FeedItem item={feed} />
           </div>
         ))}

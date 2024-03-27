@@ -3,7 +3,13 @@ import {
   weatherSelector,
 } from '@/features/Feed/utils/dataFormatUtil';
 
-export const WeatherBar = ({ weather, temperature, address }) => {
+export const WeatherBar = ({
+  weather,
+  temperature,
+}: {
+  weather: string;
+  temperature: string | number;
+}) => {
   return (
     <div className="flex items-center justify-between px-4 py-3">
       <div className="flex items-center gap-3">

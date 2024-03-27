@@ -21,6 +21,7 @@ import {
   updateComment,
 } from '../../services/commentApi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import CircleProfileImg from '@/components/CircleProfileImg';
 
 interface CommentProps {
   comment: CommentType;
@@ -111,7 +112,11 @@ const Comment: React.FC<CommentProps> = ({ comment, postId, isMyComment }) => {
     <CommentContainer>
       <UserImage
         onClick={moveProfile}
-        src={comment.userImage}
+        src={
+          comment.userImage
+            ? comment.userImage
+            : '/public/weatherImage/placeholder.jpg'
+        }
         alt={comment.username}
       />
       <CommentContent>
