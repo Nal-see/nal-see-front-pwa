@@ -2,7 +2,13 @@ import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { followUser, unfollowUser } from '../services/profileApi';
 
-const FollowMesgComp = ({ followed, userId }: { followed: boolean }) => {
+const FollowMesgComp = ({
+  followed,
+  userId,
+}: {
+  followed: boolean;
+  userId: string;
+}) => {
   const [followedState, setFollowedState] = useState(followed);
 
   const handleFollow = () => {

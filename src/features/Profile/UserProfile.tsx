@@ -32,7 +32,11 @@ const UserProfilePage = () => {
     <div className="h-dvh overflow-y-scroll">
       <BackBtnHeader title={userData.username} />
       <ProfileHeader userProfileData={userData} />
-      <FollowMesgComp followed={userData.followed} key={userId} />
+      <FollowMesgComp
+        followed={userData.followed}
+        key={userId}
+        userId={userId}
+      />
       <ProfileFeedList userId={String(userId)} />
     </div>
   );
