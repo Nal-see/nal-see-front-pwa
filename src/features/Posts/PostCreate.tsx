@@ -197,7 +197,7 @@ const PostCreatePage = () => {
                   name="constitution"
                   render={({ field: { onChange, value } }) => (
                     <Selector
-                      value={[value]}
+                      value={value ? [value] : null}
                       onChange={(selectedVal) => onChange(selectedVal[0])} // antd-mobile Selector 컴포넌트가 기본적으로 value를 배열로 받기 때문에 이와 같이 작성함
                       showCheckMark={false}
                       options={constitutionOptions}

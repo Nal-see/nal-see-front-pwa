@@ -36,7 +36,7 @@ const PostCreateHeader = ({ step, setStep }: IPostCreateHeader) => {
           onClick={setNext}
           variant="textOnly"
           size="textOnly"
-          className="text-md font-bold"
+          className="text-md text-base font-bold"
         >
           Next
         </Button>

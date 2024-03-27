@@ -27,6 +27,9 @@ export const useCurrentLocation = () => {
               setErrorMsg('UNKNOWN_ERROR');
           }
         },
+        {
+          maximumAge: 30000,
+        },
       );
     }
   }, []);

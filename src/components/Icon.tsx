@@ -237,3 +237,199 @@ export const KakaoIcon: React.FC<IconProps> = () => {
     </svg>
   );
 };
+
+export const NotificationIcon: React.FC<IconProps> = ({
+  className,
+  ...rest
+}) => {
+  return (
+    <svg
+      width="56"
+      height="56"
+      viewBox="0 0 56 56"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...rest}
+      className={cn(className)}
+    >
+      <g filter="url(#filter0_d_201_3580)">
+        <rect
+          x="12"
+          y="12"
+          width="32"
+          height="32"
+          rx="16"
+          fill="white"
+          shapeRendering="crispEdges"
+        />
+        <g clipPath="url(#clip0_201_3580)">
+          <path
+            d="M28.4167 20.5191C27.0278 20.395 23.8333 20.817 22.1667 23.4976C20.0833 26.8483 22.1667 33.9221 19.25 34.6667H28.4167"
+            stroke="#909396"
+            strokeWidth="1.8"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M27.5833 20.5191C28.9722 20.395 32.1667 20.817 33.8333 23.4976C35.9167 26.8483 33.8333 33.9221 36.75 34.6667H27.5833"
+            stroke="#909396"
+            strokeWidth="1.8"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M25.5 36.3333C25.9208 37.3144 26.8818 38 28 38C29.1182 38 30.0792 37.3144 30.5 36.3333H25.5Z"
+            fill="#909396"
+          />
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M29.4436 20.5C29.5854 20.2549 29.6666 19.9702 29.6666 19.6667C29.6666 18.7462 28.9204 18 27.9999 18C27.0794 18 26.3333 18.7462 26.3333 19.6667C26.3333 19.9702 26.4144 20.2549 26.5562 20.5C26.6691 20.6952 26.8205 20.8653 26.9999 21.0001V21H29.0001C29.1795 20.8652 29.3307 20.6951 29.4436 20.5Z"
+            fill="#909396"
+          />
+        </g>
+      </g>
+      <defs>
+        <filter
+          id="filter0_d_201_3580"
+          x="0"
+          y="0"
+          width="56"
+          height="56"
+          filterUnits="userSpaceOnUse"
+          colorInterpolationFilters="sRGB"
+        >
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset />
+          <feGaussianBlur stdDeviation="6" />
+          <feComposite in2="hardAlpha" operator="out" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_201_3580"
+          />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect1_dropShadow_201_3580"
+            result="shape"
+          />
+        </filter>
+        <clipPath id="clip0_201_3580">
+          <rect
+            width="20"
+            height="20"
+            fill="white"
+            transform="translate(18 18)"
+          />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+};
+
+export const NotificationWithBadgeIcon: React.FC<IconProps> = ({
+  className,
+  ...rest
+}) => {
+  return (
+    <svg
+      width="56"
+      height="56"
+      viewBox="0 0 56 56"
+      fill="none"
+      {...rest}
+      className={cn(className)}
+    >
+      <g filter="url(#filter0_d_201_3600)">
+        <rect
+          x="12"
+          y="12"
+          width="32"
+          height="32"
+          rx="16"
+          fill="white"
+          shapeRendering="crispEdges"
+        />
+        <g clipPath="url(#clip0_201_3600)">
+          <path
+            d="M28.4167 20.5191C27.0278 20.395 23.8333 20.817 22.1667 23.4976C20.0833 26.8483 22.1667 33.9221 19.25 34.6667H28.4167"
+            stroke="#898A8D"
+            strokeWidth="1.8"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M27.5833 20.5191C28.9722 20.395 32.1667 20.817 33.8333 23.4976C35.9167 26.8483 33.8333 33.9221 36.75 34.6667H27.5833"
+            stroke="#898A8D"
+            strokeWidth="1.8"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M25.5 36.3333C25.9208 37.3144 26.8818 38 28 38C29.1182 38 30.0792 37.3144 30.5 36.3333H25.5Z"
+            fill="#898A8D"
+          />
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M29.4436 20.5C29.5854 20.2549 29.6666 19.9702 29.6666 19.6667C29.6666 18.7462 28.9204 18 27.9999 18C27.0794 18 26.3333 18.7462 26.3333 19.6667C26.3333 19.9702 26.4144 20.2549 26.5562 20.5C26.6691 20.6952 26.8205 20.8653 26.9999 21.0001V21H29.0001C29.1795 20.8652 29.3307 20.6951 29.4436 20.5Z"
+            fill="#898A8D"
+          />
+        </g>
+        <circle cx="34" cy="22" r="4" fill="#3BA5FF" />
+      </g>
+      <defs>
+        <filter
+          id="filter0_d_201_3600"
+          x="0"
+          y="0"
+          width="56"
+          height="56"
+          filterUnits="userSpaceOnUse"
+          colorInterpolationFilters="sRGB"
+        >
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset />
+          <feGaussianBlur stdDeviation="6" />
+          <feComposite in2="hardAlpha" operator="out" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_201_3600"
+          />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect1_dropShadow_201_3600"
+            result="shape"
+          />
+        </filter>
+        <clipPath id="clip0_201_3600">
+          <rect
+            width="20"
+            height="20"
+            fill="white"
+            transform="translate(18 18)"
+          />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+};
