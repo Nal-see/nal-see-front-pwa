@@ -35,14 +35,13 @@ const PostCreatePage = () => {
     register,
     handleSubmit,
     setValue,
-    getValues,
     reset,
     control,
     formState: { errors },
   } = useForm<IPostCreateForm>({
     resolver: zodResolver(PostCreateFormSchema),
   });
-  console.log(getValues());
+
   const onSubmit: SubmitHandler<IPostCreateForm> = (data) => {
     if (user) {
       createPostApi(user.userId, data)
