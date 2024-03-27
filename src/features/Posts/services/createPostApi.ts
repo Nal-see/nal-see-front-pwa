@@ -4,21 +4,29 @@ import { AxiosError } from 'axios';
 
 export const createPostApi = async (userId: string, data: IPostCreateForm) => {
   const formData = new FormData();
-  formData.append('requestDto.userId', userId);
+  const requestDto = JSON.stringify({
+    userId,
+    content: data.content,
+    address: data.address,
+    latitude: data.latitude,
+    longitude: data.longitude,
+    userInfo: {
+      height: data.height,
+      weight: data.weight,
+      constitution: data.constitution,
+      style: data.style,
+      gender: data.gender,
+    },
+  });
 
-  const userInfoKeys = ['height', 'weight', 'constitution', 'style', 'gender'];
+  formData.append(
+    'requestDto',
+    new Blob([requestDto], { type: 'application/json' }),
+  );
 
-  for (const [key, value] of Object.entries(data)) {
-    if (key === 'photos') {
-      value.forEach((file: File) => {
-        formData.append('requestDto.photos', file);
-      });
-    } else if (userInfoKeys.includes(key))
-      formData.append(`requestDto.userInfo.${key}`, value.toString());
-    else {
-      formData.append(`requestDto.${key}`, value.toString());
-    }
-  }
+  data.photos!.forEach((file: File) => {
+    formData.append('photos', file);
+  });
 
   try {
     const response = await api.post('/api/posts', formData);
@@ -27,7 +35,7 @@ export const createPostApi = async (userId: string, data: IPostCreateForm) => {
     }
   } catch (error) {
     const err = error as AxiosError;
-
+    console.error('formdata post error:', err);
     return err.response?.data;
   }
 };
