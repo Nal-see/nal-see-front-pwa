@@ -7,10 +7,6 @@ export const genderOptions = [
     label: '여',
     value: 'F',
   },
-  {
-    label: '선택안함',
-    value: 'None',
-  },
 ];
 
 export const styleOptions = [

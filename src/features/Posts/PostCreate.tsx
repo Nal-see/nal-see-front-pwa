@@ -35,13 +35,14 @@ const PostCreatePage = () => {
     register,
     handleSubmit,
     setValue,
+    getValues,
     reset,
     control,
     formState: { errors },
   } = useForm<IPostCreateForm>({
     resolver: zodResolver(PostCreateFormSchema),
   });
-
+  console.log(getValues());
   const onSubmit: SubmitHandler<IPostCreateForm> = (data) => {
     if (user) {
       createPostApi(user.userId, data)
@@ -108,8 +109,8 @@ const PostCreatePage = () => {
     getUserDetails()
       .then((res) => {
         const userDetails = res.results;
-        setValue('height', Number(userDetails.height));
-        setValue('weight', Number(userDetails.weight));
+        setValue('height', userDetails.height);
+        setValue('weight', userDetails.weight);
         setValue('constitution', userDetails.constitution);
         setValue('style', userDetails.style);
         setValue('gender', userDetails.gender);
@@ -179,14 +180,12 @@ const PostCreatePage = () => {
               />
               <InputWrapper title="키">
                 <input
-                  type="number"
                   className="text-lg focus:outline-none"
                   {...register('height')}
                 />
               </InputWrapper>
               <InputWrapper title="몸무게">
                 <input
-                  type="number"
                   className="text-lg focus:outline-none"
                   {...register('weight')}
                 />
@@ -197,8 +196,16 @@ const PostCreatePage = () => {
                   name="constitution"
                   render={({ field: { onChange, value } }) => (
                     <Selector
-                      value={value ? [value] : null}
-                      onChange={(selectedVal) => onChange(selectedVal[0])} // antd-mobile Selector 컴포넌트가 기본적으로 value를 배열로 받기 때문에 이와 같이 작성함
+                      value={value ? [value] : []}
+                      onChange={
+                        (selectedVal) => {
+                          if (selectedVal.length) {
+                            onChange(selectedVal[0]);
+                          } else {
+                            onChange(selectedVal);
+                          }
+                        } // antd-mobile Selector 컴포넌트가 기본적으로 value를 배열로 받기 때문에 이와 같이 작성함
+                      }
                       showCheckMark={false}
                       options={constitutionOptions}
                     />
@@ -226,8 +233,14 @@ const PostCreatePage = () => {
                   name="gender"
                   render={({ field: { onChange, value } }) => (
                     <Selector
-                      value={[value]}
-                      onChange={(selectedVal) => onChange(selectedVal[0])}
+                      value={value ? [value] : []}
+                      onChange={(selectedVal) => {
+                        if (selectedVal.length) {
+                          onChange(selectedVal[0]);
+                        } else {
+                          onChange(selectedVal);
+                        }
+                      }}
                       showCheckMark={false}
                       options={genderOptions}
                     />
