@@ -11,6 +11,7 @@ export const useCurrentLocation = () => {
       ? Number(localStorage.getItem('lastLat'))
       : 37.57861,
   );
+  const [isCurrentLocation, setIsCurrentLocation] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string>();
 
   if (navigator.geolocation) {
@@ -18,6 +19,7 @@ export const useCurrentLocation = () => {
       function (pos) {
         setLongitude(pos.coords.longitude);
         setLatitude(pos.coords.latitude);
+        setIsCurrentLocation(true);
       },
       function (error) {
         switch (error.code) {
@@ -46,5 +48,5 @@ export const useCurrentLocation = () => {
     localStorage.setItem('lastLat', latitude.toString());
   }, [latitude, longitude]);
 
-  return { longitude, latitude, errorMsg };
+  return { longitude, latitude, isCurrentLocation, errorMsg };
 };
