@@ -1,64 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { PostResponseDto } from '@/types/feed';
 import { PiHeartStraightFill, PiHeartStraightLight } from 'react-icons/pi';
 import { formatLikeCnt } from '../../utils/dataFormatUtil';
 import CommentSheet from '../comment/CommentSheet';
-import { addPostLike, cancelPostLike } from '../../services/feedApi';
 import { useNavigate } from 'react-router-dom';
 import CircleProfileImg from '@/components/CircleProfileImg';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  type CarouselApi,
 } from '@/components/ui/carousel';
+import useFeedInteraction from '../../hooks/useFeedInteraction';
+import useCarousel from '../../hooks/useCarosel';
 
 interface FeedCardProps {
   feed: PostResponseDto;
 }
 
 const FeedListCard: React.FC<FeedCardProps> = ({ feed }) => {
-  const [isLiked, setIsLiked] = useState(false);
-  const [likeCnt, setLikeCnt] = useState(feed.likeCnt);
-  const [currentSlide, setCurrentSlide] = useState(1);
-  const [slideCount, setSlideCount] = useState(0);
-  const [api, setApi] = useState<CarouselApi>();
   const maxContentLength = 15;
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!api) return;
+  const { isLiked, likeCnt, handleToggleLike } = useFeedInteraction(
+    feed.likeCnt,
+    Number(feed.id),
+  );
 
-    setSlideCount(api.scrollSnapList().length);
-    setCurrentSlide(api.selectedScrollSnap() + 1);
-
-    api.on('select', () => {
-      setCurrentSlide(api.selectedScrollSnap() + 1);
-    });
-  }, [api]);
+  const { currentSlide, slideCount, setApi } = useCarousel();
 
   const moveToDetailPage = () => {
     navigate(`/feeds/${feed.id}`);
-  };
-
-  const handleToggleLike = async (event: React.MouseEvent<HTMLSpanElement>) => {
-    event.stopPropagation();
-    const newIsLiked = !isLiked;
-    setIsLiked(newIsLiked);
-    try {
-      if (feed) {
-        if (newIsLiked) {
-          await addPostLike(Number(feed.id));
-          setLikeCnt(likeCnt + 1);
-        } else {
-          await cancelPostLike(Number(feed.id));
-          setLikeCnt(likeCnt - 1);
-        }
-      }
-    } catch (error) {
-      console.error('게시물 좋아요 토글 실패:', error);
-      setIsLiked(!newIsLiked);
-    }
   };
 
   const displayedContent =

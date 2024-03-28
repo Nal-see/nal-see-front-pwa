@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FeedDetail } from '@/types/feed';
 import { PiHeartStraightFill, PiHeartStraightLight } from 'react-icons/pi';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { formatDate, formatUserConstitution } from '../../utils/dataFormatUtil';
 import CommentSheet from '../comment/CommentSheet';
-import {
-  addPostLike,
-  cancelPostLike,
-  deletePost,
-} from '../../services/feedApi';
+import { deletePost } from '../../services/feedApi';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '@/store/useAuthStore';
 import { GoPencil } from 'react-icons/go';
@@ -21,35 +17,25 @@ import {
   CarouselContent,
   CarouselItem,
   Carousel,
-  CarouselApi,
 } from '@/components/ui/carousel';
+import useFeedInteraction from '../../hooks/useFeedInteraction';
+import useCarousel from '../../hooks/useCarosel';
 interface FeedCardProps {
   feed: FeedDetail;
+  onUpdateFeed: (postId: number, submitData: any) => Promise<void>;
 }
 
-const FeedDetailCard: React.FC<FeedCardProps> = ({ feed }) => {
+const FeedDetailCard: React.FC<FeedCardProps> = ({ feed, onUpdateFeed }) => {
   const { user } = useAuthStore();
   const isMyFeed = feed.postResponseDto.userId === Number(user?.userId);
-  const [isLiked, setIsLiked] = useState(false);
-  const [likeCnt, setLikeCnt] = useState(feed.postResponseDto.likeCnt);
-  const [currentSlide, setCurrentSlide] = useState(1);
-  const [slideCount, setSlideCount] = useState(0);
-  const [api, setApi] = useState<CarouselApi>();
   const [showFullContent, setShowFullContent] = useState(false);
   const maxContentLength = 100;
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!api) return;
-
-    setSlideCount(api.scrollSnapList().length);
-    setCurrentSlide(api.selectedScrollSnap() + 1);
-
-    api.on('select', () => {
-      setCurrentSlide(api.selectedScrollSnap() + 1);
-    });
-  }, [api]);
-
+  const { isLiked, likeCnt, handleToggleLike } = useFeedInteraction(
+    feed.postResponseDto.likeCnt,
+    Number(feed.postResponseDto.id),
+  );
+  const { currentSlide, slideCount, setApi } = useCarousel();
   const [isEditSheetOpen, setIsEditSheetOpen] = useState(false);
 
   const handleCloseEditSheet = () => {
@@ -82,24 +68,8 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed }) => {
     setIsEditSheetOpen(true);
   };
 
-  const handleToggleLike = async (event: React.MouseEvent<HTMLSpanElement>) => {
-    event.stopPropagation();
-    const newIsLiked = !isLiked;
-    setIsLiked(newIsLiked);
-    try {
-      if (feed) {
-        if (newIsLiked) {
-          await addPostLike(Number(feed.postResponseDto.id));
-          setLikeCnt(likeCnt + 1);
-        } else {
-          await cancelPostLike(Number(feed.postResponseDto.id));
-          setLikeCnt(likeCnt - 1);
-        }
-      }
-    } catch (error) {
-      console.error('게시물 좋아요 토글 실패:', error);
-      setIsLiked(!newIsLiked);
-    }
+  const handleUpdate = async (submitData: any) => {
+    await onUpdateFeed(Number(feed.postResponseDto.id), submitData);
   };
 
   const displayedContent =
@@ -236,6 +206,7 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed }) => {
           content={feed.postResponseDto.content}
           postId={Number(feed.postResponseDto.id)}
           onClose={handleCloseEditSheet}
+          onUpdateFeed={handleUpdate}
         />
       </BottomSheet>
     </div>
