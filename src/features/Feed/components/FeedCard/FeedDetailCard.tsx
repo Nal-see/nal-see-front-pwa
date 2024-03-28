@@ -38,10 +38,6 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed, onUpdateSuccess }) => {
   const { currentSlide, slideCount, setApi } = useCarousel();
   const [isEditSheetOpen, setIsEditSheetOpen] = useState(false);
 
-  const handleCloseEditSheet = () => {
-    setIsEditSheetOpen(false);
-  };
-
   const moveProfile = () => {
     if (feed) {
       navigate(`/user/${feed.postResponseDto.userId}`);
@@ -50,6 +46,14 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed, onUpdateSuccess }) => {
 
   const toggleContent = () => {
     setShowFullContent(!showFullContent);
+  };
+
+  const handleEdit = () => {
+    setIsEditSheetOpen(true);
+  };
+
+  const handleCloseEditSheet = () => {
+    setIsEditSheetOpen(false);
   };
 
   const handleDelete = async () => {
@@ -62,10 +66,6 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed, onUpdateSuccess }) => {
     } catch (error) {
       console.error('게시물 삭제 실패:', error);
     }
-  };
-
-  const handleEdit = () => {
-    setIsEditSheetOpen(true);
   };
 
   const displayedContent =
@@ -192,19 +192,21 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed, onUpdateSuccess }) => {
         weather={feed.postResponseDto.weather}
         temperature={String(feed.postResponseDto.temperature)}
       />
-      <BottomSheet
-        open={isEditSheetOpen}
-        onDismiss={handleCloseEditSheet}
-        snapPoints={({ maxHeight }) => [maxHeight * 0.9]}
-      >
-        <PostEditSheet
-          userInfo={feed.userInfo}
-          content={feed.postResponseDto.content}
-          postId={Number(feed.postResponseDto.id)}
-          onClose={handleCloseEditSheet}
-          onUpdateSuccess={onUpdateSuccess}
-        />
-      </BottomSheet>
+      {isMyFeed ? (
+        <BottomSheet
+          open={isEditSheetOpen}
+          onDismiss={handleCloseEditSheet}
+          snapPoints={({ maxHeight }) => [maxHeight * 0.9]}
+        >
+          <PostEditSheet
+            userInfo={feed.userInfo}
+            content={feed.postResponseDto.content}
+            postId={Number(feed.postResponseDto.id)}
+            onClose={handleCloseEditSheet}
+            onUpdateSuccess={onUpdateSuccess}
+          />
+        </BottomSheet>
+      ) : null}
     </div>
   );
 };

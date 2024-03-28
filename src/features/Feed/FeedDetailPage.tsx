@@ -21,10 +21,6 @@ const FeedDetailPage = () => {
     return <FeedDetailSkeletonCard />;
   }
 
-  if (!feed) {
-    return <div>게시물이 존재하지 않습니다.</div>;
-  }
-
   const handleUpdateSuccess = () => {
     refetch(); // 업데이트 성공 시 데이터 다시 불러오기
   };
@@ -32,7 +28,11 @@ const FeedDetailPage = () => {
   return (
     <div>
       <BackBtnHeader title="상세페이지" />
-      <FeedDetailCard feed={feed} onUpdateSuccess={handleUpdateSuccess} />
+      {!feed ? (
+        <div>게시물이 존재하지 않습니다.</div>
+      ) : (
+        <FeedDetailCard feed={feed} onUpdateSuccess={handleUpdateSuccess} />
+      )}
     </div>
   );
 };

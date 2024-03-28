@@ -42,7 +42,10 @@ export const PostEditSheet: React.FC<EditFeedProps> = ({
     }));
   };
 
-  const handleSelectorChange = (name: keyof IPostEditForm, value: any) => {
+  const handleSelectorChange = (
+    name: keyof IPostEditForm,
+    value: string | number | null | string[],
+  ) => {
     setFeedEditData((prevData) => ({
       ...prevData,
       [name]: value,
