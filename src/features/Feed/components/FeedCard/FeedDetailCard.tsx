@@ -226,10 +226,10 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed }) => {
             : ''}
         </div>
       </div>
-      <WeatherAnimation
+      {/* <WeatherAnimation
         weather={feed.postResponseDto.weather}
         temperature={String(feed.postResponseDto.temperature)}
-      />
+      /> */}
       <WeatherBar
         weather={feed.postResponseDto.weather}
         temperature={String(feed.postResponseDto.temperature)}

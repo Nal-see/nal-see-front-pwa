@@ -15,7 +15,7 @@ export const WeatherBar = ({
       <div className="flex items-center gap-3">
         <img
           src={`${formatWeatherToImage(weather)}`}
-          className="size-12"
+          className="size-13"
           alt=""
         />
         <div className="text-base font-normal">날씨 </div>

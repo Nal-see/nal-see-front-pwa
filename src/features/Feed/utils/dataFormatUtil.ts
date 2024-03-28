@@ -1,3 +1,10 @@
+import ThunderStorm from 'assets/weatherImage/thunder.png';
+import Rain from 'assets/weatherImage/rain.png';
+import Snow from 'assets/weatherImage/snow.png';
+import Fog from 'assets/weatherImage/fog.png';
+import Clear from 'assets/weatherImage/clear.png';
+import Clouds from 'assets/weatherImage/cloud.png';
+
 export const formatDate = (dateString: string): string => {
   const uploadDate = new Date(dateString);
   const currentDate = new Date();
@@ -52,17 +59,17 @@ export const formatWeatherToIcon = (weather: string): string => {
 export const formatWeatherToImage = (weather: string): string => {
   switch (weather) {
     case 'Thunderstorm':
-      return '/public/weatherImage/thunder.png';
+      return ThunderStorm;
     case 'Rain':
-      return '/public/weatherImage/rain.png';
+      return Rain;
     case 'Snow':
-      return '/public/weatherImage/snow.png';
+      return Snow;
     case 'Fog':
-      return '/public/weatherImage/fog.png';
+      return Fog;
     case 'Clear':
-      return '/public/weatherImage/clear.png';
+      return Clear;
     case 'Clouds':
-      return '/public/weatherImage/cloud.png';
+      return Clouds;
     default:
       return '';
   }
