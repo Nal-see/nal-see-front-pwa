@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { getFeedList } from '../services/feedApi';
 import { Feed } from '@/types/feed';
@@ -7,10 +7,12 @@ import { useCurrentLocation } from '@/hooks/useCurrentLocation';
 import FeedSkeletonCard from './FeedCard/FeedSkeletionCard';
 import FeedListCard from './FeedCard/FeedCard';
 import { SyncLoader } from 'react-spinners';
+import { LocationStatusView } from './isCurrentLocation/IsCurrentLocation';
 const FeedList = () => {
-  const { longitude, latitude, errorMsg } = useCurrentLocation();
+  const { longitude, latitude, errorMsg, isCurrentLocation } =
+    useCurrentLocation();
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, refetch } =
     useInfiniteQuery<Feed[], string[]>({
       queryKey: ['feedList'],
       queryFn: async ({ pageParam = -1 }) => {
@@ -40,34 +42,32 @@ const FeedList = () => {
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
+  useEffect(() => {
+    if (!isCurrentLocation) {
+      refetch();
+    }
+  }, [isCurrentLocation, refetch]);
+
   if (errorMsg) {
     return <div>{errorMsg}</div>;
   }
 
-  if (!longitude || !latitude) {
+  if (!data) {
     return (
       <div className="h-[calc(100vh-183px)] w-full overflow-y-scroll scrollbar-hide">
         <div className="flex flex-wrap items-center justify-between px-4">
-          <FeedSkeletonCard />
-          <FeedSkeletonCard />
-          <FeedSkeletonCard />
-          <FeedSkeletonCard />
-          <FeedSkeletonCard />
-          <FeedSkeletonCard />
-          <FeedSkeletonCard />
-          <FeedSkeletonCard />
+          {Array.from({ length: 6 }).map((_, index) => (
+            <FeedSkeletonCard key={index} />
+          ))}
         </div>
       </div>
     );
   }
 
-  if (!data) {
-    return <SyncLoader color="#3ba5ff" />;
-  }
-
   return (
     <div className="h-[calc(100vh-183px)] w-full overflow-y-scroll scrollbar-hide">
       <div className="flex flex-wrap items-center justify-center">
+        <LocationStatusView isCurrentLocation={isCurrentLocation} />
         {data?.pages.map((page, pageIndex) => (
           <React.Fragment key={pageIndex}>
             {page.map((feed: Feed) => (
