@@ -45,3 +45,16 @@ export interface FeedDetail extends Feed {
     gender: string;
   };
 }
+
+export interface EditFeedProps {
+  userInfo: {
+    height: number;
+    weight: number;
+    bodyShape: string;
+    constitution: string;
+    style: string[];
+    gender: string;
+  };
+  content: string;
+  postId: number;
+}

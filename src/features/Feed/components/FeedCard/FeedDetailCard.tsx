@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FeedDetail } from '@/types/feed';
 import { PiHeartStraightFill, PiHeartStraightLight } from 'react-icons/pi';
-import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { formatDate } from '../../utils/dataFormatUtil';
@@ -16,6 +15,16 @@ import useAuthStore from '@/store/useAuthStore';
 import { GoPencil } from 'react-icons/go';
 import { FaTrashAlt } from 'react-icons/fa';
 import { WeatherBar } from '@/components/WeatherCard';
+import { BottomSheet } from 'react-spring-bottom-sheet';
+import { PostEditSheet } from '@/features/Profile/components/EditSheet';
+import {
+  CarouselContent,
+  CarouselItem,
+  Carousel,
+  CarouselApi,
+} from '@/components/ui/carousel';
+import WeatherAnimation from '../weather/WeatherIcon';
+import { Button } from '@/components/ui/button';
 interface FeedCardProps {
   feed: FeedDetail;
 }
@@ -28,9 +37,29 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed }) => {
   const isMyFeed = feed.postResponseDto.userId === Number(user?.userId);
   const [isLiked, setIsLiked] = useState(false);
   const [likeCnt, setLikeCnt] = useState(feed.postResponseDto.likeCnt);
+  const [currentSlide, setCurrentSlide] = useState(1);
+  const [slideCount, setSlideCount] = useState(0);
+  const [api, setApi] = useState<CarouselApi>();
   const [showFullContent, setShowFullContent] = useState(false);
   const maxContentLength = 100;
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!api) return;
+
+    setSlideCount(api.scrollSnapList().length);
+    setCurrentSlide(api.selectedScrollSnap() + 1);
+
+    api.on('select', () => {
+      setCurrentSlide(api.selectedScrollSnap() + 1);
+    });
+  }, [api]);
+
+  const [isEditSheetOpen, setIsEditSheetOpen] = useState(false);
+
+  const handleCloseEditSheet = () => {
+    setIsEditSheetOpen(false);
+  };
 
   const moveProfile = () => {
     if (feed) {
@@ -55,7 +84,7 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed }) => {
   };
 
   const handleEdit = () => {
-    navigate(`/feed/${feed.postResponseDto.id}/edit`);
+    setIsEditSheetOpen(true);
   };
 
   const handleToggleLike = async (event: React.MouseEvent<HTMLSpanElement>) => {
@@ -83,14 +112,6 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed }) => {
       ? feed.postResponseDto.content
       : feed?.postResponseDto.content?.slice(0, maxContentLength);
 
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
-
   return (
     <div className="mb-4 h-[calc(100vh-173px)] overflow-x-hidden overflow-y-scroll scrollbar-hide">
       <div className="flex items-center justify-between p-3 px-4">
@@ -102,9 +123,15 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed }) => {
             alt={feed.postResponseDto.username}
           />
           <div className="flex cursor-pointer flex-col" onClick={moveProfile}>
-            <span className="mr-2 font-bold">
-              {feed.postResponseDto.username}
-            </span>
+            <div className="flex">
+              <span className="mr-2 font-bold">
+                {feed.postResponseDto.username}
+              </span>
+              <Button className="h-10 rounded-md border-gray-600">
+                {feed.userInfo.height}cm
+              </Button>
+              <Button>{feed.userInfo.weight}cm</Button>
+            </div>
             <span className="mr-2 text-gray-600">
               {feed.postResponseDto.address}
             </span>
@@ -122,17 +149,33 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed }) => {
           </span>
         </div>
       </div>
-      <Slider {...sliderSettings}>
-        {feed.postResponseDto.pictureList.map((picture, index) => (
-          <div key={index}>
-            <img
-              className="h-auto w-full rounded-md"
-              src={picture}
-              alt={`${feed.postResponseDto.address} ${index + 1}`}
+      <div className="relative">
+        <Carousel className="w-full" setApi={setApi}>
+          <CarouselContent>
+            {feed.postResponseDto.pictureList.map((picture, index) => (
+              <CarouselItem key={index}>
+                <div className="relative h-96">
+                  <img
+                    className="absolute left-0 top-0 size-full object-cover"
+                    src={picture}
+                    alt={``}
+                  />
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
+        <div className="absolute inset-x-0 bottom-2 flex justify-center">
+          {Array.from({ length: slideCount }).map((_, index) => (
+            <div
+              key={index}
+              className={`mx-1 size-2 rounded-full ${
+                currentSlide === index + 1 ? 'bg-white' : 'bg-gray-300'
+              }`}
             />
-          </div>
-        ))}
-      </Slider>
+          ))}
+        </div>
+      </div>
       <div className="p-3">
         <div className="mb-2 flex">
           <span
@@ -170,14 +213,26 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed }) => {
           )}
         </p>
       </div>
-      {/* <WeatherAnimation
+      <WeatherAnimation
         weather={feed.postResponseDto.weather}
         temperature={String(feed.postResponseDto.temperature)}
-      /> */}
+      />
       <WeatherBar
         weather={feed.postResponseDto.weather}
         temperature={String(feed.postResponseDto.temperature)}
       />
+      <BottomSheet
+        open={isEditSheetOpen}
+        onDismiss={handleCloseEditSheet}
+        snapPoints={({ maxHeight }) => [maxHeight * 0.9]}
+      >
+        <PostEditSheet
+          userInfo={feed.userInfo}
+          content={feed.postResponseDto.content}
+          postId={feed.postResponseDto.id}
+          onClose={handleCloseEditSheet}
+        />
+      </BottomSheet>
     </div>
   );
 };

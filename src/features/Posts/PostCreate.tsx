@@ -99,7 +99,7 @@ const PostCreatePage = () => {
   useEffect(() => {
     if (selectedLocation) {
       setValue('address', selectedLocation.address);
-      setValue('longtitude', selectedLocation.lng);
+      setValue('longitude', selectedLocation.lng);
       setValue('latitude', selectedLocation.lat);
     }
   }, [selectedLocation, setValue]);

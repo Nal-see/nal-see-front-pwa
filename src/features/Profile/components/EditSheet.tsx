@@ -1,114 +1,121 @@
+import { updateFeed } from '@/features/Feed/services/feedApi';
 import InputWrapper from '@/features/Posts/components/InputWrapper';
-import { getUserDetails } from '@/features/Posts/services/getUserDetails';
 import {
   constitutionOptions,
   genderOptions,
   styleOptions,
 } from '@/features/Posts/utils/inputOptions';
 import useAuthStore from '@/store/useAuthStore';
-import { IPostCreateForm, PostCreateFormSchema } from '@/types/postCreate';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Selector } from 'antd-mobile';
-import { useEffect } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { EditFeedProps } from '@/types/feed';
+import { IPostEditForm } from '@/types/postCreate';
+import { Button, Selector } from 'antd-mobile';
+import { useState } from 'react';
 
-export const PostEditSheet = () => {
+export const PostEditSheet: React.FC<EditFeedProps> = ({
+  userInfo,
+  content,
+  postId,
+}) => {
   const { user } = useAuthStore();
-
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    reset,
-    control,
-    formState: { errors },
-  } = useForm<IPostCreateForm>({
-    resolver: zodResolver(PostCreateFormSchema),
+  const [formData, setFormData] = useState<IPostEditForm>({
+    content: content,
+    height: userInfo.height,
+    weight: userInfo.weight,
+    constitution: userInfo.constitution,
+    style: userInfo.style,
+    gender: userInfo.gender,
   });
 
-  const onSubmit = (data) => {
-    console.log('data: ', data);
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
-  useEffect(() => {
-    getUserDetails()
-      .then((res) => {
-        const userDetails = res.results;
-        setValue('height', Number(userDetails.height));
-        setValue('weight', Number(userDetails.weight));
-        setValue('constitution', userDetails.constitution);
-        setValue('style', userDetails.style);
-        setValue('gender', userDetails.gender);
-      })
-      .catch((err) => {
-        console.error('status code:', err);
-      });
-  }, []);
+  const handleSelectorChange = (name: keyof IPostEditForm, value: any) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const onSubmit = async () => {
+    console.log('data:', formData);
+    try {
+      await updateFeed(postId, formData);
+      // onClose(); // 제출 후 바텀 시트 닫기
+    } catch (error) {
+      console.error('Failed to update feed:', error);
+    }
+  };
 
   return (
     <div className="h-[calc(100dvh-156px)] p-4">
-      <textarea
-        className="w-full text-lg focus:outline-none"
-        placeholder="내용을 입력하세요..."
-        {...register('content')}
-      />
-      <InputWrapper title="키">
-        <input
-          type="number"
-          className="text-lg focus:outline-none"
-          {...register('height')}
+      <div>
+        <textarea
+          className="w-full text-lg focus:outline-none"
+          placeholder="내용을 입력하세요..."
+          name="content"
+          value={formData.content}
+          onChange={handleInputChange}
         />
-      </InputWrapper>
-      <InputWrapper title="몸무게">
-        <input
-          type="number"
-          className="text-lg focus:outline-none"
-          {...register('weight')}
-        />
-      </InputWrapper>
-      <InputWrapper title="체질">
-        <Controller
-          control={control}
-          name="constitution"
-          render={({ field: { onChange, value } }) => (
-            <Selector
-              value={[value]}
-              onChange={(selectedVal) => onChange(selectedVal[0])} // antd-mobile Selector 컴포넌트가 기본적으로 value를 배열로 받기 때문에 이와 같이 작성함
-              showCheckMark={false}
-              options={constitutionOptions}
-            />
-          )}
-        />
-      </InputWrapper>
-      <InputWrapper title="스타일">
-        <Controller
-          control={control}
-          name="style"
-          render={({ field: { onChange, value } }) => (
-            <Selector
-              value={value}
-              onChange={(selectedVal) => onChange(selectedVal)}
-              multiple
-              showCheckMark={false}
-              options={styleOptions}
-            />
-          )}
-        />
-      </InputWrapper>
-      <InputWrapper title="성별">
-        <Controller
-          control={control}
-          name="gender"
-          render={({ field: { onChange, value } }) => (
-            <Selector
-              value={[value]}
-              onChange={(selectedVal) => onChange(selectedVal[0])}
-              showCheckMark={false}
-              options={genderOptions}
-            />
-          )}
-        />
-      </InputWrapper>
+        <InputWrapper title="키">
+          <input
+            type="number"
+            className="text-lg focus:outline-none"
+            name="height"
+            value={formData.height}
+            onChange={handleInputChange}
+          />
+        </InputWrapper>
+        <InputWrapper title="몸무게">
+          <input
+            type="number"
+            className="text-lg focus:outline-none"
+            name="weight"
+            value={formData.weight}
+            onChange={handleInputChange}
+          />
+        </InputWrapper>
+        <InputWrapper title="체질">
+          <Selector
+            value={[formData.constitution]}
+            onChange={(selectedVal) =>
+              handleSelectorChange('constitution', selectedVal[0])
+            }
+            showCheckMark={false}
+            options={constitutionOptions}
+          />
+        </InputWrapper>
+        <InputWrapper title="스타일">
+          <Selector
+            value={formData.style}
+            onChange={(selectedVal) =>
+              handleSelectorChange('style', selectedVal)
+            }
+            multiple
+            showCheckMark={false}
+            options={styleOptions}
+          />
+        </InputWrapper>
+        <InputWrapper title="성별">
+          <Selector
+            value={[formData.gender]}
+            onChange={(selectedVal) =>
+              handleSelectorChange('gender', selectedVal[0])
+            }
+            showCheckMark={false}
+            options={genderOptions}
+          />
+        </InputWrapper>
+        <div className="mt-4 flex justify-end">
+          <Button onClick={onSubmit}>저장</Button>
+        </div>
+      </div>
     </div>
   );
 };

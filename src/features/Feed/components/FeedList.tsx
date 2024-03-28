@@ -8,7 +8,7 @@ import FeedSkeletonCard from './FeedCard/FeedSkeletionCard';
 import FeedListCard from './FeedCard/FeedCard';
 import { SyncLoader } from 'react-spinners';
 const FeedList = () => {
-  const { longtitude, latitude, errorMsg } = useCurrentLocation();
+  const { longitude, latitude, errorMsg } = useCurrentLocation();
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery<Feed[], string[]>({
@@ -16,7 +16,7 @@ const FeedList = () => {
       queryFn: async ({ pageParam = -1 }) => {
         const response = await getFeedList(
           pageParam as number,
-          longtitude as number,
+          longitude as number,
           latitude as number,
         );
         return response;
@@ -25,7 +25,7 @@ const FeedList = () => {
         const lastFeed = lastPage[lastPage.length - 1];
         return lastFeed ? lastFeed.postResponseDto.id : undefined;
       },
-      enabled: longtitude !== undefined && latitude !== undefined,
+      enabled: longitude !== undefined && latitude !== undefined,
       initialPageParam: undefined,
     });
 
@@ -44,11 +44,10 @@ const FeedList = () => {
     return <div>{errorMsg}</div>;
   }
 
-  if (!longtitude || !latitude) {
+  if (!longitude || !latitude) {
     return (
       <div className="h-[calc(100vh-183px)] w-full overflow-y-scroll scrollbar-hide">
         <div className="flex flex-wrap items-center justify-between px-4">
-          <FeedSkeletonCard />
           <FeedSkeletonCard />
           <FeedSkeletonCard />
           <FeedSkeletonCard />

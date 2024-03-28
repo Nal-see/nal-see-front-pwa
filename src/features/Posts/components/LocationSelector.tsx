@@ -19,11 +19,11 @@ const LocationSelector = ({
   selectedLocation,
   setSelectedLocation,
 }: ILocationSelectorProps) => {
-  const { longtitude, latitude, errorMsg } = useCurrentLocation();
+  const { longitude, latitude, errorMsg } = useCurrentLocation();
 
   // 지도 표시
   useEffect(() => {
-    if (longtitude && latitude) {
+    if (longitude && latitude) {
       window.kakao.maps.load(() => {
         const container = document.getElementById('map'); // 지도를 표시할 div element
 
@@ -33,7 +33,7 @@ const LocationSelector = ({
               selectedLocation.lat,
               selectedLocation.lng,
             )
-          : new window.kakao.maps.LatLng(latitude, longtitude);
+          : new window.kakao.maps.LatLng(latitude, longitude);
 
         // Map 객체 옵션
         const options = {
@@ -67,7 +67,7 @@ const LocationSelector = ({
         });
       });
     }
-  }, [longtitude, latitude]);
+  }, [longitude, latitude]);
 
   // 현재 위치 or 선택된 위치 위도&경도값으로 행정동 불러오기
   useEffect(() => {
@@ -84,20 +84,20 @@ const LocationSelector = ({
           });
         },
       );
-    } else if (longtitude && latitude) {
-      getKakaoAddress(longtitude, latitude).then((res) => {
+    } else if (longitude && latitude) {
+      getKakaoAddress(longitude, latitude).then((res) => {
         const addressH = res.documents.filter(
           (doc) => doc.region_type === 'H',
         )[0];
 
         setSelectedLocation({
-          lng: longtitude,
+          lng: longitude,
           lat: latitude,
           address: addressH.address_name,
         });
       });
     }
-  }, [longtitude, latitude, selectedLocation?.lng, selectedLocation?.lat]);
+  }, [longitude, latitude, selectedLocation?.lng, selectedLocation?.lat]);
 
   return (
     <div className="flex h-full flex-col justify-between">
@@ -109,7 +109,7 @@ const LocationSelector = ({
             : '현재 위치 로드 중...'}
         </p>
       </div>
-      {longtitude && latitude ? (
+      {longitude && latitude ? (
         <div id="map" className="h-[600px] w-full"></div>
       ) : (
         <div className="flex h-[600px] w-full flex-col items-center justify-center bg-accent-foreground text-xl text-accent">

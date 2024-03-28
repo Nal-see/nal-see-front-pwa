@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 export const useCurrentLocation = () => {
-  const [longtitude, setLongtitude] = useState<number>();
+  const [longitude, setlongitude] = useState<number>();
   const [latitude, setLatitude] = useState<number>();
   const [errorMsg, setErrorMsg] = useState<string>();
 
@@ -9,7 +9,7 @@ export const useCurrentLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         function (pos) {
-          setLongtitude(pos.coords.longitude);
+          setlongitude(pos.coords.longitude);
           setLatitude(pos.coords.latitude);
         },
         function (error) {
@@ -34,5 +34,5 @@ export const useCurrentLocation = () => {
     }
   }, []);
 
-  return { longtitude, latitude, errorMsg };
+  return { longitude, latitude, errorMsg };
 };

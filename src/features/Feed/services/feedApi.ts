@@ -30,6 +30,11 @@ export async function cancelPostLike(postId: number): Promise<void> {
   console.log('response.data: ', response.data);
 }
 
+export async function updateFeed(postId: number, data: any): Promise<void> {
+  const response = await api.patch(`/api/posts/${postId}`, data);
+  console.log('response.data: ', response.data);
+}
+
 export async function deletePost(postId: number): Promise<void> {
   const response = await api.delete(`/api/posts/${postId}`);
   console.log('response.data: ', response.data);
