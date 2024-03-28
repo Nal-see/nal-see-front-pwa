@@ -1,5 +1,6 @@
 import { useCurrentLocation } from '@/hooks/useCurrentLocation';
 import { useEffect, useState } from 'react';
+import currentLocMarker from '@/assets/icons/currentLocMarker.svg';
 
 declare global {
   interface Window {
@@ -27,7 +28,7 @@ const MainKakaoMap = () => {
 
         // 마커 이미지 커스텀
         const markerImage = new window.kakao.maps.MarkerImage(
-          '/src/assets/icons/currentLocMarker.svg',
+          currentLocMarker,
           new window.kakao.maps.Size(40, 40),
         );
 
