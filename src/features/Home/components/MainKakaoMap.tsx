@@ -8,16 +8,16 @@ declare global {
 }
 
 const MainKakaoMap = () => {
-  const { longtitude, latitude } = useCurrentLocation();
+  const { longitude, latitude } = useCurrentLocation();
   const [mapRange, setMapRange] = useState();
 
   useEffect(() => {
-    if (longtitude && latitude) {
+    if (longitude && latitude) {
       window.kakao.maps.load(() => {
         const container = document.getElementById('main-map'); // 지도를 표시할 div element
 
         // 지도 좌표 설정
-        const locPosition = new window.kakao.maps.LatLng(latitude, longtitude);
+        const locPosition = new window.kakao.maps.LatLng(latitude, longitude);
 
         // Map 객체 옵션
         const options = {
@@ -51,11 +51,11 @@ const MainKakaoMap = () => {
         });
       });
     }
-  }, [longtitude, latitude]);
+  }, [longitude, latitude]);
 
   return (
     <>
-      {longtitude && latitude ? (
+      {longitude && latitude ? (
         <div id="main-map" className="size-full"></div>
       ) : (
         <div className="size-full bg-[#f4ede1]">로딩중...</div>
