@@ -3,7 +3,7 @@ import { FeedDetail } from '@/types/feed';
 import { PiHeartStraightFill, PiHeartStraightLight } from 'react-icons/pi';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { formatDate } from '../../utils/dataFormatUtil';
+import { formatDate, formatUserConstitution } from '../../utils/dataFormatUtil';
 import CommentSheet from '../comment/CommentSheet';
 import {
   addPostLike,
@@ -24,7 +24,6 @@ import {
   CarouselApi,
 } from '@/components/ui/carousel';
 import WeatherAnimation from '../weather/WeatherIcon';
-import { Button } from '@/components/ui/button';
 interface FeedCardProps {
   feed: FeedDetail;
 }
@@ -123,14 +122,16 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed }) => {
             alt={feed.postResponseDto.username}
           />
           <div className="flex cursor-pointer flex-col" onClick={moveProfile}>
-            <div className="flex">
-              <span className="mr-2 font-bold">
+            <div className="flex items-center gap-2">
+              <span className="mr-1 font-bold">
                 {feed.postResponseDto.username}
               </span>
-              <Button className="h-10 rounded-md border-gray-600">
+              <div className="text-primary-foreground">
                 {feed.userInfo.height}cm
-              </Button>
-              <Button>{feed.userInfo.weight}cm</Button>
+              </div>
+              <div className="text-primary-foreground">
+                {feed.userInfo.weight}kg
+              </div>
             </div>
             <span className="mr-2 text-gray-600">
               {feed.postResponseDto.address}
@@ -212,6 +213,18 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed }) => {
             </>
           )}
         </p>
+        <div className="flex gap-1">
+          {feed.userInfo.style.map((style, index) => (
+            <div key={index} className="mr-2 mt-2 text-primary-foreground">
+              #{style}
+            </div>
+          ))}
+        </div>
+        <div className="mr-2 mt-2 text-primary-foreground">
+          {feed.userInfo.constitution
+            ? `체질: ${formatUserConstitution(feed.userInfo.constitution)}`
+            : ''}
+        </div>
       </div>
       <WeatherAnimation
         weather={feed.postResponseDto.weather}
@@ -229,7 +242,7 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed }) => {
         <PostEditSheet
           userInfo={feed.userInfo}
           content={feed.postResponseDto.content}
-          postId={feed.postResponseDto.id}
+          postId={Number(feed.postResponseDto.id)}
           onClose={handleCloseEditSheet}
         />
       </BottomSheet>

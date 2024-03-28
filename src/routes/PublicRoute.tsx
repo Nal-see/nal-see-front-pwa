@@ -9,12 +9,14 @@ const PublicRoute = () => {
 
   useEffect(() => {
     if (userData) {
+      console.log('userData: ', userData);
       setUser({
         user: {
           userId: userData.id,
           userName: userData.username,
           email: userData.email,
           isNewUser: userData.newUser,
+          picture: userData.picture,
         },
       });
     }

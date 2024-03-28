@@ -39,8 +39,8 @@ export interface FeedDetail extends Feed {
   userInfo: {
     height: number;
     weight: number;
-    bodyShape: string;
     constitution: string;
+    bodyShape: string;
     style: string[];
     gender: string;
   };

@@ -30,26 +30,6 @@ export const formatLikeCnt = (likeCnt: number): string => {
     return likeCnt.toString();
   }
 };
-
-// Thunderstorm
-// Rain
-// Snow
-// Fog
-// Clear
-// Clouds
-// 구름많음
-// https://lottie.host/dec32a22-f774-4c1b-a864-4dc6848833a7/WlHOBzXf7n.json
-// 안개
-// https://lottie.host/003c7109-8bfa-4854-bbe4-6330d780c3de/ujOoPsrbWM.json
-// 비
-//https://lottie.host/808efd18-5a89-45fc-9c55-6ed2a13c19d7/Tb3oLEqrhf.json
-// 해
-// https://lottie.host/9c939ea7-1110-4fe6-ade9-36692a7f453c/YT7og5PEHG.json
-// 눈
-// https://lottie.host/113abfc6-7a59-4ace-99dd-2e31f9864a48/AGJk7dM9Is.json
-// 번개
-// https://lottie.host/fdf3ae81-f4cf-446b-a6fc-69075a7409b0/nz0FAe1vat.json
-
 export const formatWeatherToIcon = (weather: string): string => {
   switch (weather) {
     case 'Thunderstorm':
@@ -107,6 +87,20 @@ const weatherSelector = (weather: string) => {
   }
   if (weather === 'Clouds') {
     return '흐림';
+  }
+};
+// normal, heatSensitive, coldSensitive
+
+export const formatUserConstitution = (constitution: string) => {
+  switch (constitution) {
+    case 'normal':
+      return '보통';
+    case 'heatSensitive':
+      return '더위를 잘타요';
+    case 'coldSensitive':
+      return '추위를 잘타요';
+    default:
+      return '';
   }
 };
 

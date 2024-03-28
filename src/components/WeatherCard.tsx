@@ -13,13 +13,17 @@ export const WeatherBar = ({
   return (
     <div className="flex items-center justify-between px-4 py-3">
       <div className="flex items-center gap-3">
-        <img src={`${formatWeatherToImage(weather)}`} alt="" />
-        <div className="text-xl font-normal">날씨 </div>
-        <div className="text-xl font-bold">{weatherSelector(weather)}</div>
+        <img
+          src={`${formatWeatherToImage(weather)}`}
+          className="size-12"
+          alt=""
+        />
+        <div className="text-base font-normal">날씨 </div>
+        <div className="text-base font-bold">{weatherSelector(weather)}</div>
       </div>
       <div className="flex items-center gap-3">
-        <div className="text-xl font-bold">온도</div>
-        <div className="text-xl font-bold">{temperature}°C</div>
+        <div className="text-base font-bold">온도</div>
+        <div className="text-base font-bold">{temperature}°C</div>
       </div>
     </div>
   );
