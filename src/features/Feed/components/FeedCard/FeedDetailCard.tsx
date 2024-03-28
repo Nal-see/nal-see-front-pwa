@@ -22,10 +22,10 @@ import useFeedInteraction from '../../hooks/useFeedInteraction';
 import useCarousel from '../../hooks/useCarosel';
 interface FeedCardProps {
   feed: FeedDetail;
-  onUpdateFeed: (postId: number, submitData: any) => Promise<void>;
+  onUpdateSuccess: () => void;
 }
 
-const FeedDetailCard: React.FC<FeedCardProps> = ({ feed, onUpdateFeed }) => {
+const FeedDetailCard: React.FC<FeedCardProps> = ({ feed, onUpdateSuccess }) => {
   const { user } = useAuthStore();
   const isMyFeed = feed.postResponseDto.userId === Number(user?.userId);
   const [showFullContent, setShowFullContent] = useState(false);
@@ -66,10 +66,6 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed, onUpdateFeed }) => {
 
   const handleEdit = () => {
     setIsEditSheetOpen(true);
-  };
-
-  const handleUpdate = async (submitData: any) => {
-    await onUpdateFeed(Number(feed.postResponseDto.id), submitData);
   };
 
   const displayedContent =
@@ -206,7 +202,7 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed, onUpdateFeed }) => {
           content={feed.postResponseDto.content}
           postId={Number(feed.postResponseDto.id)}
           onClose={handleCloseEditSheet}
-          onUpdateFeed={handleUpdate}
+          onUpdateSuccess={onUpdateSuccess}
         />
       </BottomSheet>
     </div>

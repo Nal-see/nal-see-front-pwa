@@ -31,10 +31,6 @@ export interface FeedDetail extends Feed {
   };
 }
 
-export interface EditFeedProps extends IPostEditFormData {
-  postId: number;
-}
-
 export interface IPostEditFormData {
   content: string;
   userInfo: {

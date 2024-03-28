@@ -5,15 +5,23 @@ import {
   genderOptions,
   styleOptions,
 } from '@/features/Posts/utils/inputOptions';
-import { EditFeedProps } from '@/types/feed';
+import { IPostEditFormData } from '@/types/feed';
 import { IPostEditForm } from '@/types/postCreate';
 import { Button, Selector } from 'antd-mobile';
 import { useState } from 'react';
+
+export interface EditFeedProps extends IPostEditFormData {
+  postId: number;
+  onClose: () => void;
+  onUpdateSuccess: () => void;
+}
 
 export const PostEditSheet: React.FC<EditFeedProps> = ({
   userInfo,
   content,
   postId,
+  onClose,
+  onUpdateSuccess,
 }) => {
   const [FeedEditData, setFeedEditData] = useState<IPostEditForm>({
     content: content,
@@ -55,7 +63,8 @@ export const PostEditSheet: React.FC<EditFeedProps> = ({
 
     try {
       await updateFeed(postId, submitData);
-      // onClose(); // 제출 후 바텀 시트 닫기
+      onUpdateSuccess();
+      onClose();
     } catch (error) {
       console.error('Failed to update feed:', error);
     }
