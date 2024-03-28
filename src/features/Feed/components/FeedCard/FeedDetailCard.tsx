@@ -29,9 +29,6 @@ interface FeedCardProps {
 
 const FeedDetailCard: React.FC<FeedCardProps> = ({ feed }) => {
   const { user } = useAuthStore();
-
-  //테스트 데이터
-
   const isMyFeed = feed.postResponseDto.userId === Number(user?.userId);
   const [isLiked, setIsLiked] = useState(false);
   const [likeCnt, setLikeCnt] = useState(feed.postResponseDto.likeCnt);
@@ -74,7 +71,7 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed }) => {
       if (feed) {
         await deletePost(Number(feed.postResponseDto.id));
         alert('게시물이 삭제되었습니다.');
-        navigate('/feeds');
+        navigate(-1);
       }
     } catch (error) {
       console.error('게시물 삭제 실패:', error);

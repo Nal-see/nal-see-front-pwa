@@ -15,7 +15,7 @@ export const PostEditSheet: React.FC<EditFeedProps> = ({
   content,
   postId,
 }) => {
-  const [formData, setFormData] = useState<IPostEditForm>({
+  const [FeedEditData, setFeedEditData] = useState<IPostEditForm>({
     content: content,
     height: userInfo.height,
     weight: userInfo.weight,
@@ -28,14 +28,14 @@ export const PostEditSheet: React.FC<EditFeedProps> = ({
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
+    setFeedEditData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
 
   const handleSelectorChange = (name: keyof IPostEditForm, value: any) => {
-    setFormData((prevData) => ({
+    setFeedEditData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
@@ -43,13 +43,13 @@ export const PostEditSheet: React.FC<EditFeedProps> = ({
 
   const onSubmit = async () => {
     const submitData = {
-      content: formData.content,
+      content: FeedEditData.content,
       userInfo: {
-        height: formData.height,
-        weight: formData.weight,
-        constitution: formData.constitution,
-        style: formData.style,
-        gender: formData.gender,
+        height: FeedEditData.height,
+        weight: FeedEditData.weight,
+        constitution: FeedEditData.constitution,
+        style: FeedEditData.style,
+        gender: FeedEditData.gender,
       },
     };
 
@@ -68,7 +68,7 @@ export const PostEditSheet: React.FC<EditFeedProps> = ({
           className="w-full text-lg focus:outline-none"
           placeholder="내용을 입력하세요..."
           name="content"
-          value={formData.content}
+          value={FeedEditData.content}
           onChange={handleInputChange}
         />
         <InputWrapper title="키">
@@ -76,7 +76,7 @@ export const PostEditSheet: React.FC<EditFeedProps> = ({
             type="number"
             className="text-lg focus:outline-none"
             name="height"
-            value={formData.height}
+            value={FeedEditData.height ? FeedEditData.height : ''}
             onChange={handleInputChange}
           />
         </InputWrapper>
@@ -85,13 +85,13 @@ export const PostEditSheet: React.FC<EditFeedProps> = ({
             type="number"
             className="text-lg focus:outline-none"
             name="weight"
-            value={formData.weight}
+            value={FeedEditData.weight ? FeedEditData.weight : ''}
             onChange={handleInputChange}
           />
         </InputWrapper>
         <InputWrapper title="체질">
           <Selector
-            value={[formData.constitution]}
+            value={FeedEditData.constitution ? [FeedEditData.constitution] : []}
             onChange={(selectedVal) =>
               handleSelectorChange('constitution', selectedVal[0])
             }
@@ -101,7 +101,7 @@ export const PostEditSheet: React.FC<EditFeedProps> = ({
         </InputWrapper>
         <InputWrapper title="스타일">
           <Selector
-            value={formData.style}
+            value={FeedEditData.style}
             onChange={(selectedVal) =>
               handleSelectorChange('style', selectedVal)
             }
@@ -112,7 +112,7 @@ export const PostEditSheet: React.FC<EditFeedProps> = ({
         </InputWrapper>
         <InputWrapper title="성별">
           <Selector
-            value={[formData.gender]}
+            value={FeedEditData.gender ? [FeedEditData.gender] : []}
             onChange={(selectedVal) =>
               handleSelectorChange('gender', selectedVal[0])
             }

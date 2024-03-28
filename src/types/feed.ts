@@ -36,12 +36,12 @@ export interface EditFeedProps extends IPostEditFormData {
 }
 
 export interface IPostEditFormData {
-  userInfo: {
-    height: number;
-    weight: number;
-    constitution: string;
-    style: string[];
-    gender: string;
-  };
   content: string;
+  userInfo: {
+    height: number | null;
+    weight: number | null;
+    constitution: string | null;
+    style: string[];
+    gender: string | null;
+  };
 }
