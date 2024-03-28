@@ -35,14 +35,13 @@ const PostCreatePage = () => {
     register,
     handleSubmit,
     setValue,
-    getValues,
     reset,
     control,
     formState: { errors },
   } = useForm<IPostCreateForm>({
     resolver: zodResolver(PostCreateFormSchema),
   });
-  console.log(getValues());
+
   const onSubmit: SubmitHandler<IPostCreateForm> = (data) => {
     if (user) {
       createPostApi(user.userId, data)
@@ -54,6 +53,7 @@ const PostCreatePage = () => {
           }
         })
         .catch((err) => {
+          console.error(err);
           toast.error('문제가 발생했습니다. 다시 시도해주세요.');
         });
     }
@@ -116,7 +116,7 @@ const PostCreatePage = () => {
         setValue('gender', userDetails.gender);
       })
       .catch((err) => {
-        console.error('status code:', err);
+        console.error('유저 선택 정보 fetch 실패, status code:', err);
       });
   }, []);
 
