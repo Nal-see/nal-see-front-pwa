@@ -30,8 +30,8 @@ export const LocationStatusView = ({
     // 위치 확인 완료 (체크 표시)
     return (
       <div className="flex h-20 w-full flex-col items-center justify-center bg-white">
-        <FaCheckCircle className="text-4xl text-green-500" />
-        <div>위치 확인됨!</div>
+        <FaCheckCircle className="text-4xl text-accent" />
+        <div className="pt-3 text-lg font-bold">위치 확인됨!</div>
       </div>
     );
   }

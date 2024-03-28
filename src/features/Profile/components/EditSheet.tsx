@@ -5,7 +5,6 @@ import {
   genderOptions,
   styleOptions,
 } from '@/features/Posts/utils/inputOptions';
-import useAuthStore from '@/store/useAuthStore';
 import { EditFeedProps } from '@/types/feed';
 import { IPostEditForm } from '@/types/postCreate';
 import { Button, Selector } from 'antd-mobile';
@@ -16,7 +15,6 @@ export const PostEditSheet: React.FC<EditFeedProps> = ({
   content,
   postId,
 }) => {
-  const { user } = useAuthStore();
   const [formData, setFormData] = useState<IPostEditForm>({
     content: content,
     height: userInfo.height,
@@ -44,9 +42,19 @@ export const PostEditSheet: React.FC<EditFeedProps> = ({
   };
 
   const onSubmit = async () => {
-    console.log('data:', formData);
+    const submitData = {
+      content: formData.content,
+      userInfo: {
+        height: formData.height,
+        weight: formData.weight,
+        constitution: formData.constitution,
+        style: formData.style,
+        gender: formData.gender,
+      },
+    };
+
     try {
-      await updateFeed(postId, formData);
+      await updateFeed(postId, submitData);
       // onClose(); // 제출 후 바텀 시트 닫기
     } catch (error) {
       console.error('Failed to update feed:', error);

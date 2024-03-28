@@ -66,8 +66,8 @@ const FeedList = () => {
 
   return (
     <div className="h-[calc(100vh-183px)] w-full overflow-y-scroll scrollbar-hide">
-      <div className="flex flex-wrap items-center justify-center">
-        <LocationStatusView isCurrentLocation={isCurrentLocation} />
+      <LocationStatusView isCurrentLocation={isCurrentLocation} />
+      <div className="grid grid-cols-2 justify-items-center">
         {data?.pages.map((page, pageIndex) => (
           <React.Fragment key={pageIndex}>
             {page.map((feed: Feed) => (

@@ -23,7 +23,6 @@ import {
   Carousel,
   CarouselApi,
 } from '@/components/ui/carousel';
-import WeatherAnimation from '../weather/WeatherIcon';
 interface FeedCardProps {
   feed: FeedDetail;
 }
@@ -127,10 +126,10 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed }) => {
                 {feed.postResponseDto.username}
               </span>
               <div className="text-primary-foreground">
-                {feed.userInfo.height}cm
+                {feed.userInfo.height ? `${feed.userInfo.height}cm` : ''}
               </div>
               <div className="text-primary-foreground">
-                {feed.userInfo.weight}kg
+                {feed.userInfo.weight ? `${feed.userInfo.weight}kg` : ''}
               </div>
             </div>
             <span className="mr-2 text-gray-600">
@@ -226,10 +225,6 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed }) => {
             : ''}
         </div>
       </div>
-      {/* <WeatherAnimation
-        weather={feed.postResponseDto.weather}
-        temperature={String(feed.postResponseDto.temperature)}
-      /> */}
       <WeatherBar
         weather={feed.postResponseDto.weather}
         temperature={String(feed.postResponseDto.temperature)}

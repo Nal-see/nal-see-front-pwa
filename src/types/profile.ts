@@ -2,7 +2,7 @@ export interface ProfileFeedData {
   results: {
     postId: number;
     postPicture: string;
-    many: boolean;
+    isMany: boolean;
   }[];
 }
 

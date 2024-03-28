@@ -1,5 +1,5 @@
 import { api } from '@/lib/api';
-import { Feed, FeedDetail } from '@/types/feed';
+import { Feed, FeedDetail, IPostEditFormData } from '@/types/feed';
 
 export async function getFeedList(
   lastPostId: number,
@@ -30,7 +30,11 @@ export async function cancelPostLike(postId: number): Promise<void> {
   console.log('response.data: ', response.data);
 }
 
-export async function updateFeed(postId: number, data: any): Promise<void> {
+export async function updateFeed(
+  postId: number,
+  data: IPostEditFormData,
+): Promise<void> {
+  console.log('data: ', data);
   const response = await api.patch(`/api/posts/${postId}`, data);
   console.log('response.data: ', response.data);
 }
