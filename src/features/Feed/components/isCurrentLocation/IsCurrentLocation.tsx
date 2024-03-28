@@ -23,7 +23,6 @@ export const LocationStatusView = ({
     // 위치 확인 중
     return (
       <div className="flex h-20 w-full flex-col items-center justify-center bg-white">
-        <div>현재 위치를 기반으로 주변 게시물을 불러옵니다.</div>
         <SyncLoader color="#3ba5ff" />
       </div>
     );
