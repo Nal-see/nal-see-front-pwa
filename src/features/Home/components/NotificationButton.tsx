@@ -12,7 +12,7 @@ const NotificationButton = () => {
         {hasNewNotification ? (
           <NotificationWithBadgeIcon className="size-[50px]" />
         ) : (
-          <NotificationIcon size={75} />
+          <NotificationIcon className="size-[50px]" />
         )}
       </button>
     </div>

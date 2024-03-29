@@ -264,7 +264,7 @@ export const NotificationIcon: React.FC<IconProps> = ({
           fill="white"
           shapeRendering="crispEdges"
         />
-        <g clip-path="url(#clip0_201_3580)">
+        <g clipPath="url(#clip0_201_3580)">
           <path
             d="M19.4167 11.5191C18.0278 11.395 14.8333 11.817 13.1667 14.4976C11.0833 17.8483 13.1667 24.9221 10.25 25.6667H19.4167"
             stroke="#909396"
@@ -282,8 +282,8 @@ export const NotificationIcon: React.FC<IconProps> = ({
             fill="#909396"
           />
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M20.4436 11.5C20.5854 11.2549 20.6666 10.9702 20.6666 10.6667C20.6666 9.74619 19.9204 9 18.9999 9C18.0794 9 17.3333 9.74619 17.3333 10.6667C17.3333 10.9702 17.4144 11.2549 17.5562 11.5C17.6691 11.6952 17.8205 11.8653 17.9999 12.0001V12H20.0001C20.1795 11.8652 20.3307 11.6951 20.4436 11.5Z"
             fill="#909396"
           />
