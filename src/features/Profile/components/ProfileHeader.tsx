@@ -7,7 +7,7 @@ type ProfileHeaderProps = {
     followingCount: string | number;
     followerCount: string | number;
     username: string;
-    followed: boolean;
+    isFollowed: boolean;
   };
 };
 
