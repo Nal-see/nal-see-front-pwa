@@ -3,8 +3,13 @@ import { IPostCreateHeader } from '@/types/postCreate';
 import { CloseOutline, LeftOutline } from 'antd-mobile-icons';
 import { MouseEvent, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
-const PostCreateHeader = ({ step, setStep }: IPostCreateHeader) => {
+const PostCreateHeader = ({
+  step,
+  setStep,
+  formTrigger,
+}: IPostCreateHeader) => {
   const navigate = useNavigate();
 
   const setPrevious = useCallback(() => {
@@ -12,8 +17,17 @@ const PostCreateHeader = ({ step, setStep }: IPostCreateHeader) => {
   }, [step]);
 
   const setNext = useCallback(
-    (e: MouseEvent<HTMLButtonElement>) => {
+    async (e: MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
+
+      if (step === 0) {
+        const output = await formTrigger('photos');
+        if (!output) {
+          toast.error('업로드할 사진을 선택해주세요.');
+          return;
+        }
+      }
+
       setStep(step + 1);
     },
     [step],

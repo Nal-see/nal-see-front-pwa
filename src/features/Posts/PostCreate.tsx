@@ -35,12 +35,25 @@ const PostCreatePage = () => {
     register,
     handleSubmit,
     setValue,
+    getValues,
     reset,
     control,
+    trigger,
+    clearErrors,
     formState: { errors },
   } = useForm<IPostCreateForm>({
+    defaultValues: {
+      photos: [],
+    },
     resolver: zodResolver(PostCreateFormSchema),
   });
+
+  useEffect(() => {
+    if (errors) {
+      console.log('form error', errors);
+      console.log('photo', getValues('photos'));
+    }
+  }, [errors]);
 
   const onSubmit: SubmitHandler<IPostCreateForm> = (data) => {
     if (user) {
@@ -92,7 +105,9 @@ const PostCreatePage = () => {
 
   // Image file 선택 취소 (제거)
   const removeSelectedImg = (fileName: string) => {
-    setImgFiles((prev) => prev.filter((file) => file.name !== fileName));
+    const newImgFiles = imgFiles.filter((file) => file.name !== fileName);
+    setImgFiles(newImgFiles);
+    setValue('photos', newImgFiles, { shouldValidate: true });
   };
 
   // 선택된 Location 좌표값을 React hook form field value로 Set
@@ -124,7 +139,11 @@ const PostCreatePage = () => {
     <div className="flex-1">
       {/* Form */}
       <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
-        <PostCreateHeader step={currentStep} setStep={setCurrentStep} />
+        <PostCreateHeader
+          step={currentStep}
+          setStep={setCurrentStep}
+          formTrigger={trigger}
+        />
         <div className="h-[calc(100dvh-156px)] overflow-y-scroll scrollbar-hide">
           {/* STEP 1 : 사진 선택 */}
           {currentStep === 0 && (
@@ -172,12 +191,27 @@ const PostCreatePage = () => {
 
           {/* STEP 3 : 기타 게시물 정보 입력 */}
           {currentStep === 2 && (
-            <div className="h-[calc(100dvh-156px)] p-4">
-              <textarea
-                className="w-full text-lg focus:outline-none"
-                placeholder="내용을 입력하세요..."
-                {...register('content')}
+            <div className="relative h-[calc(100dvh-156px)] p-4">
+              <Controller
+                control={control}
+                name="content"
+                render={({ field: { onChange } }) => (
+                  <textarea
+                    className="w-full text-lg focus:outline-none"
+                    placeholder="내용을 입력하세요..."
+                    onChange={async (value) => {
+                      if (await trigger('content')) clearErrors('content');
+                      onChange(value);
+                    }}
+                  />
+                )}
               />
+
+              {errors['content'] && (
+                <div className="absolute right-6 top-[170px] text-red-400">
+                  게시물 내용을 최소 10자 이상 입력해주세요.
+                </div>
+              )}
               <InputWrapper title="키">
                 <input
                   className="text-lg focus:outline-none"
