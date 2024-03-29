@@ -195,13 +195,14 @@ const PostCreatePage = () => {
               <Controller
                 control={control}
                 name="content"
-                render={({ field: { onChange } }) => (
+                render={({ field: { onChange, value } }) => (
                   <textarea
+                    value={value}
                     className="w-full text-lg focus:outline-none"
                     placeholder="내용을 입력하세요..."
                     onChange={async (value) => {
-                      if (await trigger('content')) clearErrors('content');
                       onChange(value);
+                      if (await trigger('content')) clearErrors('content');
                     }}
                   />
                 )}

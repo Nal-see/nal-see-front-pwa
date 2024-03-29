@@ -28,14 +28,13 @@
 
 // export default FeedItem;
 
-import React from 'react';
 import { FaClone } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
 type FeedItemProps = {
   postId: string | number;
   postPicture: string;
-  many: boolean;
+  isMany: boolean;
 };
 
 const FeedItem = ({ item }: { item: FeedItemProps }) => {
@@ -52,7 +51,7 @@ const FeedItem = ({ item }: { item: FeedItemProps }) => {
         alt="user"
         className="h-40 w-full object-cover"
       />
-      {item.many && (
+      {item.isMany && (
         <div className="absolute right-2 top-2">
           <FaClone className="text-white" />
         </div>

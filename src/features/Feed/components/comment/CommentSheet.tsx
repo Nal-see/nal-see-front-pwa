@@ -20,11 +20,11 @@ interface CommentSheetProps {
 const CommentSheet: React.FC<CommentSheetProps> = ({
   postId,
   username,
-  userImage,
   isDetail = false,
 }) => {
   const { user } = useAuthStore();
   const userId = user?.userId;
+  const userImage = user?.picture;
   const [open, setOpen] = useState(false);
   const [newComment, setNewComment] = useState('');
   const sheetRef = useRef<HTMLDivElement>(null);

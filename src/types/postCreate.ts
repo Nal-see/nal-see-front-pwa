@@ -57,3 +57,21 @@ export interface IKakaoAddressDocType {
   x: number;
   y: number;
 }
+
+export const PostEditFormSchema = z.object({
+  content: z.string().min(10, '글을 10자 이상 작성해주세요.'),
+  height: z.string().optional(),
+  weight: z.string().optional(),
+  constitution: z.array(z.string()).optional(),
+  style: z.array(z.string()).optional(),
+  gender: z.array(z.string()).optional(),
+});
+
+export interface IPostEditForm {
+  content: string;
+  height: number | null;
+  weight: number | null;
+  constitution: string | null;
+  style: string[];
+  gender: string | null;
+}
