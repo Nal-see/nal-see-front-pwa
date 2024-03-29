@@ -1,70 +1,35 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { PostResponseDto } from '@/types/feed';
 import { PiHeartStraightFill, PiHeartStraightLight } from 'react-icons/pi';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 import { formatLikeCnt } from '../../utils/dataFormatUtil';
 import CommentSheet from '../comment/CommentSheet';
-import { addPostLike, cancelPostLike } from '../../services/feedApi';
 import { useNavigate } from 'react-router-dom';
 import CircleProfileImg from '@/components/CircleProfileImg';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from '@/components/ui/carousel';
+import useFeedInteraction from '../../hooks/useFeedInteraction';
+import useCarousel from '../../hooks/useCarosel';
 
 interface FeedCardProps {
   feed: PostResponseDto;
 }
 
 const FeedListCard: React.FC<FeedCardProps> = ({ feed }) => {
-  const [isLiked, setIsLiked] = useState(false);
-  const [likeCnt, setLikeCnt] = useState(feed.likeCnt);
-  const [currentSlide, setCurrentSlide] = useState(0);
   const maxContentLength = 15;
   const navigate = useNavigate();
 
+  const { isLiked, likeCnt, handleToggleLike } = useFeedInteraction(
+    feed.likeCnt,
+    Number(feed.id),
+  );
+
+  const { currentSlide, slideCount, setApi } = useCarousel();
+
   const moveToDetailPage = () => {
     navigate(`/feeds/${feed.id}`);
-  };
-
-  const handleToggleLike = async (event: React.MouseEvent<HTMLSpanElement>) => {
-    event.stopPropagation();
-    const newIsLiked = !isLiked;
-    setIsLiked(newIsLiked);
-    try {
-      if (feed) {
-        if (newIsLiked) {
-          await addPostLike(Number(feed.id));
-          setLikeCnt(likeCnt + 1);
-        } else {
-          await cancelPostLike(Number(feed.id));
-          setLikeCnt(likeCnt - 1);
-        }
-      }
-    } catch (error) {
-      console.error('게시물 좋아요 토글 실패:', error);
-      setIsLiked(!newIsLiked);
-    }
-  };
-
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    arrows: false,
-    dotsClass:
-      'slick-dots absolute bottom-2 left-1/2 transform -translate-x-1/2 flex justify-center items-center z-1',
-    customPaging: (i: number) => {
-      const isActive = i === currentSlide;
-      return (
-        <div
-          className={`size-3 h-1 cursor-pointer px-3 opacity-50 transition-opacity duration-300 hover:opacity-100 ${
-            isActive ? 'bg-primary' : 'bg-white'
-          }`}
-        ></div>
-      );
-    },
-    beforeChange: (current: number, next: number) => setCurrentSlide(next),
   };
 
   const displayedContent =
@@ -75,19 +40,35 @@ const FeedListCard: React.FC<FeedCardProps> = ({ feed }) => {
   return (
     <div className="m-1 mb-4 w-[45vw]">
       <div onClick={moveToDetailPage} className="cursor-pointer">
-        <Slider {...sliderSettings}>
-          {feed.pictureList.map((picture, index) => (
-            <div key={index} className="relative h-60 bg-primary-foreground">
-              <img
-                className="absolute left-0 top-0 size-full object-cover"
-                src={picture}
-                alt={`${feed.address} ${index + 1}`}
+        <div className="relative">
+          <Carousel className="w-full" setApi={setApi}>
+            <CarouselContent>
+              {feed.pictureList.map((picture, index) => (
+                <CarouselItem key={index}>
+                  <div className="relative h-72">
+                    <img
+                      className="absolute left-0 top-0 size-full object-cover"
+                      src={picture}
+                      alt={`${feed.address} ${index + 1}`}
+                    />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+          <div className="absolute inset-x-0 bottom-2 flex justify-center">
+            {Array.from({ length: slideCount }).map((_, index) => (
+              <div
+                key={index}
+                className={`mx-1 size-2 rounded-full ${
+                  currentSlide === index + 1 ? 'bg-white' : 'bg-gray-300'
+                }`}
               />
-            </div>
-          ))}
-        </Slider>
+            ))}
+          </div>
+        </div>
         <div>
-          <div className="mb-1 flex items-center">
+          <div className="my-1 flex items-center">
             <CircleProfileImg
               profileImgUrl={
                 feed.userImage
