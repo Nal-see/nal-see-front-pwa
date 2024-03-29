@@ -17,21 +17,6 @@ export interface PostResponseDto {
 
 export interface Feed {
   postResponseDto: PostResponseDto;
-
-  // id": 2,
-  //   "pictureList": [
-  //     "https://nalsee-post-photos.s3.ap-northeast-2.amazonaws.com/post-photos/cc7eba47-915b-49be-a914-c1e98b1367ce"
-  //   ],
-  //   "content": "hello",
-  //   "likeCnt": 0,
-  //   "createDate": null,
-  //   "address": "서울시 강남구",
-  //   "weather": "Clouds",
-  //   "temperature": 26.2,
-  //   "userId": 1,
-  //   "username": "지연",
-  //   "userImage": null,
-  //   "liked": false
 }
 
 export interface FeedDetail extends Feed {
@@ -39,9 +24,20 @@ export interface FeedDetail extends Feed {
   userInfo: {
     height: number;
     weight: number;
-    bodyShape: string;
     constitution: string;
+    bodyShape: string;
     style: string[];
     gender: string;
+  };
+}
+
+export interface IPostEditFormData {
+  content: string;
+  userInfo: {
+    height: number | null;
+    weight: number | null;
+    constitution: string | null;
+    style: string[];
+    gender: string | null;
   };
 }

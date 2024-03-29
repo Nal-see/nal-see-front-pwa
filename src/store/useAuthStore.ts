@@ -6,6 +6,7 @@ export interface IUserState {
     userName: string;
     email: string;
     isNewUser: boolean;
+    picture?: string;
   } | null;
 }
 

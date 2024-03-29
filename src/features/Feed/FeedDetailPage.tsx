@@ -1,34 +1,38 @@
 import BackBtnHeader from '@/components/BackBtnHeader';
 import { useParams } from 'react-router-dom';
 import { getFeedDetail } from './services/feedApi';
-import { useEffect, useState } from 'react';
 import FeedDetailCard from './components/FeedCard/FeedDetailCard';
 import FeedDetailSkeletonCard from './components/FeedCard/FeedDetailSkeletonCard';
-import { FeedDetail } from '@/types/feed';
+import { useQuery } from '@tanstack/react-query';
 
 const FeedDetailPage = () => {
   const { feedId } = useParams<{ feedId: string }>();
-  const [feed, setFeed] = useState<FeedDetail | null>(null);
+  const {
+    data: feed,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ['feedDetail', feedId],
+    queryFn: () => getFeedDetail(Number(feedId)),
+    enabled: !!feedId,
+  });
 
-  useEffect(() => {
-    async function fetchData() {
-      if (feedId) {
-        const data = await getFeedDetail(Number(feedId));
-        setFeed(data);
-      }
-    }
-
-    fetchData();
-  }, [feedId]);
-
-  if (!feed) {
+  if (isLoading) {
     return <FeedDetailSkeletonCard />;
   }
+
+  const handleUpdateSuccess = () => {
+    refetch(); // 업데이트 성공 시 데이터 다시 불러오기
+  };
 
   return (
     <div>
       <BackBtnHeader title="상세페이지" />
-      <FeedDetailCard feed={feed} />
+      {!feed ? (
+        <div>게시물이 존재하지 않습니다.</div>
+      ) : (
+        <FeedDetailCard feed={feed} onUpdateSuccess={handleUpdateSuccess} />
+      )}
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { EnvironmentOutline, CompassOutline } from 'antd-mobile-icons';
 import { getKakaoAddress } from '../services/getKakaoAddress';
 import { ISelectedLocation } from '@/types/postCreate';
+import locationMarker from '@/assets/icons/marker.svg';
 
 declare global {
   interface Window {
@@ -43,7 +44,7 @@ const LocationSelector = ({
 
         // 마커 이미지 커스텀
         const markerImage = new window.kakao.maps.MarkerImage(
-          '/src/assets/icons/marker.svg',
+          locationMarker,
           new window.kakao.maps.Size(32, 40),
         );
 
@@ -103,7 +104,7 @@ const LocationSelector = ({
     <div className="flex h-full flex-col justify-between">
       <div className="inline-flex items-center justify-center gap-3 p-4 text-lg">
         <EnvironmentOutline fontSize={26} color="var(--accent)" />
-        <p className="font-semibold">
+        <p className="font-base">
           {selectedLocation?.address
             ? selectedLocation.address
             : '현재 위치 로드 중...'}
