@@ -7,12 +7,12 @@ const NotificationButton = () => {
   const [hasNewNotification, setHasNewNotification] = useState(true);
 
   return (
-    <div className="absolute bottom-[90px] right-3 z-10">
+    <div className="absolute bottom-3 right-3 z-10">
       <button onClick={() => navigate('/notifications')}>
         {hasNewNotification ? (
-          <NotificationWithBadgeIcon className="size-[75px]" />
+          <NotificationWithBadgeIcon className="size-[50px]" />
         ) : (
-          <NotificationIcon className="size-[75px]" />
+          <NotificationIcon size={75} />
         )}
       </button>
     </div>
