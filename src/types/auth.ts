@@ -8,4 +8,5 @@ export interface IUserInfoResponse {
   username: string;
   email: string;
   newUser: boolean;
+  picture: string;
 }

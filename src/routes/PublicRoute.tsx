@@ -1,7 +1,7 @@
 import { Navigate, Outlet, useLoaderData } from 'react-router-dom';
 import useAuthStore from '../store/useAuthStore';
-import { useEffect } from 'react';
 import { IUserInfoResponse } from '@/types/auth';
+import { useEffect } from 'react';
 
 const PublicRoute = () => {
   const userData = useLoaderData() as IUserInfoResponse;

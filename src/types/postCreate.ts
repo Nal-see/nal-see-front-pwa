@@ -1,8 +1,10 @@
+import { UseFormTrigger } from 'react-hook-form';
 import { z } from 'zod';
 
 export interface IPostCreateHeader {
   step: number;
   setStep: (step: number) => void;
+  formTrigger: UseFormTrigger<IPostCreateForm>;
 }
 
 export interface IPostCreateForm {
@@ -15,7 +17,7 @@ export interface IPostCreateForm {
   constitution: string | null;
   style: string[];
   gender: string | null;
-  photos: File[] | null;
+  photos: File[];
 }
 
 export const PostCreateFormSchema = z.object({
@@ -23,12 +25,12 @@ export const PostCreateFormSchema = z.object({
   address: z.string(),
   latitude: z.number(),
   longitude: z.number(),
-  height: z.string().optional(),
-  weight: z.string().optional(),
-  constitution: z.array(z.string()).optional(),
-  style: z.array(z.string()).optional(),
-  gender: z.array(z.string()).optional(),
-  photos: z.array(z.instanceof(File)),
+  height: z.nullable(z.string()),
+  weight: z.nullable(z.string()),
+  constitution: z.nullable(z.string()),
+  style: z.nullable(z.array(z.string())),
+  gender: z.nullable(z.string()),
+  photos: z.array(z.instanceof(File)).min(1, '사진을 1장 이상 첨부해주세요.'),
 });
 
 export interface ISelectedLocation {
