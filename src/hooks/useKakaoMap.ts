@@ -55,7 +55,6 @@ export const useKakaoMap = (
         });
 
         setKakaoMap(map); // 지도 컴포넌트
-
         // 마커 컴포넌트
         setMarker(
           new window.kakao.maps.Marker({
@@ -75,5 +74,11 @@ export const useKakaoMap = (
     loadingMarkerImg,
   ]);
 
-  return { kakaoMap, marker, mapRange, renewLocation };
+  const setCenter = () => {
+    if (kakaoMap) {
+      kakaoMap.setCenter(new window.kakao.maps.LatLng(latitude, longitude));
+    }
+  };
+
+  return { kakaoMap, marker, mapRange, renewLocation, setCenter };
 };

@@ -2,12 +2,17 @@ import { LocationUpdateBtn } from '@/components/Icon';
 
 const UpdatePositionButton = ({
   renewLocation,
+  setCenter,
 }: {
   renewLocation: () => void;
+  setCenter: () => void;
 }) => {
   return (
     <button
-      onClick={() => renewLocation()}
+      onClick={() => {
+        renewLocation();
+        setCenter();
+      }}
       className="absolute bottom-[70px] right-3 z-10"
     >
       <LocationUpdateBtn className="size-[50px]" />
