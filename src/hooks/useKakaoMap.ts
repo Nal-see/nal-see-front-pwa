@@ -17,8 +17,10 @@ export const useKakaoMap = (
   const [kakaoMap, setKakaoMap] = useState<any>();
   const [marker, setMarker] = useState<any>();
   const [mapRange, setMapRange] = useState<{
-    swLngLat: number;
-    neLngLat: number;
+    swLng: number;
+    swLat: number;
+    neLng: number;
+    neLat: number;
   }>();
 
   useEffect(() => {
@@ -48,10 +50,17 @@ export const useKakaoMap = (
         // Event Handlers : 중심좌표나 확대 수준이 변경되었을 때 타일 이미지 로드가 모두 완료된 경우 (미세한 이동은 trigger되지 않음)
         window.kakao.maps.event.addListener(map, 'tilesloaded', function () {
           const bounds = map.getBounds();
-          const southWest = bounds.getSouthWest();
-          const northEast = bounds.getNorthEast();
+          const swLng = bounds.getSouthWest().getLng();
+          const swLat = bounds.getSouthWest().getLat();
+          const neLng = bounds.getNorthEast().getLng();
+          const neLat = bounds.getNorthEast().getLat();
 
-          setMapRange({ swLngLat: southWest, neLngLat: northEast });
+          setMapRange({
+            swLng,
+            swLat,
+            neLng,
+            neLat,
+          });
         });
 
         setKakaoMap(map); // 지도 컴포넌트

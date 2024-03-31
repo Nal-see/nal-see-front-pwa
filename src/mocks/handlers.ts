@@ -171,4 +171,36 @@ export const handlers = [
       },
     );
   }),
+  http.get(
+    '/api/posts/location?bottomLeftLat=:swLat&bottomLeftLong=:swLng&topRightLat=:neLat&topRightLong=:neLng',
+    () => {
+      return HttpResponse.json(
+        {
+          success: true,
+          message: '요청에 성공했습니다.',
+          results: [
+            {
+              id: 1,
+              pictureList: [
+                'https://nalsee-post-photos.s3.ap-northeast-2.amazonaws.com/post-photos/ec0f831c-dc6d-4b7d-b9e7-945a5a6e1085',
+              ],
+              content: 'hello',
+              likeCnt: 1,
+              createDate: '2024-03-21T12:35:49.4577',
+              address: '서울시 강남구',
+              weather: 'Clouds',
+              temperature: 26.3,
+              userId: 1,
+              username: '지연',
+              userImage: null,
+              liked: true,
+            },
+          ],
+        },
+        {
+          status: 200,
+        },
+      );
+    },
+  ),
 ];
