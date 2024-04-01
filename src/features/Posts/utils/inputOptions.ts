@@ -24,7 +24,7 @@ export const styleOptions = [
   },
   {
     label: '시티보이',
-    value: 'Citiboy',
+    value: 'CityBoy',
   },
   {
     label: '아메카지',
@@ -55,7 +55,7 @@ export const styleOptions = [
 export const constitutionOptions = [
   {
     label: '기본',
-    value: 'Normal',
+    value: 'normal',
   },
   {
     label: '더위 잘 탐',
