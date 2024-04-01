@@ -8,7 +8,7 @@ for (let i = 0; i < 100; i++) {
   profileFeedData.results.push({
     postId: i,
     postPicture: 'https://placeholder.co/200x200',
-    many: i % 2 === 0,
+    isMany: i % 2 === 0,
   });
 }
 
