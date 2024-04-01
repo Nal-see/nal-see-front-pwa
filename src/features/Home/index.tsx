@@ -6,7 +6,7 @@ const HomePage = () => {
   const { user } = useAuthStore();
 
   return (
-    <div className="flex-1">
+    <div className="relative flex-1">
       <div className="h-[calc(100dvh-80px)]">
         <MainKakaoMap />
       </div>
