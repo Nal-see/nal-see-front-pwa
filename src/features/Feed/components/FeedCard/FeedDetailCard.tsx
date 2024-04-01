@@ -175,11 +175,11 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed, onUpdateSuccess }) => {
             </>
           )}
         </p>
-        <div className="flex gap-1">
+        <div className="flex flex-wrap gap-1">
           {feed.userInfo.style.map((style, index) => (
-            <div key={index} className="mr-2 mt-2 text-primary-foreground">
+            <p key={index} className="mr-1 mt-2 text-primary-foreground">
               #{style}
-            </div>
+            </p>
           ))}
         </div>
         <div className="mr-2 mt-2 text-primary-foreground">
