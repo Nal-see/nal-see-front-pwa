@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useCurrentLocation } from './useCurrentLocation';
 import { ImainMapPostData } from '@/types/kakaoMap';
+import useHomeStore from '@/features/Home/store/useHomeStore';
 
 declare global {
   interface Window {
@@ -23,6 +24,7 @@ export const useKakaoMap = (
     neLng: number;
     neLat: number;
   }>();
+  const { setPostId, setPostDrawerOpen } = useHomeStore();
 
   useEffect(() => {
     if (longitude && latitude && container) {
@@ -106,6 +108,11 @@ export const useKakaoMap = (
 
         const content = document.createElement('div');
         content.innerHTML = contentInner;
+        content.addEventListener('click', () => {
+          // 오버레이 클릭 시 : 포스트 상세 페이지 drawer 열림
+          setPostId(post.postResponseDto.id);
+          setPostDrawerOpen();
+        });
 
         const customOverlay = new window.kakao.maps.CustomOverlay({
           map: kakaoMap,

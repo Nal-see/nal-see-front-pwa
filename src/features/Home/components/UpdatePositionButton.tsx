@@ -13,7 +13,7 @@ const UpdatePositionButton = ({
         renewLocation();
         setCenter();
       }}
-      className="absolute bottom-[70px] right-3 z-10"
+      className="absolute bottom-[70px] right-3 z-[3]"
     >
       <LocationUpdateBtn className="size-[50px]" />
     </button>

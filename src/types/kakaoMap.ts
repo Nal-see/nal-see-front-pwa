@@ -5,7 +5,7 @@ export interface ImainMapPostData {
     content: string;
     likeCnt: number;
     isLiked: boolean;
-    createDate: Date;
+    createDate: string;
     address: string;
     weather: string;
     temperature: number;

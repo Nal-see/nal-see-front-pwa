@@ -27,7 +27,7 @@ const MotionWeatherCard = () => {
           paddingTop: '0.5rem',
           paddingBottom: expand ? '1rem' : '0.5rem',
         }}
-        className="absolute inset-x-0 top-5 z-10 mx-auto inline-flex w-[350px] flex-col items-start justify-center rounded-xl bg-white px-4 shadow"
+        className="absolute inset-x-0 top-5 z-[3] mx-auto inline-flex w-[350px] flex-col items-start justify-center rounded-xl bg-white px-4 shadow"
       >
         {!expand && (
           <motion.div
