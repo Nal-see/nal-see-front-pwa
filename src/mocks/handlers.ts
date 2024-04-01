@@ -493,4 +493,18 @@ export const handlers = [
       },
     );
   }),
+  http.get('/api/weather/current', () => {
+    return HttpResponse.json({
+      success: true,
+      message: '요청에 성공했습니다.',
+      results: {
+        weather: 'Clouds',
+        temperature: 31,
+        feelsLike: 34.5,
+        humidity: 59,
+        pm10: 27.72,
+        pm25: 23.89,
+      },
+    });
+  }),
 ];
