@@ -74,7 +74,7 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed, onUpdateSuccess }) => {
       : feed?.postResponseDto.content?.slice(0, maxContentLength);
 
   return (
-    <div className="mb-4 h-[calc(100vh-173px)] overflow-x-hidden overflow-y-scroll scrollbar-hide">
+    <div className="mb-4 h-[calc(100vh-173px)] overflow-hidden scrollbar-hide">
       <div className="flex items-center justify-between p-3 px-4">
         <div className="flex">
           <img
