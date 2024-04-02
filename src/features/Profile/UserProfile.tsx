@@ -17,6 +17,7 @@ const UserProfilePage = () => {
     const fetchData = async () => {
       if (userId) {
         const response = await getProfileUserData(userId);
+        console.log('response: ', response);
         setUserData(response.results); // fetched 데이터를 상태에 저장
       }
     };
@@ -32,7 +33,10 @@ const UserProfilePage = () => {
     <div className="h-dvh overflow-y-scroll">
       <BackBtnHeader title={userData.username} />
       <ProfileHeader userProfileData={userData} />
-      <FollowMesgComp followed={userData.followed} key={userId} />
+      <FollowMesgComp
+        userId={String(userId)}
+        isFollowed={userData.isFollowed}
+      />
       <ProfileFeedList userId={String(userId)} />
     </div>
   );
