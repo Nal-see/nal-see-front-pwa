@@ -1,12 +1,10 @@
 // ChatRoomPage.tsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import useWebSocket from './hooks/useConnectWebsocket';
 import BackBtnHeader from '@/components/BackBtnHeader';
 import { Input } from '@/components/ui/input';
-import { ProfileImage } from '../Feed/components/FeedCard/FeedCardStyle';
 import useAuthStore from '@/store/useAuthStore';
 import ChatBubble from './components/ChatBubbleProps';
-import { Button } from '@/components/ui/button';
 import { StyledForm, UserImage } from '../Feed/components/comment/commentStyle';
 
 const ChatRoomPage = () => {

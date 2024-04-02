@@ -28,7 +28,7 @@ const ChatBubble: React.FC<ChatBubbleProps> = ({
       )}
       <div
         className={`rounded-2xl p-2 px-4 ${
-          isMyMessage ? 'bg-accent' : 'bg-primary-foreground'
+          isMyMessage ? 'bg-accent' : 'bg-gray-300'
         }`}
       >
         {content}
