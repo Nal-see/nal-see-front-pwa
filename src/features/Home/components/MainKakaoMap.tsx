@@ -25,9 +25,14 @@ const MainKakaoMap = () => {
   const { data, error, isSuccess, isLoading } = useQuery({
     queryKey: ['mainMapPosts', swLat, swLng, neLat, neLng],
     queryFn: () =>
-      api.get(
-        `/api/posts/location?bottomLeftLat=${swLat}&bottomLeftLong=${swLng}&topRightLat=${neLat}&topRightLong=${neLng}`,
-      ),
+      api.get('/api/map', {
+        params: {
+          bottomLeftLat: swLat,
+          bottomLeftLong: swLng,
+          topRightLat: neLat,
+          topRightLong: neLng,
+        },
+      }),
   });
 
   // 게시물 데이터 fetch 후 지도 상에 표시
