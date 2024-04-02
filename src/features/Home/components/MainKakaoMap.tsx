@@ -5,6 +5,7 @@ import UpdatePositionButton from './UpdatePositionButton';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/lib/api';
 import { useEffect } from 'react';
+import { SyncLoader } from 'react-spinners';
 
 const MainKakaoMap = () => {
   const { kakaoMap, renewLocation, setCenter, mapRange, displayPostMarker } =
@@ -44,8 +45,12 @@ const MainKakaoMap = () => {
 
   return (
     <>
-      <div id="main-map" className="size-full bg-[#f4ede1]">
-        {!kakaoMap && <div>로딩중...</div>}
+      <div id="main-map" className="size-full bg-[#f2f0e9]">
+        {!kakaoMap && (
+          <div className="flex size-full flex-row items-center justify-center">
+            <SyncLoader color="#3ba5ff" />
+          </div>
+        )}
       </div>
       <UpdatePositionButton
         renewLocation={renewLocation}
