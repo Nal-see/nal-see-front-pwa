@@ -1,16 +1,23 @@
 import { create } from 'zustand';
 
+interface IPostGroupLocation {
+  bottomLeftLat: number;
+  bottomLeftLong: number;
+  topRightLat: number;
+  topRightLong: number;
+}
+
 interface IHomeStore {
-  selectedPostId: number | null;
+  selectedGroup: IPostGroupLocation | null;
   isPostDrawerOpen: boolean;
-  setPostId: (postId: number) => void;
+  setPostGroup: (selectedGroup: IPostGroupLocation) => void;
   setPostDrawerOpen: () => void;
 }
 
 const useHomeStore = create<IHomeStore>((set) => ({
-  selectedPostId: null,
+  selectedGroup: null,
   isPostDrawerOpen: false,
-  setPostId: (postId) => set({ selectedPostId: postId }),
+  setPostGroup: (selectedGroup) => set({ selectedGroup: selectedGroup }),
   setPostDrawerOpen: () =>
     set((state) => ({ isPostDrawerOpen: !state.isPostDrawerOpen })),
 }));

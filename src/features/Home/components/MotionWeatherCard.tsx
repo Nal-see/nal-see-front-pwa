@@ -18,9 +18,12 @@ const MotionWeatherCard = () => {
   const { data, error, isLoading } = useQuery({
     queryKey: ['currentWeather', longitude, latitude],
     queryFn: () =>
-      api.get(
-        `/api/weather/current?latitude=${latitude}&longitude=${longitude}`,
-      ),
+      api.get(`/api/weather/current`, {
+        params: {
+          longitude: longitude,
+          latitude: latitude,
+        },
+      }),
   });
 
   // 행정동 표시를 위한 getKakaoAddress api call
