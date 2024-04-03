@@ -5,6 +5,7 @@ import UpdatePositionButton from './UpdatePositionButton';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/lib/api';
 import { useEffect } from 'react';
+import { SyncLoader } from 'react-spinners';
 
 const MainKakaoMap = () => {
   const { kakaoMap, renewLocation, setCenter, mapRange, displayPostMarker } =
@@ -25,9 +26,14 @@ const MainKakaoMap = () => {
   const { data, error, isSuccess, isLoading } = useQuery({
     queryKey: ['mainMapPosts', swLat, swLng, neLat, neLng],
     queryFn: () =>
-      api.get(
-        `/api/posts/location?bottomLeftLat=${swLat}&bottomLeftLong=${swLng}&topRightLat=${neLat}&topRightLong=${neLng}`,
-      ),
+      api.get('/api/map', {
+        params: {
+          bottomLeftLat: swLat,
+          bottomLeftLong: swLng,
+          topRightLat: neLat,
+          topRightLong: neLng,
+        },
+      }),
   });
 
   // 게시물 데이터 fetch 후 지도 상에 표시
@@ -39,8 +45,12 @@ const MainKakaoMap = () => {
 
   return (
     <>
-      <div id="main-map" className="size-full bg-[#f4ede1]">
-        {!kakaoMap && <div>로딩중...</div>}
+      <div id="main-map" className="size-full bg-[#f2f0e9]">
+        {!kakaoMap && (
+          <div className="flex size-full flex-row items-center justify-center">
+            <SyncLoader color="#3ba5ff" />
+          </div>
+        )}
       </div>
       <UpdatePositionButton
         renewLocation={renewLocation}
