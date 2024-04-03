@@ -14,8 +14,12 @@ export const getUserInfo = async () => {
 };
 
 // POST : FCM token 서버에 등록
-export const postFCMToken = (token: string) => {
-  api.post('/api/FCM', {
-    token,
+export const postFCMToken = async (token: string) => {
+  const response = api.post('/fcmtoken', null, {
+    headers: {
+      fcmToken: token,
+    },
   });
+
+  return response;
 };

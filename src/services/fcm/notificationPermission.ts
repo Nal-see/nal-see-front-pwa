@@ -1,6 +1,7 @@
 import { getToken } from 'firebase/messaging';
 import { messaging } from './firebase-config';
 import { registerFcmServiceWorker } from './registerFcmServiceWorker';
+import { postFCMToken } from '../api/auth.service';
 
 export const handleAllowNotification = async () => {
   registerFcmServiceWorker();
@@ -14,7 +15,11 @@ export const handleAllowNotification = async () => {
 
       if (token) {
         console.log('token!', token);
-        localStorage.setItem('fcmToken', token);
+        const sendToken = await postFCMToken(token);
+
+        if (sendToken.status === 200) {
+          console.log('token sent!');
+        }
       } else {
         console.log(
           'No registration token available. Request permission to generate one.',
