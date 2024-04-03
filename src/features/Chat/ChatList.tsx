@@ -2,20 +2,26 @@ import BackBtnHeader from '@/components/BackBtnHeader';
 import ChatItem from './components/ChatItem';
 import ChatContainer from './components/ChatContainer';
 import useAuthStore from '@/store/useAuthStore';
-import useWebSocket from './hooks/useConnectWebsocket';
-import useChatListWebSocket from './hooks/useConnectListWebSocket';
+import useWebSocketStore from '@/store/useWebsocketStore';
+import { useEffect } from 'react';
 
 const ChatListPage = () => {
+  const { chatList } = useWebSocketStore();
   const { user } = useAuthStore();
-  const userId = user?.userId;
-  const { chatList } = useChatListWebSocket();
+  const myId = user?.userId;
+
+  useEffect(() => {
+    if (myId) {
+      useWebSocketStore.getState().subscribeToChatList(myId);
+    }
+  }, [myId]);
 
   return (
     <div className="flex-1">
       <BackBtnHeader title="메시지" />
       <ChatContainer>
         <ChatItem
-          chatId="1"
+          chatId="1-12"
           profileImgUrl="public/icon-32x32.png"
           username="User Kim"
           lastMessage="Last messagedfsersdfasefsdfsfefasdfefsfsefsfsf..."
@@ -23,7 +29,7 @@ const ChatListPage = () => {
           read={false}
         />
         <ChatItem
-          chatId="1"
+          chatId="2-12"
           profileImgUrl="public/icon-32x32.png"
           username="User Kim"
           lastMessage="Last messagedfsersdfasefsdfsfefasdfefsfsefsfsf..."
@@ -31,7 +37,7 @@ const ChatListPage = () => {
           read={true}
         />
         <ChatItem
-          chatId="1"
+          chatId="3-12"
           profileImgUrl="public/icon-32x32.png"
           username="User Kim"
           lastMessage="Last messagedfsersdfasefsdfsfefasdfefsfsefsfsf..."
@@ -39,7 +45,7 @@ const ChatListPage = () => {
           read={false}
         />
         <ChatItem
-          chatId="1"
+          chatId="4-13"
           profileImgUrl="public/icon-32x32.png"
           username="User Kim"
           lastMessage="Last messagedfsersdfasefsdfsfefasdfefsfsefsfsf..."

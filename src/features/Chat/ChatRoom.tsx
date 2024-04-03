@@ -1,25 +1,29 @@
 // ChatRoomPage.tsx
-import { useState } from 'react';
-import useWebSocket from './hooks/useConnectWebsocket';
+import { useEffect, useState } from 'react';
 import BackBtnHeader from '@/components/BackBtnHeader';
 import { Input } from '@/components/ui/input';
 import useAuthStore from '@/store/useAuthStore';
 import ChatBubble from './components/ChatBubbleProps';
 import { StyledForm, UserImage } from '../Feed/components/comment/commentStyle';
+import useWebSocketStore from '@/store/useWebsocketStore';
+import { useParams } from 'react-router-dom';
 
 const ChatRoomPage = () => {
-  const chatId = '1';
-  const userId = '1';
-  const [message, setMessage] = useState('');
-  const { messages, sendMessage } = useWebSocket(chatId, userId);
+  const { sendMessage } = useWebSocketStore();
+  const chatId = useParams().chatId;
   const { user } = useAuthStore();
   const myId = user?.userId;
   const myImage = user?.picture;
+  const [message, setMessage] = useState('');
   console.log('myId: ', myId);
+
+  useEffect(() => {
+    useWebSocketStore.getState().subscribeToMessages(String(chatId));
+  }, []);
 
   const handleSendMessage = () => {
     if (message.trim() !== '') {
-      sendMessage(message);
+      sendMessage(String(chatId), message);
       setMessage('');
     }
   };
@@ -28,7 +32,7 @@ const ChatRoomPage = () => {
     {
       id: 1,
       content: 'Hello',
-      senderId: 12,
+      senderId: 1,
       receiverImage: 'https://placeholder.co/50x50',
     },
     {
@@ -46,7 +50,7 @@ const ChatRoomPage = () => {
     {
       id: 4,
       content: 'I am fine',
-      senderId: 12,
+      senderId: 13,
       receiverImage: 'https://placeholder.co/50x50',
     },
   ];
