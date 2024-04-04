@@ -88,12 +88,12 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed, onUpdateSuccess }) => {
               <span className="mr-1 font-bold">
                 {feed.postResponseDto.username}
               </span>
-              <div className="text-primary-foreground">
+              {/* <div className="text-primary-foreground">
                 {feed.userInfo.height ? `${feed.userInfo.height}cm` : ''}
               </div>
               <div className="text-primary-foreground">
                 {feed.userInfo.weight ? `${feed.userInfo.weight}kg` : ''}
-              </div>
+              </div> */}
             </div>
             <span className="mr-2 text-gray-600">
               {feed.postResponseDto.address}

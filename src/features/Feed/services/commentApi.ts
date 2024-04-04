@@ -11,9 +11,6 @@ export async function postComment(
   content: string,
   userId: number,
 ): Promise<void> {
-  console.log('userId: ', userId);
-  console.log('postId: ', postId);
-  console.log('content: ', content);
   if (!userId) throw new Error('User not found');
   const response = await api.post(`/api/posts/${postId}/comments`, {
     content,
