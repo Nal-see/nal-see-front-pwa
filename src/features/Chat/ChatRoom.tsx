@@ -9,18 +9,39 @@ import useWebSocketStore from '@/store/useWebsocketStore';
 import { useParams } from 'react-router-dom';
 
 const ChatRoomPage = () => {
-  const { sendMessage, messages } = useWebSocketStore();
-  const chatId = useParams().chatId;
   const { user } = useAuthStore();
+  const {
+    connect,
+    disconnect,
+    sendMessage,
+    messages,
+    subscribeToMessages,
+    unSubscribeFromMessages,
+  } = useWebSocketStore();
+  const chatId = useParams().chatId;
   const myId = user?.userId;
   const myImage = user?.picture;
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    useWebSocketStore.getState().subscribeToMessages(String(chatId));
-  }, [chatId]);
-  console.log('myId: ', myId);
-  console.log('messages: ', messages);
+    if (user && chatId) {
+      connect(user.userId);
+      subscribeToMessages(chatId);
+    }
+    return () => {
+      if (chatId) {
+        unSubscribeFromMessages(chatId);
+      }
+      disconnect();
+    };
+  }, [
+    user,
+    chatId,
+    connect,
+    disconnect,
+    subscribeToMessages,
+    unSubscribeFromMessages,
+  ]);
 
   const handleSendMessage = () => {
     if (message.trim() !== '') {
@@ -28,6 +49,7 @@ const ChatRoomPage = () => {
       setMessage('');
     }
   };
+  console.log('messages: ', messages);
 
   const dummyData = [
     {

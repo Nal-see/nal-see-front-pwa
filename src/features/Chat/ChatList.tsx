@@ -6,15 +6,26 @@ import useWebSocketStore from '@/store/useWebsocketStore';
 import { useEffect } from 'react';
 
 const ChatListPage = () => {
-  const { chatList } = useWebSocketStore();
+  const {
+    connect,
+    disconnect,
+    chatList,
+    subscribeToChatList,
+    unSubscribeFromChatList,
+  } = useWebSocketStore();
   const { user } = useAuthStore();
   const myId = user?.userId;
 
   useEffect(() => {
-    if (myId) {
-      useWebSocketStore.getState().subscribeToChatList(myId);
+    if (user) {
+      connect(myId);
+      subscribeToChatList(user.userId);
     }
-  }, [myId]);
+    return () => {
+      disconnect();
+    };
+  }, [user, connect, disconnect, subscribeToChatList]);
+
   console.log('chatList: ', chatList);
 
   return (

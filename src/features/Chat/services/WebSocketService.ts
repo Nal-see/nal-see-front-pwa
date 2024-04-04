@@ -2,7 +2,6 @@
 import { Client, IMessage } from '@stomp/stompjs';
 
 export interface WebSocketConnectOptions {
-  token: string;
   userId: string;
 }
 
@@ -17,7 +16,7 @@ export class WebSocketService {
     const { userId } = options;
 
     this.client = new Client({
-      brokerURL: 'ws://localhost:8090/main',
+      brokerURL: 'ws://localhost:8090',
       connectHeaders: {
         userId: userId,
       },
