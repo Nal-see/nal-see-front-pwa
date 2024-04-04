@@ -15,6 +15,7 @@ const ChatListPage = () => {
       useWebSocketStore.getState().subscribeToChatList(myId);
     }
   }, [myId]);
+  console.log('chatList: ', chatList);
 
   return (
     <div className="flex-1">
