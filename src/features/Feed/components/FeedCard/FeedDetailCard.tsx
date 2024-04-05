@@ -74,7 +74,7 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed, onUpdateSuccess }) => {
       : feed?.postResponseDto.content?.slice(0, maxContentLength);
 
   return (
-    <div className="mb-4 h-[calc(100vh-173px)] overflow-x-hidden overflow-y-scroll scrollbar-hide">
+    <div className="mb-4 h-[calc(100vh-173px)] overflow-hidden scrollbar-hide">
       <div className="flex items-center justify-between p-3 px-4">
         <div className="flex">
           <img
@@ -88,12 +88,12 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed, onUpdateSuccess }) => {
               <span className="mr-1 font-bold">
                 {feed.postResponseDto.username}
               </span>
-              <div className="text-primary-foreground">
+              {/* <div className="text-primary-foreground">
                 {feed.userInfo.height ? `${feed.userInfo.height}cm` : ''}
               </div>
               <div className="text-primary-foreground">
                 {feed.userInfo.weight ? `${feed.userInfo.weight}kg` : ''}
-              </div>
+              </div> */}
             </div>
             <span className="mr-2 text-gray-600">
               {feed.postResponseDto.address}
@@ -175,11 +175,11 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed, onUpdateSuccess }) => {
             </>
           )}
         </p>
-        <div className="flex gap-1">
+        <div className="flex flex-wrap gap-1">
           {feed.userInfo.style.map((style, index) => (
-            <div key={index} className="mr-2 mt-2 text-primary-foreground">
+            <p key={index} className="mr-1 mt-2 text-primary-foreground">
               #{style}
-            </div>
+            </p>
           ))}
         </div>
         <div className="mr-2 mt-2 text-primary-foreground">

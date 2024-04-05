@@ -52,6 +52,7 @@ export const useCurrentLocation = () => {
   }, [latitude, longitude]);
 
   const renewLocation = () => {
+    setIsCurrentLocation(false);
     getCurrentPosition(); // 현재 위치 갱신
   };
 

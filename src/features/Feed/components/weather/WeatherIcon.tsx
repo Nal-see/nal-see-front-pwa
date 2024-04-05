@@ -1,7 +1,7 @@
 import React from 'react';
 import { Player } from '@lottiefiles/react-lottie-player';
 import {
-  formatWeatherToIcon,
+  formatWeatherToImage,
   weatherSelector,
 } from '../../utils/dataFormatUtil';
 
@@ -14,7 +14,7 @@ const WeatherAnimation: React.FC<WeatherAnimationProps> = ({
   weather,
   temperature,
 }) => {
-  const src = formatWeatherToIcon(weather);
+  const src = formatWeatherToImage(weather);
 
   return (
     <div className="flex items-center justify-between py-3 pr-4">

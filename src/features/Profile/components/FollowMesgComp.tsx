@@ -1,24 +1,39 @@
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
-import { followUser, unfollowUser } from '../services/profileApi';
+import { followUser, unFollowUser } from '../services/profileApi';
+import { useNavigate } from 'react-router-dom';
+import useAuthStore from '@/store/useAuthStore';
 
 const FollowMesgComp = ({
-  followed,
   userId,
+  isFollowed,
 }: {
-  followed: boolean;
   userId: string;
+  isFollowed: boolean;
 }) => {
-  const [followedState, setFollowedState] = useState(followed);
+  const [followedState, setFollowedState] = useState(isFollowed);
+  const navigate = useNavigate();
+  const { user } = useAuthStore();
+  const myId = user?.userId;
 
   const handleFollow = () => {
     if (followedState) {
-      unfollowUser(userId);
+      unFollowUser(userId);
     } else {
       followUser(userId);
     }
     setFollowedState(!followedState);
   };
+
+  const handleSendMessage = () => {
+    if (!myId) return;
+    if (Number(myId) < Number(userId)) {
+      navigate(`/chat/${myId}-${userId}`);
+    } else {
+      navigate(`/chat/${userId}-${myId}`);
+    }
+  };
+
   return (
     <div className="mx-2 flex justify-around">
       <Button
@@ -27,7 +42,10 @@ const FollowMesgComp = ({
       >
         {followedState ? '팔로잉' : '팔로우'}
       </Button>
-      <Button className="text-secondary-foregroundß mx-1 my-2 w-[50dvh] bg-secondary-foreground font-bold">
+      <Button
+        className="text-secondary-foregroundß mx-1 my-2 w-[50dvh] bg-secondary-foreground font-bold"
+        onClick={handleSendMessage}
+      >
         메시지
       </Button>
     </div>

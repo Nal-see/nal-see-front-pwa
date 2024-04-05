@@ -37,7 +37,7 @@ export async function followUser(userId: string) {
 
 // /api/users/{userId}/unfollow
 
-export async function unfollowUser(userId: string) {
+export async function unFollowUser(userId: string) {
   try {
     const response = await api.post(`/api/users/${userId}/unfollow`);
     console.log('response: 언팔로우', response);

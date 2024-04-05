@@ -37,24 +37,24 @@ export const formatLikeCnt = (likeCnt: number): string => {
     return likeCnt.toString();
   }
 };
-export const formatWeatherToIcon = (weather: string): string => {
-  switch (weather) {
-    case 'Thunderstorm':
-      return 'https://lottie.host/fdf3ae81-f4cf-446b-a6fc-69075a7409b0/nz0FAe1vat.json';
-    case 'Rain':
-      return 'https://lottie.host/808efd18-5a89-45fc-9c55-6ed2a13c19d7/Tb3oLEqrhf.json';
-    case 'Snow':
-      return 'https://lottie.host/113abfc6-7a59-4ace-99dd-2e31f9864a48/AGJk7dM9Is.json';
-    case 'Fog':
-      return 'https://lottie.host/003c7109-8bfa-4854-bbe4-6330d780c3de/ujOoPsrbWM.json';
-    case 'Clear':
-      return 'https://lottie.host/9c939ea7-1110-4fe6-ade9-36692a7f453c/YT7og5PEHG.json';
-    case 'Clouds':
-      return 'https://lottie.host/dec32a22-f774-4c1b-a864-4dc6848833a7/WlHOBzXf7n.json';
-    default:
-      return '';
-  }
-};
+// export const formatWeatherToIcon = (weather: string): string => {
+//   switch (weather) {
+//     case 'Thunderstorm':
+//       return 'https://lottie.host/fdf3ae81-f4cf-446b-a6fc-69075a7409b0/nz0FAe1vat.json';
+//     case 'Rain':
+//       return 'https://lottie.host/808efd18-5a89-45fc-9c55-6ed2a13c19d7/Tb3oLEqrhf.json';
+//     case 'Snow':
+//       return 'https://lottie.host/113abfc6-7a59-4ace-99dd-2e31f9864a48/AGJk7dM9Is.json';
+//     case 'Fog':
+//       return 'https://lottie.host/003c7109-8bfa-4854-bbe4-6330d780c3de/ujOoPsrbWM.json';
+//     case 'Clear':
+//       return 'https://lottie.host/9c939ea7-1110-4fe6-ade9-36692a7f453c/YT7og5PEHG.json';
+//     case 'Clouds':
+//       return 'https://lottie.host/dec32a22-f774-4c1b-a864-4dc6848833a7/WlHOBzXf7n.json';
+//     default:
+//       return '';
+//   }
+// };
 
 export const formatWeatherToImage = (weather: string): string => {
   switch (weather) {

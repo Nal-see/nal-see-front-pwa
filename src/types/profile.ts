@@ -23,7 +23,7 @@ export interface UserProfilePageProps {
   feedCount: number;
   followerCount: number;
   followingCount: number;
-  followed: boolean;
+  isFollowed: boolean;
   username: string;
   userImage: string | null;
 }
