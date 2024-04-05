@@ -32,5 +32,10 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["./src", "svg.d.ts"]
+  "include": [
+    "./src",
+    "svg.d.ts",
+    "public/firebase-messaging-sw.js",
+    "public/firebase-messaging-sw.js"
+  ]
 }

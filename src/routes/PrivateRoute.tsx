@@ -8,6 +8,7 @@ import {
 import Tabbar from '@/components/Tabbar';
 import { IUserInfoResponse } from '@/types/auth';
 import { useEffect } from 'react';
+import { handleAllowNotification } from '@/services/fcm/notificationPermission';
 
 const PrivateRoute = () => {
   const userData = useRouteLoaderData('user') as IUserInfoResponse;
@@ -18,6 +19,9 @@ const PrivateRoute = () => {
     if (pathname === '/') {
       navigate('/home');
     }
+
+    // 알람 설정 및 FCM 토큰 등록
+    handleAllowNotification();
   }, []);
 
   return userData ? (
