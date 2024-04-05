@@ -17,7 +17,7 @@ const useChatListWebSocket = () => {
 
   useEffect(() => {
     const stompClient = new Client({
-      brokerURL: 'ws://localhost:8090/main',
+      brokerURL: 'ws://nalsee.site:8090//main',
       connectHeaders: {},
       debug: function () {
         // console.log('websocket debug->', str);

@@ -29,7 +29,7 @@ interface CommentProps {
 }
 
 const Comment: React.FC<CommentProps> = ({ comment, postId, isMyComment }) => {
-  const [isLiked, setIsLiked] = useState(comment.isLiked);
+  const [isLiked, setIsLiked] = useState(comment.liked);
   const [likeCount, setLikeCount] = useState(comment.likeCNT);
   const [showFullContent, setShowFullContent] = useState(false);
   const [isEditing, setIsEditing] = useState(false);

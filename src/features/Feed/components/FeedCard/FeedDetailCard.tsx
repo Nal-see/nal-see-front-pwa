@@ -32,6 +32,7 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed, onUpdateSuccess }) => {
   const maxContentLength = 100;
   const navigate = useNavigate();
   const { isLiked, likeCnt, handleToggleLike } = useFeedInteraction(
+    feed.postResponseDto.liked,
     feed.postResponseDto.likeCnt,
     Number(feed.postResponseDto.id),
   );

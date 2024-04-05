@@ -26,7 +26,9 @@ interface WebSocketState {
   connect: (options: WebSocketConnectOptions) => void;
   disconnect: () => void;
   subscribeToChatList: (userId: string) => void;
+  unSubscribeFromChatList: (userId: string) => void;
   subscribeToMessages: (chatId: string) => void;
+  unSubscribeFromMessages: (chatId: string) => void;
   sendMessage: (chatId: string, content: string) => void;
 }
 
@@ -35,18 +37,25 @@ const useWebSocketStore = create<WebSocketState>((set, get) => ({
   isConnected: false,
   chatList: [],
   messages: [],
-  connect: (options) => {
-    const webSocketService = new WebSocketService(options);
+  connect: async (options) => {
+    console.log('options: ', options);
+    const webSocketService = new WebSocketService();
     webSocketService.client.onConnect = () => {
       console.log('연결성공하였습니다.');
       set({ isConnected: true });
+
       webSocketService.subscriptions.forEach((sub) => {
         webSocketService.client.subscribe(sub.destination, sub.callback);
       });
     };
+
     webSocketService.client.onDisconnect = () => {
+      console.log('연결이 끊어졌습니다. 재연결을 시도합니다.');
       set({ isConnected: false });
+      // 재연결 로직 추가
+      webSocketService.activate();
     };
+
     set({ webSocketService, isConnected: false });
     webSocketService.activate();
   },
@@ -56,11 +65,13 @@ const useWebSocketStore = create<WebSocketState>((set, get) => ({
       return { webSocketService: null, isConnected: false };
     });
   },
-  subscribeToChatList: (userId: string) => {
+  subscribeToChatList: async (userId: string) => {
     const { webSocketService } = get();
-    if (webSocketService) {
+    console.log('webSocketService: ', webSocketService);
+    if (webSocketService && useWebSocketStore.getState().isConnected) {
+      console.log('된거임?');
       webSocketService.subscribeToDestination(
-        `/user/queue/sub/chat-list/${userId}`,
+        `/sub/${userId}/chat-list`,
         (message) => {
           const receivedChatList = JSON.parse(message.body);
           set({ chatList: receivedChatList });
@@ -69,13 +80,19 @@ const useWebSocketStore = create<WebSocketState>((set, get) => ({
       webSocketService.publishMessage(`/app/chat-list/${userId}`, { userId });
     }
   },
-  subscribeToMessages: (chatId: string) => {
+  unSubscribeFromChatList: async (userId: string) => {
+    const { webSocketService } = get();
+    if (webSocketService) {
+      webSocketService.client.unsubscribe(`/sub/${userId}/chat-list`);
+    }
+  },
+  subscribeToMessages: async (chatId: string) => {
     const userId = useAuthStore.getState().user?.userId;
     if (!userId || chatId.includes(userId)) console.log('Invalid chatId');
     const { webSocketService } = get();
-    if (webSocketService) {
+    if (webSocketService && useWebSocketStore.getState().isConnected) {
       webSocketService.subscribeToDestination(
-        `/user/queue/sub/messages/${chatId}`,
+        `/sub/${chatId}/chat`,
         (message) => {
           const receivedMessage = JSON.parse(message.body);
           set((state) => ({
@@ -85,7 +102,13 @@ const useWebSocketStore = create<WebSocketState>((set, get) => ({
       );
     }
   },
-  sendMessage: (chatId: string, content: string) => {
+  unSubscribeFromMessages: async (chatId: string) => {
+    const { webSocketService } = get();
+    if (webSocketService) {
+      webSocketService.client.unsubscribe(`/sub/${chatId}/chat`);
+    }
+  },
+  sendMessage: async (chatId: string, content: string) => {
     const { webSocketService } = get();
     const userId = useAuthStore.getState().user?.userId;
     if (!userId || chatId.includes(userId)) return;
@@ -95,7 +118,9 @@ const useWebSocketStore = create<WebSocketState>((set, get) => ({
         sender: userId,
         content,
       };
-      webSocketService.publishMessage('/pub/chat', newMessage, { chatId });
+      webSocketService.publishMessage(`/pub/${chatId}/chat`, newMessage, {
+        chatId,
+      });
     }
   },
 }));
