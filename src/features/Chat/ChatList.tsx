@@ -18,7 +18,7 @@ const ChatListPage = () => {
 
   useEffect(() => {
     if (user) {
-      connect(myId);
+      connect({ userId: myId });
       subscribeToChatList(myId);
     }
     return () => {

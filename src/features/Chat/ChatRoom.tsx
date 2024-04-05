@@ -25,7 +25,7 @@ const ChatRoomPage = () => {
 
   useEffect(() => {
     if (user && chatId) {
-      connect(user.userId);
+      connect({ userId: user.userId });
       subscribeToMessages(chatId);
     }
     return () => {
