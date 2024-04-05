@@ -17,15 +17,10 @@ const ChatListPage = () => {
   const myId = user?.userId;
 
   useEffect(() => {
-    const connectAndSubscribe = async () => {
-      if (user) {
-        await connect(myId);
-        await subscribeToChatList(user.userId);
-      }
-    };
-
-    connectAndSubscribe();
-
+    if (user) {
+      connect(myId);
+      subscribeToChatList(myId);
+    }
     return () => {
       disconnect();
     };
