@@ -19,6 +19,8 @@ const PrivateRoute = () => {
     if (pathname === '/') {
       navigate('/home');
     }
+
+    // 알람 설정 및 FCM 토큰 등록
     handleAllowNotification();
   }, []);
 

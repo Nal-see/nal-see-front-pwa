@@ -1,22 +1,33 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
-import { getMessaging } from 'firebase/messaging';
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getMessaging, onMessage } from 'firebase/messaging';
 
-// Your web app's Firebase configuration
+// Firebase configuration
 const firebaseConfig = {
-  apiKey: 'AIzaSyDMYtCoKQae2-FS1UZWG4mOxkhQlL9kSgs',
-  authDomain: 'nal-see.firebaseapp.com',
-  projectId: 'nal-see',
-  storageBucket: 'nal-see.appspot.com',
-  messagingSenderId: '4974077086',
-  appId: '1:4974077086:web:425127726106e888f7078f',
-  measurementId: 'G-F057P9WFMX',
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 export const messaging = getMessaging(app);
+
+// foreground message 처리
+onMessage(messaging, (payload) => {
+  const notificationTitle = payload.notification!.title!;
+  const notificationOptions = {
+    body: payload.notification!.body,
+    icon: '/icon-192x192.png',
+  };
+
+  if (Notification.permission === 'granted') {
+    console.log('foreground message received:', payload);
+    new Notification(notificationTitle, notificationOptions);
+  }
+});
