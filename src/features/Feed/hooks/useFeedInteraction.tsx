@@ -2,8 +2,12 @@
 import { useState } from 'react';
 import { addPostLike, cancelPostLike } from '@/features/Feed/services/feedApi';
 
-const useFeedInteraction = (initialLikeCnt: number, postId: number) => {
-  const [isLiked, setIsLiked] = useState(false);
+const useFeedInteraction = (
+  liked: boolean,
+  initialLikeCnt: number,
+  postId: number,
+) => {
+  const [isLiked, setIsLiked] = useState(liked);
   const [likeCnt, setLikeCnt] = useState(initialLikeCnt);
 
   const handleToggleLike = async (event: React.MouseEvent<HTMLSpanElement>) => {
