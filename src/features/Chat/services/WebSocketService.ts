@@ -1,5 +1,5 @@
-// WebSocketService.ts
 import { Client, IMessage } from '@stomp/stompjs';
+import SockJS from 'sockjs-client';
 
 export interface WebSocketConnectOptions {
   userId: string;
@@ -12,14 +12,11 @@ export class WebSocketService {
     callback: (message: IMessage) => void;
   }> = [];
 
-  constructor(options: WebSocketConnectOptions) {
-    const { userId } = options;
-
+  constructor() {
+    const socket = new SockJS('https://nalsee.site:8090/main');
     this.client = new Client({
-      brokerURL: 'ws://localhost:8090',
-      connectHeaders: {
-        userId: userId,
-      },
+      webSocketFactory: () => socket,
+      connectHeaders: {},
       debug: function () {
         // console.log('websocket debug->', str);
       },

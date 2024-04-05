@@ -38,20 +38,24 @@ const useWebSocketStore = create<WebSocketState>((set, get) => ({
   chatList: [],
   messages: [],
   connect: (options) => {
-    const webSocketService = new WebSocketService(options);
+    console.log('options: ', options);
+    const webSocketService = new WebSocketService();
     webSocketService.client.onConnect = () => {
       console.log('연결성공하였습니다.');
       set({ isConnected: true });
+
       webSocketService.subscriptions.forEach((sub) => {
         webSocketService.client.subscribe(sub.destination, sub.callback);
       });
     };
+
     webSocketService.client.onDisconnect = () => {
       console.log('연결이 끊어졌습니다. 재연결을 시도합니다.');
       set({ isConnected: false });
       // 재연결 로직 추가
       webSocketService.activate();
     };
+
     set({ webSocketService, isConnected: false });
     webSocketService.activate();
   },
