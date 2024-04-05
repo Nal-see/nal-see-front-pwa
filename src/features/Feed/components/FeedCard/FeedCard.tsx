@@ -22,6 +22,7 @@ const FeedListCard: React.FC<FeedCardProps> = ({ feed }) => {
   const navigate = useNavigate();
 
   const { isLiked, likeCnt, handleToggleLike } = useFeedInteraction(
+    feed.liked,
     feed.likeCnt,
     Number(feed.id),
   );
