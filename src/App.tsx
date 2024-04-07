@@ -8,7 +8,7 @@ function App() {
   const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
-      <Toaster position="top-center" />
+      <Toaster position="top-center" closeButton />
       {/* font 설정, 100dvh설정 등등 */}
       <div className="">
         <Router />
