@@ -15,6 +15,7 @@ export const PWAConfig: Partial<VitePWAOptions> = {
     theme_color: '#ffffff',
     start_url: '/',
     scope: '/',
+    display: 'standalone',
     icons: [
       {
         src: 'icon-16x16.png',
