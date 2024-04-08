@@ -14,7 +14,7 @@ const UserProfilePage = () => {
 
   const [userData, setUserData] = useState<UserProfilePageProps | null>(null);
 
-  const { data, isLoading, refetch } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: ['userProfileInfo', userId],
     queryFn: () => {
       return getProfileUserData(String(userId));
@@ -39,6 +39,7 @@ const UserProfilePage = () => {
       <FollowMesgComp
         userId={String(userId)}
         isFollowed={userData.isFollowed}
+        onSuccess={refetch}
       />
       <ProfileFeedList userId={String(userId)} />
     </div>
