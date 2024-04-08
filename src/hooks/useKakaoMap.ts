@@ -16,16 +16,19 @@ export const useKakaoMap = (
 ) => {
   const { longitude, latitude, isCurrentLocation, renewLocation } =
     useCurrentLocation();
-  const [kakaoMap, setKakaoMap] = useState<any>();
-  const [marker, setMarker] = useState<any>();
+  const [kakaoMap, setKakaoMap] = useState<any>(); // 카카오맵 인스턴스
+  const [marker, setMarker] = useState<any>(); // 현재 위치 표시 마커
+  const [customOverlay, setCustomOverlay] = useState<any[]>([]); // Custom overlay : 게시물 표시 마커들의 배열
+  // 지도 범위 변경 시 : 각 모서리의 좌표값 상태 저장
   const [mapRange, setMapRange] = useState<{
     swLng: number;
     swLat: number;
     neLng: number;
     neLat: number;
   }>();
-  const { setPostGroup, setPostDrawerOpen } = useHomeStore();
+  const { setPostGroup, setPostDrawerOpen, setIsMapMoved } = useHomeStore();
 
+  /* ---------- 카카오 지도 인스턴스 초기화 ---------- */
   useEffect(() => {
     if (longitude && latitude && container) {
       window.kakao.maps.load(() => {
@@ -38,7 +41,7 @@ export const useKakaoMap = (
           level: 5,
         };
 
-        // 마커 이미지 커스텀
+        // 현재 위치 마커 이미지 커스텀 (로딩 완료 & 로딩중))
         const markerImage = new window.kakao.maps.MarkerImage(
           markerImg,
           new window.kakao.maps.Size(40, 40),
@@ -48,9 +51,13 @@ export const useKakaoMap = (
           new window.kakao.maps.Size(40, 40),
         );
 
+        // Kakao Map 객체 생성
         const map = new window.kakao.maps.Map(container, options);
 
-        // Event Handlers : 중심좌표나 확대 수준이 변경되었을 때 타일 이미지 로드가 모두 완료된 경우 (미세한 이동은 trigger되지 않음)
+        // Event Handlers
+
+        // 1. 중심좌표나 확대 수준이 변경되었을 때 타일 이미지 로드가 모두 완료된 경우 (미세한 이동은 trigger되지 않음)
+        // 렌더링된 지도의 범위를 나타내는 각 꼭짓점 좌표값을 얻어 상태값으로 저장한다
         window.kakao.maps.event.addListener(map, 'tilesloaded', function () {
           const bounds = map.getBounds();
           const swLng = bounds.getSouthWest().getLng();
@@ -66,8 +73,16 @@ export const useKakaoMap = (
           });
         });
 
-        setKakaoMap(map); // 지도 컴포넌트
-        // 마커 컴포넌트
+        // 2. 지도가 드래그되거나 확대/축소되었을 때
+        // 지도 재검색 버튼 노출을 위해 전역 스토어에 isMapMoved 상태값 변경
+        window.kakao.maps.event.addListener(map, 'idle', function () {
+          setIsMapMoved(true);
+        });
+
+        // 생성된 지도 객체 - 상태값 저장
+        setKakaoMap(map);
+
+        // 현재 위치 마커 컴포넌트
         setMarker(
           new window.kakao.maps.Marker({
             map: map,
@@ -84,16 +99,20 @@ export const useKakaoMap = (
     container,
     markerImg,
     loadingMarkerImg,
+    setIsMapMoved,
   ]);
 
+  /* ---------- 현재 위치로 지도의 중심좌표를 이동 ---------- */
   const setCenter = () => {
     if (kakaoMap) {
       kakaoMap.setCenter(new window.kakao.maps.LatLng(latitude, longitude));
     }
   };
 
-  // 조회된 개별 포스트를 커스텀 오버레이로 지도에 표시
+  /* ---------- 조회된 날씨드롭(게시물)을 커스텀 오버레이로 지도상에 표시 ---------- */
   const displayPostMarker = (dataArr: ImainMapPostList[]) => {
+    clearCustomOverlay();
+
     if (kakaoMap && dataArr.length) {
       for (const postGroup of dataArr) {
         const position = new window.kakao.maps.LatLng(
@@ -114,7 +133,7 @@ export const useKakaoMap = (
         const content = document.createElement('div');
         content.innerHTML = contentInner;
         content.addEventListener('click', () => {
-          // 오버레이 클릭 시 : 포스트 리스트 drawer 열림
+          // 오버레이 클릭 시 : 해당 위치의 게시물들을 열람할 수 있는 drawer 열림
           setPostGroup({
             bottomLeftLat: postGroup.bottomLeftLat,
             bottomLeftLong: postGroup.bottomLeftLong,
@@ -124,7 +143,7 @@ export const useKakaoMap = (
           setPostDrawerOpen();
         });
 
-        const customOverlay = new window.kakao.maps.CustomOverlay({
+        const newCustomOverlay = new window.kakao.maps.CustomOverlay({
           map: kakaoMap,
           clickable: true,
           content: content,
@@ -132,8 +151,17 @@ export const useKakaoMap = (
           zIndex: 10,
         });
 
-        customOverlay.setMap(kakaoMap);
+        setCustomOverlay((prev) => [...prev, newCustomOverlay]);
+        newCustomOverlay.setMap(kakaoMap);
       }
+    }
+  };
+
+  /* ---------- 기존 커스텀 오버레이를 지도 상에서 제거 ---------- */
+  const clearCustomOverlay = () => {
+    if (customOverlay.length) {
+      customOverlay?.forEach((overlay) => overlay.setMap(null));
+      setCustomOverlay([]);
     }
   };
 
@@ -144,5 +172,6 @@ export const useKakaoMap = (
     renewLocation,
     setCenter,
     displayPostMarker,
+    clearCustomOverlay,
   };
 };

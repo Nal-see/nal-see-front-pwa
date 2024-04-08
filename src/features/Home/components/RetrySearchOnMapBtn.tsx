@@ -1,11 +1,13 @@
-import React from 'react';
 import { RedoOutline } from 'antd-mobile-icons';
 import useHomeStore from '../store/useHomeStore';
 
 const RetrySearchOnMapBtn = () => {
-  const { isMapMoved } = useHomeStore();
+  const { isMapMoved, setIsMapMoved, setRefetchPostsOnMap } = useHomeStore();
 
-  const refetchOnMapMove = () => {};
+  const refetchOnMapMove = () => {
+    setRefetchPostsOnMap(true);
+    setIsMapMoved(false);
+  };
 
   return (
     <>
