@@ -6,6 +6,7 @@ import { getProfileUserData } from './services/profileApi';
 import { useParams } from 'react-router-dom';
 import FollowMesgComp from './components/FollowMesgComp';
 import { UserProfilePageProps } from '@/types/profile';
+import { useQuery } from '@tanstack/react-query';
 
 const UserProfilePage = () => {
   const userId = useParams().userId;
@@ -13,17 +14,19 @@ const UserProfilePage = () => {
 
   const [userData, setUserData] = useState<UserProfilePageProps | null>(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (userId) {
-        const response = await getProfileUserData(userId);
-        console.log('response: ', response);
-        setUserData(response.results); // fetched 데이터를 상태에 저장
-      }
-    };
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: ['userProfileInfo', userId],
+    queryFn: () => {
+      return getProfileUserData(String(userId));
+    },
+    enabled: !!userId,
+  });
 
-    fetchData();
-  }, [userId]);
+  useEffect(() => {
+    if (data) {
+      setUserData(data.results);
+    }
+  }, [data, userId]);
 
   if (!userData) {
     return <div>Loading...</div>;

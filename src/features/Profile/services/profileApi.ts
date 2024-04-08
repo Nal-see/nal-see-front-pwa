@@ -46,3 +46,13 @@ export async function unFollowUser(userId: string) {
     console.log(error);
   }
 }
+
+export async function updateProfile(data) {
+  console.log('data: ', data);
+  try {
+    const response = await api.post(`/api/users/userInfo`, data);
+    console.log('response: 프로필 업데이트', response);
+  } catch (error) {
+    console.log(error);
+  }
+}
