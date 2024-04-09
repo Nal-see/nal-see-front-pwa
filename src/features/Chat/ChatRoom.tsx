@@ -7,6 +7,7 @@ import ChatBubble from './components/ChatBubbleProps';
 import { StyledForm, UserImage } from '../Feed/components/comment/commentStyle';
 import useWebSocketStore from '@/store/useWebsocketStore';
 import { useParams } from 'react-router-dom';
+import { getChatMesg } from './services/chatApi';
 
 const ChatRoomPage = () => {
   const { user } = useAuthStore();
@@ -17,6 +18,7 @@ const ChatRoomPage = () => {
     messages,
     subscribeToMessages,
     unSubscribeFromMessages,
+    isConnected,
   } = useWebSocketStore();
   const chatId = useParams().chatId;
   const myId = user?.userId;
@@ -24,24 +26,26 @@ const ChatRoomPage = () => {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    if (user && chatId) {
-      connect({ userId: user.userId });
+    if (user) {
+      connect({ userId: myId });
+    }
+    return () => {
+      disconnect();
+    };
+  }, [user, connect, disconnect, myId]);
+
+  useEffect(() => {
+    if (chatId && myId && isConnected) {
+      console.log('된건가요?');
       subscribeToMessages(chatId);
+      console.log('asdbasbdakjsdsnda', getChatMesg(chatId));
     }
     return () => {
       if (chatId) {
         unSubscribeFromMessages(chatId);
       }
-      disconnect();
     };
-  }, [
-    user,
-    chatId,
-    connect,
-    disconnect,
-    subscribeToMessages,
-    unSubscribeFromMessages,
-  ]);
+  }, [chatId, isConnected, myId, subscribeToMessages, unSubscribeFromMessages]);
 
   const handleSendMessage = () => {
     if (message.trim() !== '') {

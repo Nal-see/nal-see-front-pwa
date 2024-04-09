@@ -41,3 +41,14 @@ export interface IPostEditFormData {
     gender: string | null;
   };
 }
+
+export interface IProfileEditForm {
+  userInfo: {
+    username: string;
+    height: number | null;
+    weight: number | null;
+    constitution: string | null;
+    style: string[];
+    gender: string | null;
+  };
+}

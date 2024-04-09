@@ -75,3 +75,9 @@ export interface IPostEditForm {
   style: string[];
   gender: string | null;
 }
+
+export interface IPostEditFormData {
+  username: string;
+  height: number | null;
+  weight: number | null;
+}
