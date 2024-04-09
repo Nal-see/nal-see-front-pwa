@@ -3,6 +3,7 @@ import NotificationButton from './components/NotificationButton';
 import MotionWeatherCard from './components/MotionWeatherCard';
 import PostGroupListDrawer from './PostGroupListDrawer';
 import ToastNotiPermission from '../Notifications/components/ToastNotiPermission';
+import RetrySearchOnMapBtn from './components/RetrySearchOnMapBtn';
 
 const HomePage = () => {
   return (
@@ -14,6 +15,7 @@ const HomePage = () => {
         <MainKakaoMap />
       </div>
       <NotificationButton />
+      <RetrySearchOnMapBtn />
     </div>
   );
 };

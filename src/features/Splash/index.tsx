@@ -30,7 +30,7 @@ const SplashPage = () => {
 
       <button
         onClick={() => handleOauthLogin('kakao')}
-        className="absolute inset-x-0 bottom-[72px] mx-auto w-80 cursor-pointer"
+        className="absolute inset-x-0 bottom-[72px] mx-auto inline-flex w-80 cursor-pointer justify-center"
       >
         <img src={kakaoLoginBtn} />
       </button>
