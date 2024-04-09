@@ -11,7 +11,6 @@ import { SyncLoader } from 'react-spinners';
 const ProfileFeedList = ({ userId }: { userId: string | number }) => {
   const { user } = useAuthStore();
   userId = userId ? userId : Number(user?.userId);
-  console.log('userId: ', userId);
   const { data, isFetchingNextPage, fetchNextPage, hasNextPage } =
     useInfiniteQuery<ProfileFeedData>({
       queryKey: ['profileFeed'],
@@ -25,7 +24,6 @@ const ProfileFeedList = ({ userId }: { userId: string | number }) => {
     });
 
   const feedList = data?.pages.flatMap((page) => page.results) || [];
-  console.log('feedList: ', feedList);
 
   const [ref, inView] = useInView({
     threshold: 0,
