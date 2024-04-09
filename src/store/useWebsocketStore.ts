@@ -67,7 +67,7 @@ const useWebSocketStore = create<WebSocketState>((set, get) => ({
   },
   subscribeToChatList: async (userId: string) => {
     const { webSocketService } = get();
-    console.log('webSocketService: ', webSocketService);
+    console.log('webSocketService: adsdads', webSocketService);
     if (webSocketService && useWebSocketStore.getState().isConnected) {
       console.log('된거임?');
       webSocketService.subscribeToDestination(

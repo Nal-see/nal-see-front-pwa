@@ -12,19 +12,25 @@ const ChatListPage = () => {
     chatList,
     subscribeToChatList,
     unSubscribeFromChatList,
+    isConnected,
   } = useWebSocketStore();
   const { user } = useAuthStore();
   const myId = user?.userId;
 
   useEffect(() => {
     if (user) {
-      connect(myId);
-      subscribeToChatList(myId);
+      connect({ userId: myId });
     }
     return () => {
       disconnect();
     };
-  }, [user, connect, disconnect, subscribeToChatList]);
+  }, [user, connect, disconnect, myId]);
+
+  useEffect(() => {
+    if (isConnected && user) {
+      subscribeToChatList(myId);
+    }
+  }, [isConnected, myId, subscribeToChatList, user]);
 
   console.log('chatList: ', chatList);
 
