@@ -5,9 +5,12 @@ import UpdatePositionButton from './UpdatePositionButton';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/lib/api';
 import { useEffect } from 'react';
-import { SyncLoader } from 'react-spinners';
+import { BeatLoader, PuffLoader } from 'react-spinners';
+import useHomeStore from '../store/useHomeStore';
+import { toast } from 'sonner';
 
 const MainKakaoMap = () => {
+  const { refetchPostsOnMap, setRefetchPostsOnMap } = useHomeStore();
   const { kakaoMap, renewLocation, setCenter, mapRange, displayPostMarker } =
     useKakaoMap(
       document.getElementById('main-map'),
@@ -15,40 +18,55 @@ const MainKakaoMap = () => {
       loadingLocMarker,
     );
 
-  // 카카오 지도 범위 (undefined인 경우 기본값 설정)
-  const { swLat, swLng, neLat, neLng } = mapRange ?? {
-    swLat: 37.56481266992169,
-    swLng: 126.96835276832655,
-    neLat: 37.592350461680695,
-    neLng: 126.98600486863796,
-  };
-
-  const { data, error, isSuccess, isLoading } = useQuery({
-    queryKey: ['mainMapPosts', swLat, swLng, neLat, neLng],
-    queryFn: () =>
-      api.get('/api/map', {
+  const { data, error, isLoading, isFetched } = useQuery({
+    queryKey: [
+      'mainMapPosts',
+      mapRange?.swLat,
+      mapRange?.swLng,
+      mapRange?.neLat,
+      mapRange?.neLng,
+    ],
+    queryFn: async () => {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      return api.get('/api/map', {
         params: {
-          bottomLeftLat: swLat,
-          bottomLeftLong: swLng,
-          topRightLat: neLat,
-          topRightLong: neLng,
+          bottomLeftLat: mapRange?.swLat,
+          bottomLeftLong: mapRange?.swLng,
+          topRightLat: mapRange?.neLat,
+          topRightLong: mapRange?.neLng,
         },
-      }),
+      });
+    },
+    enabled: refetchPostsOnMap && mapRange?.swLat !== undefined,
   });
 
   // 게시물 데이터 fetch 후 지도 상에 표시
   useEffect(() => {
-    if (isSuccess) {
+    if (data) {
       displayPostMarker(data.data.results);
+      setRefetchPostsOnMap(false);
     }
-  }, [data, isSuccess]);
+  }, [data, isFetched]);
+
+  useEffect(() => {
+    if (error)
+      toast.warning('게시물을 불러오는 데 실패했습니다. 다시 시도해주세요.', {
+        duration: 3000,
+      });
+  }, [error]);
 
   return (
     <>
       <div id="main-map" className="size-full bg-[#f2f0e9]">
+        {isLoading && (
+          <BeatLoader
+            color="var(--primary-foreground)"
+            className="absolute left-1/2 top-1/2 z-[3] -translate-x-5 -translate-y-5"
+          />
+        )}
         {!kakaoMap && (
           <div className="flex size-full flex-row items-center justify-center">
-            <SyncLoader color="#3ba5ff" />
+            <PuffLoader color="#3ba5ff" />
           </div>
         )}
       </div>
