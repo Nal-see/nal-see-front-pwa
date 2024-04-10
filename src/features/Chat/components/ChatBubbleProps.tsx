@@ -4,15 +4,16 @@ import React from 'react';
 
 interface ChatBubbleProps {
   content: string;
-  senderId: number;
-  receiverImage: string;
+  senderId: number | string;
+  receiverImage: string | null;
   myId: string | undefined;
+  name: string;
 }
 
 const ChatBubble: React.FC<ChatBubbleProps> = ({
   content,
   senderId,
-  receiverImage,
+  receiverImage = null,
   myId,
 }) => {
   const isMyMessage = myId == String(senderId);
@@ -23,7 +24,7 @@ const ChatBubble: React.FC<ChatBubbleProps> = ({
         isMyMessage ? 'ml-auto flex-row-reverse' : 'flex-row'
       }`}
     >
-      {!isMyMessage && (
+      {!isMyMessage && receiverImage && (
         <ProfileImage src={receiverImage} alt="receiver" className="mr-2" />
       )}
       <div
