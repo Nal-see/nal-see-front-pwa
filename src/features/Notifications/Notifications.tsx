@@ -8,11 +8,17 @@ const NotificationsPage = () => {
     queryKey: ['notificationList'],
     queryFn: () => api.get('/notification'),
   });
-
+  console.log(data);
   return (
     <div className="flex-1">
       <BackBtnHeader title="알림" />
-      <NotificationItem />
+      {data &&
+        data.data.results.map((item, idx) => (
+          <NotificationItem
+            key={`${idx}-${item.senderId}`}
+            notification={item}
+          />
+        ))}
     </div>
   );
 };

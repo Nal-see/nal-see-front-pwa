@@ -1,6 +1,18 @@
 import { useNavigate } from 'react-router-dom';
 
-const NotificationItem = () => {
+interface INotificationItemProps {
+  notification: {
+    message: string;
+    senderId: number;
+    senderImage: string;
+    senderName: string;
+    postId: number | null;
+    commentId: number | null;
+    userId: number | null;
+  };
+}
+
+const NotificationItem = ({ notification }: INotificationItemProps) => {
   const navigate = useNavigate();
 
   const navigateToTarget = () => {
@@ -13,11 +25,11 @@ const NotificationItem = () => {
       className="inline-flex w-dvw items-center justify-start gap-3 px-7 py-3"
     >
       <img
-        src="/icon-32x32.png"
+        src={notification.senderImage}
         className="size-[40px] rounded-full object-cover"
       />
-      <p className="line-clamp-2 w-[70%]">홍길동 님이 게시물을 좋아합니다.</p>
-      <p className="font-primary-foreground">1m</p>
+      <p className="line-clamp-2 w-[70%]">{notification.message}</p>
+      {/* <p className="font-primary-foreground">1m</p> */}
     </div>
   );
 };
