@@ -1,22 +1,25 @@
 // ChatBubble.tsx
 import { ProfileImage } from '@/features/Feed/components/FeedCard/FeedCardStyle';
+import useAuthStore from '@/store/useAuthStore';
 import React from 'react';
 
 interface ChatBubbleProps {
-  content: string;
+  msg: string;
   senderId: number | string;
   receiverImage: string | null;
-  myId: string | undefined;
-  name: string;
 }
 
 const ChatBubble: React.FC<ChatBubbleProps> = ({
-  content,
+  msg,
   senderId,
   receiverImage = null,
-  myId,
 }) => {
+  const myId = useAuthStore.getState().user?.userId;
   const isMyMessage = myId == String(senderId);
+  console.log('isMyMessage: ', isMyMessage);
+
+  // 메시지를 15글자 단위로 분할하여 배열로 저장
+  const splitMsg = msg.match(/.{1,25}/g) || [msg];
 
   return (
     <div
@@ -28,11 +31,11 @@ const ChatBubble: React.FC<ChatBubbleProps> = ({
         <ProfileImage src={receiverImage} alt="receiver" className="mr-2" />
       )}
       <div
-        className={`rounded-2xl p-2 px-4 ${
+        className={`whitespace-pre-wrap rounded-2xl p-2 px-4 ${
           isMyMessage ? 'bg-accent' : 'bg-gray-300'
         }`}
       >
-        {content}
+        {splitMsg.join('\n')}
       </div>
     </div>
   );

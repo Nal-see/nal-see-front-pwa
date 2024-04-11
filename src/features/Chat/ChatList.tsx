@@ -11,6 +11,7 @@ const ChatListPage = () => {
     connect,
     disconnect,
     chatList,
+    setChatList,
     subscribeToChatList,
     unSubscribeFromChatList,
     isConnected,
@@ -28,15 +29,28 @@ const ChatListPage = () => {
   }, [user, connect, disconnect, myId]);
 
   useEffect(() => {
-    if (isConnected && user) {
-      subscribeToChatList(String(myId));
-    }
+    const fetchChatList = async () => {
+      if (isConnected && user) {
+        await subscribeToChatList(String(myId));
+        await setChatList();
+      }
+    };
+
+    fetchChatList();
+
     return () => {
       if (isConnected && user) {
         unSubscribeFromChatList(String(myId));
       }
     };
-  }, [isConnected, myId, subscribeToChatList, unSubscribeFromChatList, user]);
+  }, [
+    isConnected,
+    myId,
+    setChatList,
+    subscribeToChatList,
+    unSubscribeFromChatList,
+    user,
+  ]);
 
   useEffect(() => {
     console.log('chatList: ', chatList);
@@ -56,6 +70,17 @@ const ChatListPage = () => {
   return (
     <div className="flex-1">
       <ChatContainer>
+        {chatList.map((chat, index) => (
+          <ChatItem
+            key={index}
+            chatId={chat.chatId}
+            profileImgUrl={chat.receiverImg}
+            username={chat.receiver}
+            lastMessage={chat.msg}
+            lastUpdatedDate={chat.createAt}
+            read={false}
+          />
+        ))}
         <ChatItem
           chatId="1-12"
           profileImgUrl="public/icon-32x32.png"

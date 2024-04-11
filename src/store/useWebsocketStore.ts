@@ -5,16 +5,26 @@ import useAuthStore from './useAuthStore';
 import { getChatList, getChatMesg } from '@/features/Chat/services/chatApi';
 
 interface ChatItem {
+  id: string;
   chatId: string;
-  lastMessage: string;
+  createAt: string;
+  msg: string;
+  sender: string;
+  senderId: string;
+  senderImg: string;
+  receiver: string;
+  receiverId: string;
+  receiverImg: string;
   // 필요한 다른 속성들 추가
 }
 
 interface Message {
   id: string;
-  userId: string;
-  name: string;
-  content: string;
+  createAt: string;
+  msg: string;
+  sender: string;
+  senderId: string;
+  senderImg: string;
 }
 
 interface WebSocketState {
@@ -128,14 +138,11 @@ const useWebSocketStore = create<WebSocketState>((set, get) => ({
   sendMessage: async (chatId: string, content: string) => {
     const { webSocketService } = get();
     const userId = useAuthStore.getState().user?.userId;
-    const userName = useAuthStore.getState().user?.userName;
-    const userImage = useAuthStore.getState().user?.picture;
+    const receiverId = chatId.replace(String(userId), '').replace('-', '');
 
     if (webSocketService) {
       const newMessage = {
-        receiverId: userId,
-        receiverName: userName,
-        receiverImage: userImage,
+        receiverId,
         content: content,
       };
       webSocketService.publishMessage(`/pub/${chatId}/chat`, newMessage, {
