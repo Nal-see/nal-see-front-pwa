@@ -37,6 +37,10 @@ const ChatRoomPage = () => {
   }, [user, connect, disconnect]);
 
   useEffect(() => {
+    console.log(messages);
+  }, [messages]);
+
+  useEffect(() => {
     console.log(isConnected);
     const fetchMessages = async () => {
       if (chatId && myId && isConnected) {
@@ -75,45 +79,6 @@ const ChatRoomPage = () => {
       setMessage('');
     }
   };
-
-  const dummyData = [
-    {
-      id: 1,
-      chatId: '1-12',
-      msg: 'Hello',
-      senderId: 1,
-      sender: '송한호',
-      senderImg: 'https://placeholder.co/50x50',
-      createAt: '2021-09-01T00:00:00',
-    },
-    {
-      id: 2,
-      chatId: '1-12',
-      msg: 'Hi',
-      senderId: 2,
-      sender: '송한호',
-      senderImg: 'https://placeholder.co/50x50',
-      createAt: '2021-09-01T00:00:00',
-    },
-    {
-      id: 3,
-      chatId: '1-12',
-      msg: 'How are you?',
-      senderId: 1,
-      sender: '송한호',
-      senderImg: 'https://placeholder.co/50x50',
-      createAt: '2021-09-01T00:00:00',
-    },
-    {
-      id: 4,
-      chatId: '1-12',
-      msg: 'I am fine',
-      senderId: 13,
-      sender: '송한호',
-      senderImg: 'https://placeholder.co/50x50',
-      createAt: '2021-09-01T00:00:00',
-    },
-  ];
 
   return (
     <div className="flex h-screen flex-1 flex-col overflow-y-scroll">

@@ -5,8 +5,16 @@ import useAuthStore from './useAuthStore';
 import { getChatList, getChatMesg } from '@/features/Chat/services/chatApi';
 
 interface ChatItem {
+  id: string;
   chatId: string;
-  lastMessage: string;
+  createAt: string;
+  msg: string;
+  sender: string;
+  senderId: string;
+  senderImg: string;
+  receiver: string;
+  receiverId: string;
+  receiverImg: string;
   // 필요한 다른 속성들 추가
 }
 

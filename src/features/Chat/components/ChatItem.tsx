@@ -1,10 +1,11 @@
 import CircleProfileImg from '@/components/CircleProfileImg';
+import { formatDate } from '@/features/Feed/utils/dataFormatUtil';
 import { useNavigate } from 'react-router-dom';
 
 interface IChatItemProps {
   chatId: string;
   username: string;
-  profileImgUrl: string;
+  profileImgUrl: string | null;
   lastMessage: string;
   lastUpdatedDate: string;
   read: boolean;
@@ -18,6 +19,9 @@ const ChatItem = ({
   lastUpdatedDate,
   read,
 }: IChatItemProps) => {
+  //2024-04-11T03:54:45.004
+  const updatedDate = formatDate(lastUpdatedDate);
+
   const navigate = useNavigate();
 
   const enterChatRoom = () => {
@@ -30,7 +34,14 @@ const ChatItem = ({
       className="flex w-dvw flex-row items-center justify-between px-7 py-5 active:bg-accent-foreground"
     >
       <div className="flex w-[85%] flex-row items-center gap-5">
-        <CircleProfileImg size="size-[50px]" profileImgUrl={profileImgUrl} />
+        <CircleProfileImg
+          size="size-[50px]"
+          profileImgUrl={
+            profileImgUrl
+              ? profileImgUrl
+              : '/src/assets/weatherImage/placeholder.jpg'
+          }
+        />
         <div className="flex w-[70%] flex-col justify-start">
           <p
             className={`text-lg font-medium ${read ? 'text-primary-foreground' : ''}`}
@@ -38,10 +49,10 @@ const ChatItem = ({
             {username}
           </p>
           <div
-            className={`flex flex-row justify-start gap-2 text-base ${read ? 'text-primary-foreground' : ''}`}
+            className={`flex flex-row justify-between gap-2 text-base ${read ? 'text-primary-foreground' : ''}`}
           >
             <p className="truncate">{lastMessage}</p>
-            <p className="text-nowrap">{lastUpdatedDate}</p>
+            <p className="text-nowrap">{updatedDate}</p>
           </div>
         </div>
       </div>
