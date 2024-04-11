@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
 import { getMessaging, onMessage } from 'firebase/messaging';
+import { useNotificationStore } from '@/store/useNotificationStore';
 
 // Firebase configuration
 const firebaseConfig = {
@@ -19,15 +20,7 @@ const analytics = getAnalytics(app);
 export const messaging = getMessaging(app);
 
 // foreground message 처리
-onMessage(messaging, (payload) => {
-  const notificationTitle = payload.notification!.title!;
-  const notificationOptions = {
-    body: payload.notification!.body,
-    icon: '/icon-192x192.png',
-  };
-
-  if (Notification.permission === 'granted') {
-    console.log('foreground message received:', payload);
-    new Notification(notificationTitle, notificationOptions);
-  }
+onMessage(messaging, () => {
+  const { setNewNotification } = useNotificationStore();
+  setNewNotification(true);
 });

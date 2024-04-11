@@ -4,8 +4,10 @@ import { useQuery } from '@tanstack/react-query';
 import { api } from '@/lib/api';
 import { INotificationData } from '@/types/notifications';
 import { useEffect, useState } from 'react';
+import { useNotificationStore } from '@/store/useNotificationStore';
 
 const NotificationsPage = () => {
+  const { setNewNotification } = useNotificationStore();
   const [notificationList, setNotificationList] =
     useState<INotificationData[]>();
 
@@ -13,6 +15,10 @@ const NotificationsPage = () => {
     queryKey: ['notificationList'],
     queryFn: () => api.get('/notification'),
   });
+
+  useEffect(() => {
+    setNewNotification(false);
+  }, []);
 
   useEffect(() => {
     if (data?.data.results.length) {
