@@ -4,6 +4,7 @@ import ChatContainer from './components/ChatContainer';
 import useAuthStore from '@/store/useAuthStore';
 import useWebSocketStore from '@/store/useWebsocketStore';
 import { useEffect } from 'react';
+import { PiCloudFogFill } from 'react-icons/pi';
 
 const ChatListPage = () => {
   const {
@@ -19,7 +20,7 @@ const ChatListPage = () => {
 
   useEffect(() => {
     if (user) {
-      connect({ userId: myId });
+      connect();
     }
     return () => {
       disconnect();
@@ -28,15 +29,32 @@ const ChatListPage = () => {
 
   useEffect(() => {
     if (isConnected && user) {
-      subscribeToChatList(myId);
+      subscribeToChatList(String(myId));
     }
-  }, [isConnected, myId, subscribeToChatList, user]);
+    return () => {
+      if (isConnected && user) {
+        unSubscribeFromChatList(String(myId));
+      }
+    };
+  }, [isConnected, myId, subscribeToChatList, unSubscribeFromChatList, user]);
 
-  console.log('chatList: ', chatList);
+  useEffect(() => {
+    console.log('chatList: ', chatList);
+  }, [chatList]);
+
+  if (!chatList) {
+    return (
+      <div className="flex-1">
+        <BackBtnHeader title="메시지" />
+        <div className="flex h-full items-center justify-center">
+          <PiCloudFogFill className="size-10 animate-spin text-gray-300" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex-1">
-      <BackBtnHeader title="메시지" />
       <ChatContainer>
         <ChatItem
           chatId="1-12"
@@ -64,38 +82,6 @@ const ChatListPage = () => {
         />
         <ChatItem
           chatId="4-13"
-          profileImgUrl="public/icon-32x32.png"
-          username="User Kim"
-          lastMessage="Last messagedfsersdfasefsdfsfefasdfefsfsefsfsf..."
-          lastUpdatedDate="2024-01-03"
-          read={true}
-        />
-        <ChatItem
-          chatId="1"
-          profileImgUrl="public/icon-32x32.png"
-          username="User Kim"
-          lastMessage="Last messagedfsersdfasefsdfsfefasdfefsfsefsfsf..."
-          lastUpdatedDate="2024-01-03"
-          read={true}
-        />
-        <ChatItem
-          chatId="1"
-          profileImgUrl="public/icon-32x32.png"
-          username="User Kim"
-          lastMessage="Last messagedfsersdfasefsdfsfefasdfefsfsefsfsf..."
-          lastUpdatedDate="2024-01-03"
-          read={true}
-        />
-        <ChatItem
-          chatId="1"
-          profileImgUrl="public/icon-32x32.png"
-          username="User Kim"
-          lastMessage="Last messagedfsersdfasefsdfsfefasdfefsfsefsfsf..."
-          lastUpdatedDate="2024-01-03"
-          read={true}
-        />
-        <ChatItem
-          chatId="1"
           profileImgUrl="public/icon-32x32.png"
           username="User Kim"
           lastMessage="Last messagedfsersdfasefsdfsfefasdfefsfsefsfsf..."

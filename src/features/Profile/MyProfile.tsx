@@ -1,7 +1,7 @@
 import BackBtnHeader from '@/components/BackBtnHeader';
 import ProfileHeader from './components/ProfileHeader';
 import ProfileFeedList from './components/ProfileFeedList';
-import { getProfileUserData } from './services/profileApi';
+import { getLogout, getProfileUserData } from './services/profileApi';
 import useAuthStore from '@/store/useAuthStore';
 import { useState } from 'react';
 import EmptyPage from '@/components/EmptyPage';
@@ -9,11 +9,13 @@ import { BottomSheet } from 'react-spring-bottom-sheet';
 import { ProfileEditSheet } from './components/profileDrawer';
 import { getUserDetails } from '../Posts/services/getUserDetails';
 import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 const MyProfilePage = () => {
   const { user } = useAuthStore();
   const userId = user?.userId;
   const [isEditSheetOpen, setIsEditSheetOpen] = useState(false);
+  const navigate = useNavigate();
 
   const { data: userInfo, refetch: refetchProfileData } = useQuery({
     queryKey: ['userDetails'],
@@ -31,6 +33,11 @@ const MyProfilePage = () => {
 
   const handleEdit = () => {
     setIsEditSheetOpen(true);
+  };
+
+  const handleLogOut = async () => {
+    await getLogout();
+    await navigate('/hello');
   };
 
   const handleCloseEditSheet = () => {
@@ -58,10 +65,21 @@ const MyProfilePage = () => {
           />
         )}
       </BottomSheet>
-      <button
-        onClick={handleEdit}
-        className="mx-auto h-8 w-11/12 bg-accent font-bold text-secondary-foreground"
-      />
+      <div className="flex items-center justify-center gap-7">
+        <button
+          onClick={handleEdit}
+          className="h-8 w-5/12 rounded-md bg-accent font-bold text-secondary-foreground"
+        >
+          프로필 변경
+        </button>
+
+        <button
+          onClick={handleLogOut}
+          className="h-8 w-5/12 rounded-md bg-accent font-bold text-secondary-foreground"
+        >
+          로그아웃
+        </button>
+      </div>
       {userData && <ProfileFeedList userId={String(userId)} />}
     </div>
   );

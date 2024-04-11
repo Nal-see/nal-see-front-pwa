@@ -56,3 +56,12 @@ export async function updateProfile(data) {
     console.log(error);
   }
 }
+
+export async function getLogout() {
+  try {
+    const response = await api.get(`/api/logout`);
+    console.log('response: 로그아웃', response);
+  } catch (error) {
+    console.log(error);
+  }
+}

@@ -1,5 +1,5 @@
 // ChatRoomPage.tsx
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import BackBtnHeader from '@/components/BackBtnHeader';
 import { Input } from '@/components/ui/input';
 import useAuthStore from '@/store/useAuthStore';
@@ -7,7 +7,6 @@ import ChatBubble from './components/ChatBubbleProps';
 import { StyledForm, UserImage } from '../Feed/components/comment/commentStyle';
 import useWebSocketStore from '@/store/useWebsocketStore';
 import { useParams } from 'react-router-dom';
-import { getChatMesg } from './services/chatApi';
 
 const ChatRoomPage = () => {
   const { user } = useAuthStore();
@@ -16,6 +15,7 @@ const ChatRoomPage = () => {
     disconnect,
     sendMessage,
     messages,
+    setMessages,
     subscribeToMessages,
     unSubscribeFromMessages,
     isConnected,
@@ -24,28 +24,50 @@ const ChatRoomPage = () => {
   const myId = user?.userId;
   const myImage = user?.picture;
   const [message, setMessage] = useState('');
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (user) {
-      connect({ userId: myId });
+      connect();
+      console.log('웹소켓 기본 주소 연결성공');
     }
     return () => {
       disconnect();
     };
-  }, [user, connect, disconnect, myId]);
+  }, [user, connect, disconnect]);
 
   useEffect(() => {
-    if (chatId && myId && isConnected) {
-      console.log('된건가요?');
-      subscribeToMessages(chatId);
-      console.log('asdbasbdakjsdsnda', getChatMesg(chatId));
-    }
+    console.log(isConnected);
+    const fetchMessages = async () => {
+      if (chatId && myId && isConnected) {
+        console.log('채팅방 구독하고 메시지 가져오기');
+        await subscribeToMessages(chatId);
+        await setMessages(chatId);
+      }
+    };
+
+    fetchMessages();
+
     return () => {
       if (chatId) {
         unSubscribeFromMessages(chatId);
       }
     };
-  }, [chatId, isConnected, myId, subscribeToMessages, unSubscribeFromMessages]);
+  }, [
+    chatId,
+    isConnected,
+    myId,
+    setMessages,
+    subscribeToMessages,
+    unSubscribeFromMessages,
+  ]);
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   const handleSendMessage = () => {
     if (message.trim() !== '') {
@@ -53,52 +75,78 @@ const ChatRoomPage = () => {
       setMessage('');
     }
   };
-  console.log('messages: ', messages);
 
   const dummyData = [
     {
       id: 1,
-      content: 'Hello',
+      chatId: '1-12',
+      msg: 'Hello',
       senderId: 1,
-      receiverImage: 'https://placeholder.co/50x50',
+      sender: '송한호',
+      senderImg: 'https://placeholder.co/50x50',
+      createAt: '2021-09-01T00:00:00',
     },
     {
       id: 2,
-      content: 'Hi',
+      chatId: '1-12',
+      msg: 'Hi',
       senderId: 2,
-      receiverImage: 'https://placeholder.co/50x50',
+      sender: '송한호',
+      senderImg: 'https://placeholder.co/50x50',
+      createAt: '2021-09-01T00:00:00',
     },
     {
       id: 3,
-      content: 'How are you?',
+      chatId: '1-12',
+      msg: 'How are you?',
       senderId: 1,
-      receiverImage: 'https://placeholder.co/50x50',
+      sender: '송한호',
+      senderImg: 'https://placeholder.co/50x50',
+      createAt: '2021-09-01T00:00:00',
     },
     {
       id: 4,
-      content: 'I am fine',
+      chatId: '1-12',
+      msg: 'I am fine',
       senderId: 13,
-      receiverImage: 'https://placeholder.co/50x50',
+      sender: '송한호',
+      senderImg: 'https://placeholder.co/50x50',
+      createAt: '2021-09-01T00:00:00',
     },
   ];
+
   return (
-    <div className="flex h-screen flex-1 flex-col">
+    <div className="flex h-screen flex-1 flex-col overflow-y-scroll">
       <BackBtnHeader title="Chat Room" />
       <div className="flex-1 overflow-y-auto">
-        {/* {messages.map((msg, index) => (
-          <div key={index}>{msg}</div>
-        ))} */}
         {dummyData.map((data, index) => (
           <ChatBubble
             key={index}
-            content={data.content}
+            content={data.msg}
             senderId={data.senderId}
-            receiverImage={data.receiverImage}
+            receiverImage={data.senderImg}
+            myId={myId}
+            name={data.sender}
+          />
+        ))}
+        {messages.map((data, index) => (
+          <ChatBubble
+            key={index}
+            content={data.content}
+            name={data.name}
+            senderId={data.userId}
+            receiverImage={data.senderImg}
             myId={myId}
           />
         ))}
+        <div ref={messagesEndRef} />
       </div>
-      <StyledForm onSubmit={handleSendMessage}>
+      <StyledForm
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSendMessage();
+        }}
+      >
         <UserImage src={myImage} />
         <Input
           type="text"
