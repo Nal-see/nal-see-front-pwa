@@ -74,8 +74,8 @@ const ChatListPage = () => {
           <ChatItem
             key={index}
             chatId={chat.chatId}
-            profileImgUrl={chat.senderImg}
-            username={chat.sender}
+            profileImgUrl={chat.receiverImg}
+            username={chat.receiver}
             lastMessage={chat.msg}
             lastUpdatedDate={chat.createAt}
             read={false}
