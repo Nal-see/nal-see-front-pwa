@@ -119,24 +119,12 @@ const ChatRoomPage = () => {
     <div className="flex h-screen flex-1 flex-col overflow-y-scroll">
       <BackBtnHeader title="Chat Room" />
       <div className="flex-1 overflow-y-auto">
-        {dummyData.map((data, index) => (
-          <ChatBubble
-            key={index}
-            content={data.msg}
-            senderId={data.senderId}
-            receiverImage={data.senderImg}
-            myId={myId}
-            name={data.sender}
-          />
-        ))}
         {messages.map((data, index) => (
           <ChatBubble
             key={index}
-            content={data.content}
-            name={data.name}
-            senderId={data.userId}
+            msg={data.msg}
+            senderId={data.senderId}
             receiverImage={data.senderImg}
-            myId={myId}
           />
         ))}
         <div ref={messagesEndRef} />

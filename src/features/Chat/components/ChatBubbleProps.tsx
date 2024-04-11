@@ -1,22 +1,22 @@
 // ChatBubble.tsx
 import { ProfileImage } from '@/features/Feed/components/FeedCard/FeedCardStyle';
+import useAuthStore from '@/store/useAuthStore';
 import React from 'react';
 
 interface ChatBubbleProps {
-  content: string;
+  msg: string;
   senderId: number | string;
   receiverImage: string | null;
-  myId: string | undefined;
-  name: string;
 }
 
 const ChatBubble: React.FC<ChatBubbleProps> = ({
-  content,
+  msg,
   senderId,
   receiverImage = null,
-  myId,
 }) => {
+  const myId = useAuthStore.getState().user?.userId;
   const isMyMessage = myId == String(senderId);
+  console.log('isMyMessage: ', isMyMessage);
 
   return (
     <div
@@ -32,7 +32,7 @@ const ChatBubble: React.FC<ChatBubbleProps> = ({
           isMyMessage ? 'bg-accent' : 'bg-gray-300'
         }`}
       >
-        {content}
+        {msg}
       </div>
     </div>
   );
