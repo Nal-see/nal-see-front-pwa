@@ -11,7 +11,7 @@ import { SyncLoader } from 'react-spinners';
 const ProfileFeedList = ({ userId }: { userId: string | number }) => {
   const { user } = useAuthStore();
   userId = userId ? userId : Number(user?.userId);
-  const isMyProfile = user?.userId === userId;
+  const isMyProfile = user?.userId == userId;
   const { data, isFetchingNextPage, fetchNextPage, hasNextPage } =
     useInfiniteQuery<ProfileFeedData>({
       queryKey: ['profileFeed'],
