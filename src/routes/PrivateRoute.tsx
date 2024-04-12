@@ -15,9 +15,8 @@ const PrivateRoute = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (pathname === '/') {
-      navigate('/home');
-    }
+    if (pathname === '/') navigate('/home');
+    if (userData.newUser === true) navigate('/optionalInfo');
   }, []);
 
   return userData ? (
