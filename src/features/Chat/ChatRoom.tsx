@@ -85,8 +85,8 @@ const ChatRoomPage = () => {
       <BackBtnHeader title="Chat Room" />
       <div className="flex-1 overflow-y-auto">
         {messages
-          .slice()
-          .reverse()
+          // .slice()
+          // .reverse()
           .map((data, index) => (
             <ChatBubble
               key={index}
