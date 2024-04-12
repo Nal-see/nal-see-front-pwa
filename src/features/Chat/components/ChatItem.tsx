@@ -1,5 +1,6 @@
 import CircleProfileImg from '@/components/CircleProfileImg';
 import { formatDate } from '@/features/Feed/utils/dataFormatUtil';
+import useAuthStore from '@/store/useAuthStore';
 import { useNavigate } from 'react-router-dom';
 
 interface IChatItemProps {
@@ -8,7 +9,8 @@ interface IChatItemProps {
   profileImgUrl: string | null;
   lastMessage: string;
   lastUpdatedDate: string;
-  read: boolean;
+  readCnt: number;
+  senderId: string;
 }
 
 const ChatItem = ({
@@ -17,11 +19,14 @@ const ChatItem = ({
   profileImgUrl,
   lastMessage,
   lastUpdatedDate,
-  read,
+  readCnt,
+  senderId,
 }: IChatItemProps) => {
-  //2024-04-11T03:54:45.004
-  const updatedDate = formatDate(lastUpdatedDate);
+  const userId = useAuthStore.getState().user?.userId;
+  const read = readCnt == 0 && senderId !== userId;
+  // const read = readCnt > 0;
 
+  const updatedDate = formatDate(lastUpdatedDate);
   const navigate = useNavigate();
 
   const enterChatRoom = () => {
@@ -49,9 +54,10 @@ const ChatItem = ({
             {username}
           </p>
           <div
-            className={`flex flex-row justify-between gap-2 text-base ${read ? 'text-primary-foreground' : ''}`}
+            className={`flex flex-row justify-start gap-2 text-base ${read ? 'text-primary-foreground' : ''}`}
           >
             <p className="truncate">{lastMessage}</p>
+            <p> · </p>
             <p className="text-nowrap">{updatedDate}</p>
           </div>
         </div>
