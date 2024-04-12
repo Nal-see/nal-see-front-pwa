@@ -81,46 +81,6 @@ const ChatListPage = () => {
             read={false}
           />
         ))}
-        <ChatItem
-          chatId="1-12"
-          profileImgUrl="public/icon-32x32.png"
-          username="User Kim"
-          lastMessage="Last messagedfsersdfasefsdfsfefasdfefsfsefsfsf..."
-          lastUpdatedDate="2024-01-03"
-          read={false}
-        />
-        <ChatItem
-          chatId="2-12"
-          profileImgUrl="public/icon-32x32.png"
-          username="User Kim"
-          lastMessage="Last messagedfsersdfasefsdfsfefasdfefsfsefsfsf..."
-          lastUpdatedDate="2024-01-03"
-          read={true}
-        />
-        <ChatItem
-          chatId="3-12"
-          profileImgUrl="public/icon-32x32.png"
-          username="User Kim"
-          lastMessage="Last messagedfsersdfasefsdfsfefasdfefsfsefsfsf..."
-          lastUpdatedDate="2024-01-03"
-          read={false}
-        />
-        <ChatItem
-          chatId="4-13"
-          profileImgUrl="public/icon-32x32.png"
-          username="User Kim"
-          lastMessage="Last messagedfsersdfasefsdfsfefasdfefsfsefsfsf..."
-          lastUpdatedDate="2024-01-03"
-          read={true}
-        />
-        <ChatItem
-          chatId="1"
-          profileImgUrl="public/icon-32x32.png"
-          username="User Kim"
-          lastMessage="Last messagedfsersdfasefsdfsfefasdfefsfsefsfsf..."
-          lastUpdatedDate="2024-01-03"
-          read={true}
-        />
       </ChatContainer>
     </div>
   );
