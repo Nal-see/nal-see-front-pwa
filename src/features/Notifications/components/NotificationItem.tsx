@@ -26,10 +26,15 @@ const NotificationItem = ({ notification }: INotificationItemProps) => {
 
   return (
     <div
-      onClick={() => mutate(notification.id)}
+      onClick={() => {
+        if (!notification.isRead) mutate(notification.id);
+      }}
       className="inline-flex w-dvw items-center justify-between px-8 py-3"
     >
-      <div className="inline-flex items-center gap-3">
+      <div
+        onClick={() => navigate(`/user/${notification.senderId}`)}
+        className="inline-flex items-center gap-3"
+      >
         <img
           src={notification.senderImage}
           className="size-[40px] rounded-full object-cover"
