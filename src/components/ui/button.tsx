@@ -21,6 +21,7 @@ const buttonVariants = cva(
         kakao:
           'items-start justify-start gap-[98.97px] rounded-lg bg-[#FEE500]',
         textOnly: '',
+        accent: 'bg-accent text-white',
       },
       size: {
         default: 'h-10 px-4 py-2',

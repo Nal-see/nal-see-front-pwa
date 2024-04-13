@@ -4,22 +4,30 @@ import ChatContainer from './components/ChatContainer';
 import useAuthStore from '@/store/useAuthStore';
 import useWebSocketStore from '@/store/useWebsocketStore';
 import { useEffect } from 'react';
+import { PiCloudFogFill } from 'react-icons/pi';
 
 const ChatListPage = () => {
   const {
     connect,
     disconnect,
     chatList,
+    setChatList,
     subscribeToChatList,
     unSubscribeFromChatList,
     isConnected,
+    onLineStatus,
+    onLineUsers,
+    // subscribeToOnLineStatus,
+    // subscribeToOnLineUsers,
+    // unsubscribeFromOnLineStatus,
+    // unsubscribeFromOnLineUsers,
   } = useWebSocketStore();
   const { user } = useAuthStore();
   const myId = user?.userId;
 
   useEffect(() => {
     if (user) {
-      connect({ userId: myId });
+      connect();
     }
     return () => {
       disconnect();
@@ -27,89 +35,65 @@ const ChatListPage = () => {
   }, [user, connect, disconnect, myId]);
 
   useEffect(() => {
-    if (isConnected && user) {
-      subscribeToChatList(myId);
-    }
-  }, [isConnected, myId, subscribeToChatList, user]);
+    const fetchChatList = async () => {
+      if (isConnected && user) {
+        await subscribeToChatList(String(myId));
+        await setChatList();
+        // await subscribeToOnLineStatus();
+        // await subscribeToOnLineUsers();
+      }
+    };
 
-  console.log('chatList: ', chatList);
+    fetchChatList();
+
+    return () => {
+      if (isConnected && user) {
+        unSubscribeFromChatList(String(myId));
+        // unsubscribeFromOnLineStatus();
+        // unsubscribeFromOnLineUsers();
+      }
+    };
+  }, [
+    isConnected,
+    myId,
+    setChatList,
+    subscribeToChatList,
+    unSubscribeFromChatList,
+    user,
+  ]);
+
+  useEffect(() => {
+    console.log('chatList: ', chatList);
+    console.log('onLineStatus: ', onLineStatus);
+    console.log('onLineUsers: ', onLineUsers);
+  }, [chatList, onLineStatus, onLineUsers]);
+
+  if (!chatList) {
+    return (
+      <div className="flex-1">
+        <BackBtnHeader title="메시지" />
+        <div className="flex h-full items-center justify-center">
+          <PiCloudFogFill className="size-10 animate-spin text-gray-300" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex-1">
-      <BackBtnHeader title="메시지" />
       <ChatContainer>
-        <ChatItem
-          chatId="1-12"
-          profileImgUrl="public/icon-32x32.png"
-          username="User Kim"
-          lastMessage="Last messagedfsersdfasefsdfsfefasdfefsfsefsfsf..."
-          lastUpdatedDate="2024-01-03"
-          read={false}
-        />
-        <ChatItem
-          chatId="2-12"
-          profileImgUrl="public/icon-32x32.png"
-          username="User Kim"
-          lastMessage="Last messagedfsersdfasefsdfsfefasdfefsfsefsfsf..."
-          lastUpdatedDate="2024-01-03"
-          read={true}
-        />
-        <ChatItem
-          chatId="3-12"
-          profileImgUrl="public/icon-32x32.png"
-          username="User Kim"
-          lastMessage="Last messagedfsersdfasefsdfsfefasdfefsfsefsfsf..."
-          lastUpdatedDate="2024-01-03"
-          read={false}
-        />
-        <ChatItem
-          chatId="4-13"
-          profileImgUrl="public/icon-32x32.png"
-          username="User Kim"
-          lastMessage="Last messagedfsersdfasefsdfsfefasdfefsfsefsfsf..."
-          lastUpdatedDate="2024-01-03"
-          read={true}
-        />
-        <ChatItem
-          chatId="1"
-          profileImgUrl="public/icon-32x32.png"
-          username="User Kim"
-          lastMessage="Last messagedfsersdfasefsdfsfefasdfefsfsefsfsf..."
-          lastUpdatedDate="2024-01-03"
-          read={true}
-        />
-        <ChatItem
-          chatId="1"
-          profileImgUrl="public/icon-32x32.png"
-          username="User Kim"
-          lastMessage="Last messagedfsersdfasefsdfsfefasdfefsfsefsfsf..."
-          lastUpdatedDate="2024-01-03"
-          read={true}
-        />
-        <ChatItem
-          chatId="1"
-          profileImgUrl="public/icon-32x32.png"
-          username="User Kim"
-          lastMessage="Last messagedfsersdfasefsdfsfefasdfefsfsefsfsf..."
-          lastUpdatedDate="2024-01-03"
-          read={true}
-        />
-        <ChatItem
-          chatId="1"
-          profileImgUrl="public/icon-32x32.png"
-          username="User Kim"
-          lastMessage="Last messagedfsersdfasefsdfsfefasdfefsfsefsfsf..."
-          lastUpdatedDate="2024-01-03"
-          read={true}
-        />
-        <ChatItem
-          chatId="1"
-          profileImgUrl="public/icon-32x32.png"
-          username="User Kim"
-          lastMessage="Last messagedfsersdfasefsdfsfefasdfefsfsefsfsf..."
-          lastUpdatedDate="2024-01-03"
-          read={true}
-        />
+        {chatList.map((chat, index) => (
+          <ChatItem
+            key={index}
+            chatId={chat.chatId}
+            profileImgUrl={chat.senderImg}
+            username={chat.sender}
+            lastMessage={chat.msg}
+            lastUpdatedDate={chat.createAt}
+            readCnt={chat.readCnt}
+            senderId={chat.senderId}
+          />
+        ))}
       </ChatContainer>
     </div>
   );

@@ -143,6 +143,7 @@ const Comment: React.FC<CommentProps> = ({ comment, postId, isMyComment }) => {
               type="text"
               value={editedContent}
               onChange={(e) => setEditedContent(e.target.value)}
+              className="w-full rounded-md focus:border-blue-500 focus:outline-none"
             />
           </Content>
         ) : (
