@@ -1,4 +1,6 @@
 export interface INotificationData {
+  id: number;
+  isRead: boolean;
   createAt: string;
   message: string;
   senderId: number;
