@@ -111,7 +111,7 @@ const ChatRoomPage = () => {
             console.log('e.value: ', e.target.value);
             setMessage(e.target.value);
           }}
-          placeholder="댓글을 입력해주세요."
+          placeholder="메시지를 입력해주세요."
           className="ml-3 rounded-full"
         />
       </StyledForm>
