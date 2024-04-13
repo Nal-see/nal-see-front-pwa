@@ -9,6 +9,7 @@ import { TfiComment } from 'react-icons/tfi';
 import useAuthStore from '@/store/useAuthStore';
 import { getComments, postComment } from '../../services/commentApi';
 import { SyncLoader } from 'react-spinners';
+import { convertImgSrcToHTTPS } from '@/lib/helpers';
 
 interface CommentSheetProps {
   postId: number;
@@ -87,7 +88,14 @@ const CommentSheet: React.FC<CommentSheetProps> = ({
           )}
         </div>
         <StyledForm onSubmit={handleSubmit}>
-          <UserImage src={userImage} alt={username} />
+          <UserImage
+            src={
+              userImage
+                ? convertImgSrcToHTTPS(userImage)
+                : '/assets/weatherImage.placeholder.jpg'
+            }
+            alt={username}
+          />
           <Input
             type="text"
             value={newComment}

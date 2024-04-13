@@ -20,6 +20,7 @@ import {
 } from '@/components/ui/carousel';
 import useFeedInteraction from '../../hooks/useFeedInteraction';
 import useCarousel from '../../hooks/useCarosel';
+import { convertImgSrcToHTTPS } from '@/lib/helpers';
 interface FeedCardProps {
   feed: FeedDetail;
   onUpdateSuccess: () => void;
@@ -81,7 +82,7 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed, onUpdateSuccess }) => {
           <img
             className="mr-3 size-10 cursor-pointer rounded-full"
             onClick={moveProfile}
-            src={feed.postResponseDto.userImage}
+            src={convertImgSrcToHTTPS(feed.postResponseDto.userImage)}
             alt={feed.postResponseDto.username}
           />
           <div className="flex cursor-pointer flex-col" onClick={moveProfile}>

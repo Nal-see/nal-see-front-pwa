@@ -1,5 +1,5 @@
 import { api } from '@/lib/api';
-import { formatNotificationDate } from '@/lib/helpers';
+import { convertImgSrcToHTTPS, formatNotificationDate } from '@/lib/helpers';
 import { INotificationItemProps } from '@/types/notifications';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
@@ -36,7 +36,7 @@ const NotificationItem = ({ notification }: INotificationItemProps) => {
         className="inline-flex items-center gap-3"
       >
         <img
-          src={notification.senderImage}
+          src={convertImgSrcToHTTPS(notification.senderImage)}
           className="size-[40px] rounded-full object-cover"
         />
         <p
