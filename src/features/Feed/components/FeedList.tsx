@@ -54,7 +54,7 @@ const FeedList = () => {
 
   if (!data) {
     return (
-      <div className="h-[calc(100vh-160px)] w-full overflow-y-scroll scrollbar-hide">
+      <div className="h-[calc(100dvh-160px)] w-full overflow-y-scroll scrollbar-hide">
         <div className="flex flex-wrap items-center justify-between px-4">
           {Array.from({ length: 6 }).map((_, index) => (
             <FeedSkeletonCard key={index} />
@@ -65,7 +65,7 @@ const FeedList = () => {
   }
 
   return (
-    <div className="h-[calc(100vh-160px)] w-full overflow-y-scroll scrollbar-hide">
+    <div className="h-[calc(100dvh-160px)] w-full overflow-y-scroll scrollbar-hide">
       <LocationStatusView isCurrentLocation={isCurrentLocation} />
       <div className="grid grid-cols-2 justify-items-center">
         {data?.pages.map((page, pageIndex) => (
