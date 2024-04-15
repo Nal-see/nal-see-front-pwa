@@ -3,7 +3,7 @@ import { FeedDetail } from '@/types/feed';
 import { PiHeartStraightFill, PiHeartStraightLight } from 'react-icons/pi';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { formatDate, formatUserConstitution } from '../../utils/dataFormatUtil';
+import { formatUserConstitution } from '../../utils/dataFormatUtil';
 import CommentSheet from '../comment/CommentSheet';
 import { deletePost } from '../../services/feedApi';
 import { useNavigate } from 'react-router-dom';
@@ -76,7 +76,7 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed, onUpdateSuccess }) => {
       : feed?.postResponseDto.content?.slice(0, maxContentLength);
 
   return (
-    <div className="mb-4 h-[calc(100vh-173px)] overflow-hidden scrollbar-hide">
+    <div className="mb-4 h-[calc(100vh-170px)] overflow-hidden overflow-y-scroll scrollbar-hide">
       <div className="flex items-center justify-between p-3 px-4">
         <div className="flex">
           <img
@@ -178,15 +178,15 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed, onUpdateSuccess }) => {
           )}
         </p>
         <div className="flex flex-wrap gap-1">
-          {feed.userInfo.style.map((style, index) => (
+          {feed.userDetailDto.style.map((style, index) => (
             <p key={index} className="mr-1 mt-2 text-primary-foreground">
               #{style}
             </p>
           ))}
         </div>
         <div className="mr-2 mt-2 text-primary-foreground">
-          {feed.userInfo.constitution
-            ? `체질: ${formatUserConstitution(feed.userInfo.constitution)}`
+          {feed.userDetailDto.constitution
+            ? `체질: ${formatUserConstitution(feed.userDetailDto.constitution)}`
             : ''}
         </div>
       </div>
@@ -201,7 +201,7 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed, onUpdateSuccess }) => {
           snapPoints={({ maxHeight }) => [maxHeight * 0.9]}
         >
           <PostEditSheet
-            userInfo={feed.userInfo}
+            userDetailDto={feed.userDetailDto}
             content={feed.postResponseDto.content}
             postId={Number(feed.postResponseDto.id)}
             onClose={handleCloseEditSheet}
