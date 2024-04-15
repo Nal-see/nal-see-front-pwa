@@ -28,3 +28,13 @@ export const formatNotificationDate = (date: Date | string): string => {
     return `${diffDays}일 전`;
   } else return new Date(date).toISOString().split('T')[0];
 };
+
+export const convertImgSrcToHTTPS = (url: string): string => {
+  if (!url.startsWith('https')) {
+    const convertedUrl = url.replace('http', 'https');
+
+    return convertedUrl;
+  }
+
+  return url;
+};

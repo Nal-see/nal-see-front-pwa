@@ -2,6 +2,7 @@ import { Navigate, Outlet, useLoaderData } from 'react-router-dom';
 import useAuthStore from '../store/useAuthStore';
 import { IUserInfoResponse } from '@/types/auth';
 import { useEffect } from 'react';
+import { convertImgSrcToHTTPS } from '@/lib/helpers';
 
 const PublicRoute = () => {
   const userData = useLoaderData() as IUserInfoResponse;
@@ -16,7 +17,7 @@ const PublicRoute = () => {
           userName: userData.username,
           email: userData.email,
           isNewUser: userData.newUser,
-          picture: userData.picture,
+          picture: convertImgSrcToHTTPS(userData.picture),
         },
       });
     }

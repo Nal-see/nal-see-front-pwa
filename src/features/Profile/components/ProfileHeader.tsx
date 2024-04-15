@@ -1,3 +1,4 @@
+import { convertImgSrcToHTTPS } from '@/lib/helpers';
 import FeedCount from './FeedCount';
 
 type ProfileHeaderProps = {
@@ -19,7 +20,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ userProfileData }) => {
           className="mx-5 size-20 rounded-full"
           src={
             userProfileData.userImage
-              ? `${userProfileData.userImage}`
+              ? convertImgSrcToHTTPS(userProfileData.userImage)
               : 'https://placeholder.co/50x50'
           }
           alt="user"

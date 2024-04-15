@@ -5,6 +5,7 @@ import useAuthStore from '@/store/useAuthStore';
 import useWebSocketStore from '@/store/useWebsocketStore';
 import { useEffect } from 'react';
 import { PiCloudFogFill } from 'react-icons/pi';
+import { convertImgSrcToHTTPS } from '@/lib/helpers';
 
 const ChatListPage = () => {
   const {
@@ -86,7 +87,7 @@ const ChatListPage = () => {
           <ChatItem
             key={index}
             chatId={chat.chatId}
-            profileImgUrl={chat.senderImg}
+            profileImgUrl={convertImgSrcToHTTPS(chat.senderImg)}
             username={chat.sender}
             lastMessage={chat.msg}
             lastUpdatedDate={chat.createAt}

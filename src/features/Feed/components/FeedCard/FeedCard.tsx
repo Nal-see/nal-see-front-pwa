@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/carousel';
 import useFeedInteraction from '../../hooks/useFeedInteraction';
 import useCarousel from '../../hooks/useCarosel';
+import { convertImgSrcToHTTPS } from '@/lib/helpers';
 
 interface FeedCardProps {
   feed: PostResponseDto;
@@ -73,8 +74,8 @@ const FeedListCard: React.FC<FeedCardProps> = ({ feed }) => {
             <CircleProfileImg
               profileImgUrl={
                 feed.userImage
-                  ? feed.userImage
-                  : '/public/weatherImage/placeholder.jpg'
+                  ? convertImgSrcToHTTPS(feed.userImage)
+                  : '/assets/weatherImage/placeholder.jpg'
               }
               size="size-5 mr-2"
             />
