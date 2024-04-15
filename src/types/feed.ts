@@ -43,7 +43,7 @@ export interface IPostEditFormData {
 }
 
 export interface IProfileEditForm {
-  userDetailDto: {
+  userInfo: {
     username: string;
     height: number | null;
     weight: number | null;

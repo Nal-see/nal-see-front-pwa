@@ -1,6 +1,8 @@
 import BackBtnHeader from '@/components/BackBtnHeader';
 import ProfileFeedList from './components/ProfileFeedList';
-import ProfileHeader from './components/ProfileHeader';
+import ProfileHeader, {
+  ProfileHeaderSkeleton,
+} from './components/ProfileHeader';
 import { useState, useEffect } from 'react';
 import { getProfileUserData } from './services/profileApi';
 import { useParams } from 'react-router-dom';
@@ -45,12 +47,27 @@ const UserProfilePage = () => {
     }
   }, [data, userId]);
 
-  if (isLoading || !userData) {
+  if (isLoading) {
     return (
-      <div className="h-dvh overflow-y-scroll">
-        <ProfileFeedListSkeleton />
+      <div>
+        <div className="flex h-[100dvh-183px] flex-1 flex-col overflow-y-scroll">
+          <BackBtnHeader title="My Profile" />
+          <ProfileHeaderSkeleton />
+          <Skeleton className=" mb-3 ml-8 h-8 w-1/12 rounded-md font-bold text-secondary-foreground" />
+          <div className="flex items-center justify-center gap-7">
+            <Skeleton className="h-8 w-5/12 rounded-md font-bold text-secondary-foreground" />
+            <Skeleton className="h-8 w-5/12 rounded-md font-bold text-secondary-foreground" />
+          </div>
+        </div>
+        <div className="h-dvh overflow-y-scroll">
+          <ProfileFeedListSkeleton />
+        </div>
       </div>
     );
+  }
+
+  if (!userData) {
+    return null;
   }
 
   return (
