@@ -1,14 +1,12 @@
-import BackBtnHeader from '@/components/BackBtnHeader';
 import ChatItem from './components/ChatItem';
 import ChatContainer from './components/ChatContainer';
 import useAuthStore from '@/store/useAuthStore';
 import useWebSocketStore from '@/store/useWebsocketStore';
 import { useEffect } from 'react';
-import { PiCloudFogFill } from 'react-icons/pi';
 import { convertImgSrcToHTTPS } from '@/lib/helpers';
 import SplashGirl from '@/assets/splash-girl2.png';
 import SplashSun from '@/assets/splash-sun.png';
-import NalseeWhiteLogo from '@/assets/nalsee-white.png';
+import Navbar from '@/components/NalSeeNavbar';
 
 const ChatListPage = () => {
   const {
@@ -67,7 +65,7 @@ const ChatListPage = () => {
   if (!chatList) {
     return (
       <div className="flex-1">
-        <BackBtnHeader title="메시지" />
+        <Navbar />
         <div className="flex-1">
           <div className="relative flex h-[calc(100dvh-155px)] items-center justify-center overflow-hidden bg-gradient-to-b from-blue-300 ">
             <img
@@ -94,6 +92,7 @@ const ChatListPage = () => {
 
   return (
     <div className="flex-1">
+      <Navbar />
       <ChatContainer>
         {chatList.map((chat, index) => (
           <ChatItem
