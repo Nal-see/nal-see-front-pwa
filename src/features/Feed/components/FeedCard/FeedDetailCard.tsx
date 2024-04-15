@@ -20,7 +20,7 @@ import {
 } from '@/components/ui/carousel';
 import useFeedInteraction from '../../hooks/useFeedInteraction';
 import useCarousel from '../../hooks/useCarosel';
-import { convertImgSrcToHTTPS } from '@/lib/helpers';
+import { convertImgSrcToHTTPS, formatNotificationDate } from '@/lib/helpers';
 interface FeedCardProps {
   feed: FeedDetail;
   onUpdateSuccess: () => void;
@@ -110,7 +110,7 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed, onUpdateSuccess }) => {
             </>
           ) : null}
           <span className=" text-sm text-gray-500">
-            {formatDate(feed.postResponseDto.createDate)}
+            {formatNotificationDate(feed.postResponseDto.createDate)}
           </span>
         </div>
       </div>

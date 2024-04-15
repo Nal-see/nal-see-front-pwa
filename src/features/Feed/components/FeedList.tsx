@@ -16,6 +16,7 @@ const FeedList = () => {
     useInfiniteQuery<Feed[], string[]>({
       queryKey: ['feedList'],
       queryFn: async ({ pageParam = -1 }) => {
+        console.log('pageParam: ', pageParam);
         const response = await getFeedList(
           pageParam as number,
           longitude as number,
