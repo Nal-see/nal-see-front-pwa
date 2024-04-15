@@ -16,9 +16,9 @@ type ProfileHeaderProps = {
 const ProfileHeader: React.FC<ProfileHeaderProps> = ({ userProfileData }) => {
   return (
     <div className="mb-2">
-      <div className="flex items-center justify-around pb-2">
+      <div className="flex items-center justify-between px-6 py-2">
         <img
-          className="mx-5 size-20 rounded-full"
+          className="size-20 rounded-full"
           src={
             userProfileData.userImage
               ? convertImgSrcToHTTPS(userProfileData.userImage)
@@ -26,19 +26,21 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ userProfileData }) => {
           }
           alt="user"
         />
-        <div className="flex flex-auto justify-around">
-          <FeedCount count={userProfileData.feedCount} counterName="Posts" />
+        <div className="inline-flex w-[65%] justify-center gap-9">
+          <FeedCount count={userProfileData.feedCount} counterName="게시물" />
           <FeedCount
             count={userProfileData.followerCount}
-            counterName="Followers"
+            counterName="팔로워"
           />
           <FeedCount
             count={userProfileData.followingCount}
-            counterName="Following"
+            counterName="팔로잉"
           />
         </div>
       </div>
-      <h1 className="ml-7 text-lg font-bold">{userProfileData.username}</h1>
+      <h1 className="px-6 pt-2 text-lg font-semibold">
+        {userProfileData.username}
+      </h1>
     </div>
   );
 };
