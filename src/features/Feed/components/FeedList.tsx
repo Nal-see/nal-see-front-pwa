@@ -8,6 +8,9 @@ import FeedSkeletonCard from './FeedCard/FeedSkeletionCard';
 import FeedListCard from './FeedCard/FeedCard';
 import { SyncLoader } from 'react-spinners';
 import { LocationStatusView } from './isCurrentLocation/IsCurrentLocation';
+import SplashGirl from '@/assets/splash-girl2.png';
+import SplashSun from '@/assets/splash-sun.png';
+
 const FeedList = () => {
   const { longitude, latitude, errorMsg, isCurrentLocation } =
     useCurrentLocation();
@@ -16,6 +19,7 @@ const FeedList = () => {
     useInfiniteQuery<Feed[], string[]>({
       queryKey: ['feedList'],
       queryFn: async ({ pageParam = -1 }) => {
+        console.log('pageParam: ', pageParam);
         const response = await getFeedList(
           pageParam as number,
           longitude as number,
@@ -49,7 +53,28 @@ const FeedList = () => {
   }, [isCurrentLocation, refetch]);
 
   if (errorMsg) {
-    return <div>{errorMsg}</div>;
+    return (
+      <div className="h-[calc(100vh-160px)] w-full overflow-y-scroll scrollbar-hide">
+        <div className="relative flex h-[calc(100dvh-155px)] items-center justify-center overflow-hidden bg-gradient-to-b from-blue-300 ">
+          <img
+            className="absolute right-0 top-[109.70px] h-60 w-40 origin-top-left rotate-[-46.01deg]"
+            src={SplashSun}
+            alt="splash-sun"
+          />
+          <p className="absolute inset-x-0 top-[270px] mx-auto h-20 w-max text-lg font-extrabold text-card">
+            위치정보를 불러오는 데 실패했어요
+          </p>
+
+          <div className="absolute left-[-52px] top-[438px] h-[631px] w-[271.57px] overflow-hidden">
+            <img
+              src={SplashGirl}
+              alt="splash-girl"
+              className="size-full object-contain"
+            />
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (!data) {

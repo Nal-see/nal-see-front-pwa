@@ -17,7 +17,7 @@ export interface EditFeedProps extends IPostEditFormData {
 }
 
 export const PostEditSheet: React.FC<EditFeedProps> = ({
-  userInfo,
+  userDetailDto,
   content,
   postId,
   onClose,
@@ -25,11 +25,11 @@ export const PostEditSheet: React.FC<EditFeedProps> = ({
 }) => {
   const [FeedEditData, setFeedEditData] = useState<IPostEditForm>({
     content: content,
-    height: userInfo.height,
-    weight: userInfo.weight,
-    constitution: userInfo.constitution,
-    style: userInfo.style,
-    gender: userInfo.gender,
+    height: userDetailDto.height,
+    weight: userDetailDto.weight,
+    constitution: userDetailDto.constitution,
+    style: userDetailDto.style,
+    gender: userDetailDto.gender,
   });
 
   const handleInputChange = (
@@ -55,7 +55,7 @@ export const PostEditSheet: React.FC<EditFeedProps> = ({
   const onSubmit = async () => {
     const submitData = {
       content: FeedEditData.content,
-      userInfo: {
+      userDetailDto: {
         height: FeedEditData.height,
         weight: FeedEditData.weight,
         constitution: FeedEditData.constitution,

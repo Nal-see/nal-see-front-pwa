@@ -1,11 +1,12 @@
-import BackBtnHeader from '@/components/BackBtnHeader';
 import ChatItem from './components/ChatItem';
 import ChatContainer from './components/ChatContainer';
 import useAuthStore from '@/store/useAuthStore';
 import useWebSocketStore from '@/store/useWebsocketStore';
 import { useEffect } from 'react';
-import { PiCloudFogFill } from 'react-icons/pi';
 import { convertImgSrcToHTTPS } from '@/lib/helpers';
+import SplashGirl from '@/assets/splash-girl2.png';
+import SplashSun from '@/assets/splash-sun.png';
+import Navbar from '@/components/NalSeeNavbar';
 
 const ChatListPage = () => {
   const {
@@ -64,9 +65,26 @@ const ChatListPage = () => {
   if (!chatList) {
     return (
       <div className="flex-1">
-        <BackBtnHeader title="메시지" />
-        <div className="flex h-full items-center justify-center">
-          <PiCloudFogFill className="size-10 animate-spin text-gray-300" />
+        <Navbar />
+        <div className="flex-1">
+          <div className="relative flex h-[calc(100dvh-155px)] items-center justify-center overflow-hidden bg-gradient-to-b from-blue-300 ">
+            <img
+              className="absolute right-0 top-[109.70px] h-60 w-40 origin-top-left rotate-[-46.01deg]"
+              src={SplashSun}
+              alt="splash-sun"
+            />
+            <p className="absolute inset-x-0 top-[270px] mx-auto h-20 w-[74.10px] text-lg font-extrabold text-card">
+              메시지가 없습니다
+            </p>
+
+            <div className="absolute left-[-52px] top-[438px] h-[631px] w-[271.57px] overflow-hidden">
+              <img
+                src={SplashGirl}
+                alt="splash-girl"
+                className="size-full object-contain"
+              />
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -74,6 +92,7 @@ const ChatListPage = () => {
 
   return (
     <div className="flex-1">
+      <Navbar />
       <ChatContainer>
         {chatList.map((chat, index) => (
           <ChatItem
