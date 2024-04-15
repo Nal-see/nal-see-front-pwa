@@ -37,11 +37,8 @@ const NotificationsPage = () => {
       <BackBtnHeader title="알림" />
       <div className="h-[calc(100dvh-152px)] overflow-y-scroll scrollbar-hide">
         {notificationList?.length &&
-          notificationList.map((item: INotificationData, idx: number) => (
-            <NotificationItem
-              key={`${idx}-${item.senderId}`}
-              notification={item}
-            />
+          notificationList.map((item: INotificationData) => (
+            <NotificationItem key={item.id} notification={item} />
           ))}
       </div>
     </div>
