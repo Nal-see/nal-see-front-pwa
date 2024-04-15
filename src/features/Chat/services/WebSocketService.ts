@@ -13,7 +13,7 @@ export class WebSocketService {
   }> = [];
 
   constructor() {
-    const socket = new SockJS('https://nalsee.site:8090/main');
+    const socket = new SockJS(`${import.meta.env.VITE_API_BASE_URL}:8090/main`);
     this.client = new Client({
       webSocketFactory: () => socket,
       connectHeaders: {},
