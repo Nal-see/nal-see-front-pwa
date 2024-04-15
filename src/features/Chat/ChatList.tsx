@@ -18,10 +18,6 @@ const ChatListPage = () => {
     isConnected,
     onLineStatus,
     onLineUsers,
-    // subscribeToOnLineStatus,
-    // subscribeToOnLineUsers,
-    // unsubscribeFromOnLineStatus,
-    // unsubscribeFromOnLineUsers,
   } = useWebSocketStore();
   const { user } = useAuthStore();
   const myId = user?.userId;
@@ -40,8 +36,6 @@ const ChatListPage = () => {
       if (isConnected && user) {
         await subscribeToChatList(String(myId));
         await setChatList();
-        // await subscribeToOnLineStatus();
-        // await subscribeToOnLineUsers();
       }
     };
 
@@ -50,8 +44,6 @@ const ChatListPage = () => {
     return () => {
       if (isConnected && user) {
         unSubscribeFromChatList(String(myId));
-        // unsubscribeFromOnLineStatus();
-        // unsubscribeFromOnLineUsers();
       }
     };
   }, [
@@ -87,8 +79,10 @@ const ChatListPage = () => {
           <ChatItem
             key={index}
             chatId={chat.chatId}
-            profileImgUrl={convertImgSrcToHTTPS(chat.senderImg)}
-            username={chat.sender}
+            profileImgUrl={convertImgSrcToHTTPS(
+              myId == chat.senderId ? chat.receiverImg : chat.senderImg,
+            )}
+            username={myId == chat.senderId ? chat.receiver : chat.sender}
             lastMessage={chat.msg}
             lastUpdatedDate={chat.createAt}
             readCnt={chat.readCnt}

@@ -4,7 +4,7 @@ import { create } from 'zustand';
 import useAuthStore from './useAuthStore';
 import { getChatList, getChatMesg } from '@/features/Chat/services/chatApi';
 
-interface ChatItem {
+export interface ChatItem {
   id: string;
   chatId: string;
   createAt: string;
@@ -43,10 +43,6 @@ interface WebSocketState {
   unSubscribeFromChatList: (userId: string) => void;
   subscribeToMessages: (chatId: string) => void;
   unSubscribeFromMessages: (chatId: string) => void;
-  // subscribeToOnLineUsers: () => void;
-  // unsubscribeFromOnLineUsers: () => void;
-  // subscribeToOnLineStatus: () => void;
-  // unsubscribeFromOnLineStatus: () => void;
   sendMessage: (chatId: string, content: string) => void;
 }
 
@@ -69,7 +65,11 @@ const useWebSocketStore = create<WebSocketState>((set, get) => ({
     const userId = useAuthStore.getState().user?.userId;
     if (userId) {
       const chatList = await getChatList();
-      set({ chatList });
+      const updateChatList = chatList.sort(
+        (a: ChatItem, b: ChatItem) =>
+          new Date(b.createAt).getTime() - new Date(a.createAt).getTime(),
+      );
+      set({ chatList: updateChatList });
     }
   },
   connect: async () => {
@@ -86,7 +86,6 @@ const useWebSocketStore = create<WebSocketState>((set, get) => ({
     webSocketService.client.onDisconnect = () => {
       set({ isConnected: false });
       console.log('연결이 끊어졌습니다. 재연결을 시도합니다.');
-      // 재연결 로직 추가
       webSocketService.activate();
     };
 
