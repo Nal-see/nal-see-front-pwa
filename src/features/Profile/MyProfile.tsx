@@ -132,7 +132,7 @@ const MyProfilePage = () => {
         open={isEtcSheetOpen}
         onDismiss={handleCloseEtcSheet}
         snapPoints={({ maxHeight }) =>
-          showExitForm ? [maxHeight * 0.3] : [maxHeight * 0.12]
+          showExitForm ? [maxHeight * 0.4] : [maxHeight * 0.15]
         }
       >
         <div
