@@ -4,7 +4,7 @@ import NalseeWhiteLogo from '@/assets/nalsee-white.png';
 import kakaoLoginBtn from '@/assets/kakao_login_medium_wide.png';
 
 const handleOauthLogin = (provider: string) => {
-  const oauthLoginUrl = `${import.meta.env.VITE_API_BASE_URL}/oauth2/authorization/${provider}`;
+  const oauthLoginUrl = `${import.meta.env.VITE_API_BASE_URL}:8080/oauth2/authorization/${provider}`;
   window.location.href = oauthLoginUrl;
 };
 
