@@ -21,7 +21,7 @@ export interface Feed {
 
 export interface FeedDetail extends Feed {
   comments: Comment[];
-  userInfo: {
+  userDetailDto: {
     height: number;
     weight: number;
     constitution: string;
@@ -33,7 +33,7 @@ export interface FeedDetail extends Feed {
 
 export interface IPostEditFormData {
   content: string;
-  userInfo: {
+  userDetailDto: {
     height: number | null;
     weight: number | null;
     constitution: string | null;

@@ -1,5 +1,6 @@
 import { convertImgSrcToHTTPS } from '@/lib/helpers';
-import FeedCount from './FeedCount';
+import FeedCount, { FeedCountSkeleton } from './FeedCount';
+import { Skeleton } from '@/components/ui/skeleton';
 
 type ProfileHeaderProps = {
   userProfileData: {
@@ -43,3 +44,18 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ userProfileData }) => {
 };
 
 export default ProfileHeader;
+
+export const ProfileHeaderSkeleton = () => {
+  return (
+    <div className="mb-2">
+      <div className="flex items-center justify-around pb-2">
+        <Skeleton className="mx-5 size-20 rounded-full" />
+        <div className="flex flex-auto justify-around">
+          <FeedCountSkeleton />
+          <FeedCountSkeleton />
+          <FeedCountSkeleton />
+        </div>
+      </div>
+    </div>
+  );
+};

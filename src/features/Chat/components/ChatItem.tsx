@@ -1,5 +1,6 @@
 import CircleProfileImg from '@/components/CircleProfileImg';
 import { formatDate } from '@/features/Feed/utils/dataFormatUtil';
+import { formatNotificationDate } from '@/lib/helpers';
 import useAuthStore from '@/store/useAuthStore';
 import { useNavigate } from 'react-router-dom';
 
@@ -26,7 +27,7 @@ const ChatItem = ({
   const read = readCnt == 0 && senderId !== userId;
   // const read = readCnt > 0;
 
-  const updatedDate = formatDate(lastUpdatedDate);
+  const updatedDate = formatNotificationDate(lastUpdatedDate);
   const navigate = useNavigate();
 
   const enterChatRoom = () => {

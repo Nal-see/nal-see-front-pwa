@@ -45,5 +45,5 @@ export const StyledForm = styled.form`
 `;
 
 export const Input = styled.input`
-  flex-grow mt-1 px-4 py-2 ml-3 border border-gray-300 rounded-3xl focus:outline-none focus:border-transparent;
+  flex-grow mt-1 px-4 py-2 ml-3 border border-gray-300 rounded-3xl focus:outline-none focus:border-transparent text-sm;
 `;

@@ -1,15 +1,17 @@
 import BackBtnHeader from '@/components/BackBtnHeader';
-import ProfileHeader from './components/ProfileHeader';
+import ProfileHeader, {
+  ProfileHeaderSkeleton,
+} from './components/ProfileHeader';
 import ProfileFeedList from './components/ProfileFeedList';
 import { getLogout, getProfileUserData } from './services/profileApi';
 import useAuthStore from '@/store/useAuthStore';
 import { useState } from 'react';
-import EmptyPage from '@/components/EmptyPage';
 import { BottomSheet } from 'react-spring-bottom-sheet';
 import { ProfileEditSheet } from './components/profileDrawer';
 import { getUserDetails } from '../Posts/services/getUserDetails';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const MyProfilePage = () => {
   const { user } = useAuthStore();
@@ -17,7 +19,11 @@ const MyProfilePage = () => {
   const [isEditSheetOpen, setIsEditSheetOpen] = useState(false);
   const navigate = useNavigate();
 
-  const { data: userInfo, refetch: refetchProfileData } = useQuery({
+  const {
+    data: userInfo,
+    refetch: refetchProfileData,
+    isLoading,
+  } = useQuery({
     queryKey: ['userDetails'],
     queryFn: getUserDetails,
   });
@@ -26,10 +32,6 @@ const MyProfilePage = () => {
     queryFn: () => getProfileUserData(String(userId)),
     enabled: !!userId,
   });
-
-  if (!userData) {
-    return <EmptyPage />;
-  }
 
   const handleEdit = () => {
     setIsEditSheetOpen(true);
@@ -48,6 +50,21 @@ const MyProfilePage = () => {
     refetchProfileData();
     refetchProfileHeader();
   };
+
+  if (isLoading || !userData) {
+    return (
+      <div className="flex h-[100dvh-183px] flex-1 flex-col overflow-y-scroll">
+        <BackBtnHeader title="My Profile" />
+        <ProfileHeaderSkeleton />
+        <Skeleton className=" mb-3 ml-8 h-8 w-1/12 rounded-md font-bold text-secondary-foreground" />
+        <div className="flex items-center justify-center gap-7">
+          <Skeleton className="h-8 w-5/12 rounded-md font-bold text-secondary-foreground" />
+          <Skeleton className="h-8 w-5/12 rounded-md font-bold text-secondary-foreground" />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex h-[100dvh-183px] flex-1 flex-col overflow-y-scroll">
       <BackBtnHeader title="My Profile" />

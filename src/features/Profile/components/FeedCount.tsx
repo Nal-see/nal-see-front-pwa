@@ -1,3 +1,4 @@
+import { Skeleton } from '@/components/ui/skeleton';
 import React from 'react';
 
 type FeedCountProp = {
@@ -15,3 +16,12 @@ const FeedCount: React.FC<FeedCountProp> = ({ count, counterName }) => {
 };
 
 export default FeedCount;
+
+export const FeedCountSkeleton = () => {
+  return (
+    <div className="flex flex-col items-center justify-center">
+      <Skeleton className="h-8 w-5" />
+      <Skeleton className="h-8 w-20" />
+    </div>
+  );
+};
