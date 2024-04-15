@@ -11,8 +11,6 @@ export const errorInterceptor = async (error: AxiosError): Promise<void> => {
     // logout 처리 : zustand store에서 user 삭제
     removeUser();
     window.location.href = `${window.location.origin}/hello`;
-  } else if (error.response?.status === 500) {
-    window.location.reload();
   }
   return Promise.reject(error);
 };
