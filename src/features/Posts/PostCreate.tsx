@@ -55,9 +55,9 @@ const PostCreatePage = () => {
 
   const {
     register,
+    watch,
     handleSubmit,
     setValue,
-    getValues,
     reset,
     control,
     trigger,
@@ -70,12 +70,8 @@ const PostCreatePage = () => {
     resolver: zodResolver(PostCreateFormSchema),
   });
 
-  useEffect(() => {
-    if (errors) {
-      console.log('form error', errors);
-      console.log('photo', getValues('photos'));
-    }
-  }, [errors]);
+  const constitutionFormValue = watch('constitution');
+  const genderFormValue = watch('gender');
 
   const onSubmit: SubmitHandler<IPostCreateForm> = (data) => {
     if (user) {
@@ -145,6 +141,12 @@ const PostCreatePage = () => {
         console.error('유저 선택 정보 fetch 실패, status code:', err);
       });
   }, []);
+
+  // 체질, 성별 : 선택 취소한 경우 Null값 부여
+  useEffect(() => {
+    if (!constitutionFormValue?.length) setValue('constitution', null);
+    if (!genderFormValue?.length) setValue('gender', null);
+  }, [constitutionFormValue, genderFormValue]);
 
   return (
     <div className="flex-1">
@@ -250,15 +252,7 @@ const PostCreatePage = () => {
                   render={({ field: { onChange, value } }) => (
                     <Selector
                       value={value ? [value] : []}
-                      onChange={
-                        (selectedVal) => {
-                          if (selectedVal.length) {
-                            onChange(selectedVal[0]);
-                          } else {
-                            onChange(selectedVal);
-                          }
-                        } // antd-mobile Selector 컴포넌트가 기본적으로 value를 배열로 받기 때문에 이와 같이 작성함
-                      }
+                      onChange={(selectedVal) => onChange(selectedVal)} // antd-mobile Selector 컴포넌트가 기본적으로 value를 배열로 받기 때문에 이와 같이 작성함
                       showCheckMark={false}
                       options={constitutionOptions}
                     />
@@ -287,13 +281,7 @@ const PostCreatePage = () => {
                   render={({ field: { onChange, value } }) => (
                     <Selector
                       value={value ? [value] : []}
-                      onChange={(selectedVal) => {
-                        if (selectedVal.length) {
-                          onChange(selectedVal[0]);
-                        } else {
-                          onChange(selectedVal);
-                        }
-                      }}
+                      onChange={(selectedVal) => onChange(selectedVal)}
                       showCheckMark={false}
                       options={genderOptions}
                     />
