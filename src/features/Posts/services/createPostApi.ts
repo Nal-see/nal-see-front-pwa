@@ -10,7 +10,7 @@ export const createPostApi = async (userId: string, data: IPostCreateForm) => {
     address: data.address,
     latitude: data.latitude,
     longitude: data.longitude,
-    userInfo: {
+    userDetailDto: {
       height: data.height,
       weight: data.weight,
       constitution: data.constitution,
