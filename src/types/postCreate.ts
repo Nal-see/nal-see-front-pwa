@@ -5,6 +5,7 @@ export interface IPostCreateHeader {
   step: number;
   setStep: (step: number) => void;
   formTrigger: UseFormTrigger<IPostCreateForm>;
+  isSubmitting: boolean;
 }
 
 export interface IPostCreateForm {
