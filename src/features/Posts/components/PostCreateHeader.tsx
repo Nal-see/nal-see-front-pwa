@@ -9,6 +9,7 @@ const PostCreateHeader = ({
   step,
   setStep,
   formTrigger,
+  isSubmitting,
 }: IPostCreateHeader) => {
   const navigate = useNavigate();
 
@@ -59,7 +60,8 @@ const PostCreateHeader = ({
           type="submit"
           variant="textOnly"
           size="textOnly"
-          className="text-base font-bold text-accent"
+          className={`text-base font-bold ${isSubmitting ? 'text-primary-foreground' : 'text-accent'}`}
+          disabled={isSubmitting}
         >
           등록
         </Button>

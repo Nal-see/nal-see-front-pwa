@@ -1,8 +1,7 @@
 import { api } from '@/lib/api';
 import { IPostCreateForm } from '@/types/postCreate';
-import { AxiosError } from 'axios';
 
-export const createPostApi = async (userId: string, data: IPostCreateForm) => {
+export const createPostApi = (userId: string, data: IPostCreateForm) => {
   const formData = new FormData();
   const requestDto = JSON.stringify({
     userId,
@@ -28,14 +27,5 @@ export const createPostApi = async (userId: string, data: IPostCreateForm) => {
     formData.append('photos', file);
   });
 
-  try {
-    const response = await api.post('/api/posts', formData);
-    if (response.status === 200) {
-      return response.data;
-    }
-  } catch (error) {
-    const err = error as AxiosError;
-    console.error('formdata post error:', err);
-    return err.response?.data;
-  }
+  return api.post('/api/posts', formData);
 };
