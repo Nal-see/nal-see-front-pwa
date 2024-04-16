@@ -112,7 +112,7 @@ const ChatRoomPage = () => {
             setMessage(e.target.value);
           }}
           placeholder="메시지를 입력해주세요."
-          className="ml-3 rounded-full"
+          className="ml-3 rounded-full text-base"
         />
       </StyledForm>
     </div>
