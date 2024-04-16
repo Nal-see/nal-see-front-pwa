@@ -84,17 +84,14 @@ const ChatRoomPage = () => {
     <div className="flex h-screen flex-1 flex-col overflow-y-scroll">
       <BackBtnHeader title="Chat Room" />
       <div className="flex-1 overflow-y-auto">
-        {messages
-          // .slice()
-          // .reverse()
-          .map((data, index) => (
-            <ChatBubble
-              key={index}
-              msg={data.msg}
-              senderId={data.senderId}
-              receiverImage={data.senderImg}
-            />
-          ))}
+        {messages.map((data, index) => (
+          <ChatBubble
+            key={index}
+            msg={data.msg}
+            senderId={data.senderId}
+            receiverImage={data.senderImg}
+          />
+        ))}
         <div ref={messagesEndRef} />
       </div>
       <StyledForm
