@@ -32,7 +32,7 @@ const ChatBubble: React.FC<ChatBubbleProps> = ({
       )}
       <div
         className={`whitespace-pre-wrap rounded-2xl p-2 px-4 ${
-          isMyMessage ? 'bg-accent' : 'bg-gray-300'
+          isMyMessage ? 'border' : 'bg-gray-300'
         }`}
       >
         {splitMsg.join('\n')}
