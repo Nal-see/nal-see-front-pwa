@@ -7,6 +7,7 @@ import { convertImgSrcToHTTPS } from '@/lib/helpers';
 import SplashGirl from '@/assets/splash-girl2.png';
 import SplashSun from '@/assets/splash-sun.png';
 import Navbar from '@/components/NalSeeNavbar';
+import { api } from '@/lib/api';
 
 const ChatListPage = () => {
   const {
@@ -56,11 +57,37 @@ const ChatListPage = () => {
     user,
   ]);
 
-  useEffect(() => {
-    console.log('chatList: ', chatList);
-    console.log('onLineStatus: ', onLineStatus);
-    console.log('onLineUsers: ', onLineUsers);
-  }, [chatList, onLineStatus, onLineUsers]);
+  // useEffect(() => {
+  //   const sendReceiverIdsToMainServer = async () => {
+  //     if (chatList) {
+  //       const receiverIds = chatList.map((chat) => chat.receiverId);
+  //       try {
+  //         await api.post(`/receiver-ids`, {
+  //           receiverIds,
+  //         });
+  //       } catch (error) {
+  //         console.error('Error sending receiver IDs to main server:', error);
+  //       }
+  //     }
+  //   };
+
+  //   sendReceiverIdsToMainServer();
+  // }, [chatList]);
+
+  // useEffect(() => {
+  //   const eventSource = new EventSource(
+  //     `${import.meta.env.VITE_API_BASE_URL}:8080/user-status`,
+  //   );
+
+  //   eventSource.onmessage = (event) => {
+  //     const { userId, status } = JSON.parse(event.data);
+  //     // 유저의 접속 상태 변화에 따른 처리 로직 추가
+  //   };
+
+  //   return () => {
+  //     eventSource.close();
+  //   };
+  // }, []);
 
   if (!chatList) {
     return (

@@ -19,6 +19,17 @@ export interface ChatItem {
   // 필요한 다른 속성들 추가
 }
 
+export interface ChattingItem {
+  chatId: string;
+  senderId: string;
+  receiverImg: string;
+  senderImg: string;
+  receiver: string;
+  sender: string;
+  msg: string;
+  createAt: string;
+  readCnt: number;
+}
 interface Message {
   id: string;
   createAt: string;
