@@ -85,7 +85,7 @@ const ChatRoomPage = () => {
   return (
     <div className="flex h-screen flex-1 flex-col overflow-y-scroll">
       <BackBtnHeader title="메시지" />
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto px-3">
         {messages.map((data, index) => (
           <ChatBubble
             key={index}
