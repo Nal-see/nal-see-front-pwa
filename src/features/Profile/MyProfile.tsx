@@ -154,11 +154,9 @@ const MyProfilePage = () => {
             }}
           />
         </div>
-        <div
-          onClick={() => setShowExitForm(!showExitForm)}
-          className="border-b-primary-foreground/40 flex w-full flex-col items-center border-b px-7 py-2"
-        >
+        <div className="border-b-primary-foreground/40 flex w-full flex-col items-center border-b px-7 py-2">
           <p
+            onClick={() => setShowExitForm(!showExitForm)}
             className={`w-full py-2 text-lg font-medium ${showExitForm ? '' : ''}`}
           >
             🚪 회원 탈퇴
