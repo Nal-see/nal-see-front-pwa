@@ -33,6 +33,9 @@ const ChatItem = ({
     navigate(`/chat/${chatId}`);
   };
 
+  if (username == '탈퇴한 사용자') {
+    return null;
+  }
   return (
     <div
       onClick={enterChatRoom}
