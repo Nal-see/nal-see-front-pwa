@@ -63,10 +63,12 @@ const FeedList = () => {
   useEffect(() => {
     if (isError) {
       console.log('feedList error', error);
-      window.location.reload();
+
       toast.warning('세션이 만료되었습니다.', {
         description: '다시 로그인해주세요.',
       });
+      new Promise((resolve) => setTimeout(resolve, 3000));
+      window.location.reload();
     }
   }, [isError]);
 
