@@ -22,7 +22,7 @@ export const unregisterFirebaseSW = (): void => {
   if ('Notification' in window) {
     toast.info('알림 해제 1단계 완료', {
       description:
-        '기기 브라우저의 설정에서 알림 권한을 해제해주세요. 그렇지 않으면 알림 해제가 되지 않습니다!',
+        '기기 브라우저의 설정에서 알림 권한을 해제해주세요. 그렇지 않으면 알림이 완벽히 해제되지 않아요!',
       duration: 10000,
     });
   }
