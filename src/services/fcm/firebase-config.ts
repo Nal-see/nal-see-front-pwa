@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAnalytics } from 'firebase/analytics';
+// import { getAnalytics } from 'firebase/analytics';
 import { getMessaging, onMessage } from 'firebase/messaging';
 import { useNotificationStore } from '@/store/useNotificationStore';
 
@@ -16,7 +16,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+// const analytics = getAnalytics(app);
 export const messaging = getMessaging(app);
 
 // foreground message 처리
