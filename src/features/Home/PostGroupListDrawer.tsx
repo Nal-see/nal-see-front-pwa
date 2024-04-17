@@ -40,7 +40,7 @@ const PostGroupListDrawer = () => {
       open={isPostDrawerOpen}
       onDismiss={() => setPostDrawerOpen()}
       snapPoints={({ maxHeight }) =>
-        data?.data.results.length > 2 ? [maxHeight * 1] : [maxHeight * 0.57]
+        data?.data.results.length > 2 ? [maxHeight * 0.9] : [maxHeight * 0.55]
       }
     >
       <div className="inline-flex w-full justify-end px-5 pt-2">
@@ -65,15 +65,15 @@ const PostGroupListDrawer = () => {
           <p>다시 시도해주세요.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-2 justify-items-center px-2">
+        <div className="grid grid-cols-2 justify-items-center overflow-y-scroll px-2 pt-3 scrollbar-hide">
           {/* 게시물 수가 홀수개인 경우 : 빈 공간에 대체 게시물 렌더링 */}
           {data?.data.results.length % 2 === 1 ? (
             <>
               {data.data.results.map((post: PostResponseDto) => (
                 <FeedListCard key={post.id} feed={post} />
               ))}
-              <div className="flex h-[360px] w-[45dvw] flex-col gap-3">
-                <div className="border-primary-foreground/50 mt-1 flex h-[290px] flex-row items-end justify-between rounded-md border bg-gradient-to-t from-[#F5F6F7] to-accent-foreground">
+              <div className="flex w-[45dvw] flex-col gap-3">
+                <div className="border-primary-foreground/50 flex h-[60dvw] flex-row items-end justify-between rounded-md border bg-gradient-to-t from-[#F5F6F7] to-accent-foreground">
                   <div className="ml-3 w-[70px]">
                     <img src={SplashMan} className="drop-shadow-md" />
                   </div>

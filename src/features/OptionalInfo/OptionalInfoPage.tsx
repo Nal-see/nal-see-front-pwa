@@ -23,6 +23,8 @@ const OptionalInfoPage = () => {
   const navigate = useNavigate();
   const {
     register,
+    watch,
+    setValue,
     control,
     handleSubmit,
     formState: { errors },
@@ -37,6 +39,9 @@ const OptionalInfoPage = () => {
     },
     resolver: zodResolver(OptionalInfoFormSchema),
   });
+
+  const constitutionFormValue = watch('constitution');
+  const genderFormValue = watch('gender');
 
   const submitForm: SubmitHandler<IOptionalInfoForm> = async (data) => {
     try {
@@ -54,9 +59,16 @@ const OptionalInfoPage = () => {
   };
 
   useEffect(() => {
+    if (!constitutionFormValue?.length) setValue('constitution', null);
+    if (!genderFormValue?.length) setValue('gender', null);
+  }, [constitutionFormValue, genderFormValue]);
+
+  useEffect(() => {
     if (Object.keys(errors).length) {
       Object.values(errors).forEach((error) => {
-        toast.warning(error.message);
+        toast.warning('문제가 발생했습니다.', {
+          description: error.message,
+        });
       });
     }
   }, [errors]);

@@ -110,7 +110,7 @@ const FeedList = () => {
   return (
     <div className="h-[calc(100vh-160px)] w-full overflow-y-scroll scrollbar-hide">
       <LocationStatusView isCurrentLocation={isCurrentLocation} />
-      <div className="grid grid-cols-2 justify-items-center">
+      <div className="grid grid-cols-2 justify-items-center gap-0 px-2">
         {data?.pages.map((page, pageIndex) => (
           <React.Fragment key={pageIndex}>
             {page.map((feed: Feed) => (

@@ -27,7 +27,7 @@ const FeedDetailPage = () => {
 
   return (
     <div>
-      <BackBtnHeader title="상세페이지" />
+      <BackBtnHeader title="" />
       {!feed ? (
         <div>게시물이 존재하지 않습니다.</div>
       ) : (
