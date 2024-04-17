@@ -4,12 +4,13 @@ import 'react-spring-bottom-sheet/dist/style.css';
 import { Comment } from '../../../../mocks/data/commentData';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import CommentBox from './comment';
-import { Input, StyledForm, UserImage } from './commentStyle';
+import { StyledForm, UserImage } from './commentStyle';
 import { TfiComment } from 'react-icons/tfi';
 import useAuthStore from '@/store/useAuthStore';
 import { getComments, postComment } from '../../services/commentApi';
 import { SyncLoader } from 'react-spinners';
 import { convertImgSrcToHTTPS } from '@/lib/helpers';
+import { Input } from '@/components/ui/input';
 
 interface CommentSheetProps {
   postId: number;
@@ -53,7 +54,6 @@ const CommentSheet: React.FC<CommentSheetProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('newComment: ', newComment);
     createCommentMutation.mutate({ postId, content: newComment });
     setNewComment('');
   };
@@ -100,10 +100,10 @@ const CommentSheet: React.FC<CommentSheetProps> = ({
             type="text"
             value={newComment}
             onChange={(e) => {
-              console.log('e.value: ', e.target.value);
               setNewComment(e.target.value);
             }}
             placeholder="댓글을 입력해주세요."
+            className="ml-3 rounded-full text-base"
           />
         </StyledForm>
       </BottomSheet>

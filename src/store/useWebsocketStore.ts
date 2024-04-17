@@ -19,6 +19,17 @@ export interface ChatItem {
   // 필요한 다른 속성들 추가
 }
 
+export interface ChattingItem {
+  chatId: string;
+  senderId: string;
+  receiverImg: string;
+  senderImg: string;
+  receiver: string;
+  sender: string;
+  msg: string;
+  createAt: string;
+  readCnt: number;
+}
 interface Message {
   id: string;
   createAt: string;
@@ -26,6 +37,9 @@ interface Message {
   sender: string;
   senderId: string;
   senderImg: string;
+  receiver: string;
+  receiverId: string;
+  receiverImg: string;
 }
 
 interface WebSocketState {
@@ -34,7 +48,7 @@ interface WebSocketState {
   chatList: ChatItem[];
   messages: Message[];
   onLineUsers: string[];
-  onLineStatus: string;
+  userList: string[];
   setMessages: (chatId: string) => void;
   setChatList: () => void;
   connect: () => void;
@@ -52,7 +66,7 @@ const useWebSocketStore = create<WebSocketState>((set, get) => ({
   chatList: [],
   messages: [],
   onLineUsers: [],
-  onLineStatus: '',
+  userList: [],
   setMessages: async (chatId: string) => {
     const userId = useAuthStore.getState().user?.userId;
     if (userId) {
@@ -70,6 +84,11 @@ const useWebSocketStore = create<WebSocketState>((set, get) => ({
           new Date(b.createAt).getTime() - new Date(a.createAt).getTime(),
       );
       set({ chatList: updateChatList });
+      const userList = chatList.map(
+        (chat: { senderId: string; receiverId: string }) =>
+          userId === chat.senderId ? chat.receiverId : chat.senderId,
+      );
+      set({ userList });
     }
   },
   connect: async () => {

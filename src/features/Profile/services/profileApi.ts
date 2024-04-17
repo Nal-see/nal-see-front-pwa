@@ -1,4 +1,5 @@
 import { api } from '@/lib/api';
+import { IOptionalInfoForm } from '@/types/auth';
 import { ProfileFeedData } from '@/types/profile';
 
 export async function getProfileFeed({
@@ -47,7 +48,7 @@ export async function unFollowUser(userId: string) {
   }
 }
 
-export async function updateProfile(data) {
+export async function updateProfile(data: IOptionalInfoForm) {
   console.log('data: ', data);
   try {
     const response = await api.post(`/api/users/userInfo`, data);

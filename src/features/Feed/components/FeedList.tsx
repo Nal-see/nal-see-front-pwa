@@ -27,7 +27,6 @@ const FeedList = () => {
   } = useInfiniteQuery<Feed[], string[]>({
     queryKey: ['feedList'],
     queryFn: async ({ pageParam = -1 }) => {
-      console.log('pageParam: ', pageParam);
       const response = await getFeedList(
         pageParam as number,
         longitude as number,
@@ -70,7 +69,7 @@ const FeedList = () => {
       new Promise((resolve) => setTimeout(resolve, 3000));
       window.location.reload();
     }
-  }, [isError]);
+  }, [error, isError]);
 
   if (errorMsg) {
     return (
