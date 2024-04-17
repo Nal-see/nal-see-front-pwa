@@ -40,14 +40,14 @@ const FeedListCard: React.FC<FeedCardProps> = ({ feed }) => {
       : feed?.content.slice(0, maxContentLength);
 
   return (
-    <div className="m-1 mb-3 w-[45dvw]">
+    <div className="mb-3 w-[45dvw]">
       <div onClick={moveToDetailPage} className="cursor-pointer">
         <div className="relative">
           <Carousel className="w-full" setApi={setApi}>
             <CarouselContent>
               {feed.pictureList.map((picture, index) => (
                 <CarouselItem key={index}>
-                  <div className="relative h-72">
+                  <div className="relative h-[60dvw]">
                     <img
                       className="absolute left-0 top-0 size-full rounded-md object-cover"
                       src={picture}
