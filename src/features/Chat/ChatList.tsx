@@ -63,6 +63,10 @@ const ChatListPage = () => {
   ]);
 
   useEffect(() => {
+    console.log('userlist', userList);
+  }, [userList]);
+
+  useEffect(() => {
     const subscribeToUserStatus = async () => {
       const url = `${import.meta.env.VITE_API_BASE_URL}:8080/subscribe?userIds=${userList.join(',')}`;
       try {

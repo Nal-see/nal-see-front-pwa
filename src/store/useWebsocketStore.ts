@@ -37,6 +37,9 @@ interface Message {
   sender: string;
   senderId: string;
   senderImg: string;
+  receiver: string;
+  receiverId: string;
+  receiverImg: string;
 }
 
 interface WebSocketState {

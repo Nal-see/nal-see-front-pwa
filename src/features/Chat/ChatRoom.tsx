@@ -26,7 +26,9 @@ const ChatRoomPage = () => {
   const myImage = user?.picture;
   const [message, setMessage] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
+  const isReadOnly =
+    messages[0]?.sender == '탈퇴한 사용자' ||
+    messages[0]?.receiver == '탈퇴한 사용자';
   useEffect(() => {
     if (user) {
       connect();
@@ -114,8 +116,13 @@ const ChatRoomPage = () => {
             console.log('e.value: ', e.target.value);
             setMessage(e.target.value);
           }}
-          placeholder="메시지를 입력해주세요."
+          placeholder={
+            isReadOnly
+              ? '탈퇴한 사용자입니다. 메시지를 보낼 수 없습니다.'
+              : '메시지를 입력해주세요.'
+          }
           className="ml-3 rounded-full text-base"
+          disabled={isReadOnly}
         />
       </StyledForm>
     </div>
