@@ -18,7 +18,12 @@ const FeedDetailPage = () => {
   });
 
   if (isLoading) {
-    return <FeedDetailSkeletonCard />;
+    return (
+      <div className="h-[calc(100dvh-128px)]">
+        <BackBtnHeader title="" />
+        <FeedDetailSkeletonCard />;
+      </div>
+    );
   }
 
   const handleUpdateSuccess = () => {
