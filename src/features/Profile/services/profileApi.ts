@@ -66,16 +66,11 @@ export async function getLogout() {
   }
 }
 
-export const deleteAccount = async (
-  username: string,
-  email: string,
-  password: string,
-) => {
+export const deleteAccount = async (username: string, email: string) => {
   const response = await api.delete('/api/delete', {
     data: {
       username,
       email,
-      password,
     },
   });
   return response;

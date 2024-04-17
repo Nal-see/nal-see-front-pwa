@@ -40,7 +40,7 @@ const FeedListCard: React.FC<FeedCardProps> = ({ feed }) => {
       : feed?.content.slice(0, maxContentLength);
 
   return (
-    <div className="m-1 mb-4 w-[45vw]">
+    <div className="m-1 mb-3 w-[45dvw]">
       <div onClick={moveToDetailPage} className="cursor-pointer">
         <div className="relative">
           <Carousel className="w-full" setApi={setApi}>
@@ -49,7 +49,7 @@ const FeedListCard: React.FC<FeedCardProps> = ({ feed }) => {
                 <CarouselItem key={index}>
                   <div className="relative h-72">
                     <img
-                      className="absolute left-0 top-0 size-full object-cover"
+                      className="absolute left-0 top-0 size-full rounded-md object-cover"
                       src={picture}
                       alt={`${feed.address} ${index + 1}`}
                     />
@@ -70,7 +70,7 @@ const FeedListCard: React.FC<FeedCardProps> = ({ feed }) => {
           </div>
         </div>
         <div>
-          <div className="my-1 flex items-center">
+          <div className="mb-1 mt-2 flex items-center">
             <CircleProfileImg
               profileImgUrl={
                 feed.userImage
