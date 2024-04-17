@@ -56,35 +56,33 @@ const ChatListPage = () => {
     user,
   ]);
 
-  // useEffect(() => {
-  //   const subscribeToUserStatus = async () => {
-  //     try {
-  //       const eventSource = new EventSource(
-  //         `${import.meta.env.VITE_API_BASE_URL}:8080/subscribe?userIds=${userList.join(',')}`,
-  //       );
+  useEffect(() => {
+    const subscribeToUserStatus = async () => {
+      try {
+        const eventSource = new EventSource(
+          `${import.meta.env.VITE_API_BASE_URL}:8080/subscribe?userIds=${userList.join(',')}`,
+        );
 
-  //       eventSource.onmessage = (event) => {
-  //         const test = JSON.parse(event.data);
-  //         console.log(`user ${test}`);
-  //         // 사용자 상태 변경에 따른 처리 로직 추가
-  //       };
+        eventSource.onmessage = (event) => {
+          const test = JSON.parse(event.data);
+          console.log(`user ${test}`);
+          // 사용자 상태 변경에 따른 처리 로직 추가
+        };
 
-  //       eventSource.onerror = (error) => {
-  //         console.error('SSE error:', error);
-  //       };
+        eventSource.onerror = (error) => {
+          console.error('SSE error:', error);
+        };
 
-  //       return () => {
-  //         eventSource.close();
-  //       };
-  //     } catch (error) {
-  //       console.error('Error subscribing to user status:', error);
-  //     }
-  //   };
+        return () => {
+          eventSource.close();
+        };
+      } catch (error) {
+        console.error('Error subscribing to user status:', error);
+      }
+    };
 
-  //   if (userList.length > 0) {
-  //     subscribeToUserStatus();
-  //   }
-  // }, [userList]);
+    subscribeToUserStatus();
+  }, [userList]);
 
   if (!chatList) {
     return (
