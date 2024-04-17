@@ -76,7 +76,7 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed, onUpdateSuccess }) => {
       : feed?.postResponseDto.content?.slice(0, maxContentLength);
 
   return (
-    <div className="h-[calc(100dvh-144px)] overflow-y-scroll scrollbar-hide">
+    <div className="h-[calc(100dvh-128px)] overflow-y-scroll scrollbar-hide">
       <div className="flex items-center justify-between p-3 px-4">
         <div className="flex">
           <img
@@ -162,7 +162,7 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed, onUpdateSuccess }) => {
             />
           </span>
         </div>
-        <span className="ml-0.5 text-base font-normal">좋아요 {likeCnt}</span>
+        <span className="ml-0.5 text-base font-medium">좋아요 {likeCnt}</span>
         <p className="ml-0.5 mt-2 text-base">
           {displayedContent}
           {feed.postResponseDto.content.length > maxContentLength && (

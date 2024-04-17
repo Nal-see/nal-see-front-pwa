@@ -71,15 +71,17 @@ const UserProfilePage = () => {
   }
 
   return (
-    <div className="h-dvh overflow-y-scroll">
+    <div className="h-dvh">
       <BackBtnHeader title={userData.username} />
-      <ProfileHeader userProfileData={userData} />
-      <FollowMesgComp
-        userId={String(userId)}
-        isFollowed={userData.isFollowed}
-        onSuccess={refetch}
-      />
-      <ProfileFeedList userId={String(userId)} />
+      <div className="h-[calc(100dvh-136px)] overflow-y-scroll scrollbar-hide">
+        <ProfileHeader userProfileData={userData} />
+        <FollowMesgComp
+          userId={String(userId)}
+          isFollowed={userData.isFollowed}
+          onSuccess={refetch}
+        />
+        <ProfileFeedList userId={String(userId)} />
+      </div>
     </div>
   );
 };
