@@ -84,13 +84,7 @@ const ChatRoomPage = () => {
 
   return (
     <div className="flex h-screen flex-1 flex-col overflow-y-scroll">
-      <BackBtnHeader
-        title={`${
-          messages[0].receiver === user?.userName
-            ? messages[0].sender
-            : messages[0].receiver
-        }`}
-      />
+      <BackBtnHeader title="메시지" />
       <div className="flex-1 overflow-y-auto">
         {messages.map((data, index) => (
           <ChatBubble
