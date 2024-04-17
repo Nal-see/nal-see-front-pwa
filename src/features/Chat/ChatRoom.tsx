@@ -7,6 +7,7 @@ import ChatBubble from './components/ChatBubbleProps';
 import { StyledForm, UserImage } from '../Feed/components/comment/commentStyle';
 import useWebSocketStore from '@/store/useWebsocketStore';
 import { useParams } from 'react-router-dom';
+import { convertImgSrcToHTTPS } from '@/lib/helpers';
 
 const ChatRoomPage = () => {
   const { user } = useAuthStore();
@@ -25,7 +26,9 @@ const ChatRoomPage = () => {
   const myImage = user?.picture;
   const [message, setMessage] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
+  const isReadOnly =
+    messages[0]?.sender == '탈퇴한 사용자' ||
+    messages[0]?.receiver == '탈퇴한 사용자';
   useEffect(() => {
     if (user) {
       connect();
@@ -44,7 +47,6 @@ const ChatRoomPage = () => {
     console.log(isConnected);
     const fetchMessages = async () => {
       if (chatId && myId && isConnected) {
-        console.log('채팅방 구독하고 메시지 가져오기');
         await subscribeToMessages(chatId);
         await setMessages(chatId);
       }
@@ -100,7 +102,13 @@ const ChatRoomPage = () => {
           handleSendMessage();
         }}
       >
-        <UserImage src={myImage} />
+        <UserImage
+          src={
+            myImage
+              ? convertImgSrcToHTTPS(myImage)
+              : '/src/assets/weatherImage/placeholder.jpg'
+          }
+        />
         <Input
           type="text"
           value={message}
@@ -108,8 +116,13 @@ const ChatRoomPage = () => {
             console.log('e.value: ', e.target.value);
             setMessage(e.target.value);
           }}
-          placeholder="메시지를 입력해주세요."
+          placeholder={
+            isReadOnly
+              ? '탈퇴한 사용자입니다. 메시지를 보낼 수 없습니다.'
+              : '메시지를 입력해주세요.'
+          }
           className="ml-3 rounded-full text-base"
+          disabled={isReadOnly}
         />
       </StyledForm>
     </div>

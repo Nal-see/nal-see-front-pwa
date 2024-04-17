@@ -65,15 +65,17 @@ const FollowMesgComp = ({
   };
 
   return (
-    <div className="mx-2 flex justify-around">
+    <div className="mx-6 flex justify-around gap-2">
       <Button
-        className={`"mx-1 my-2 w-[50dvh] ${isFollowed ? 'text-secondary-foregroundß bg-secondary-foreground' : 'bg-accent text-secondary-foreground'} font-bold `}
+        variant={isFollowed ? 'secondary' : 'accent'}
+        className="mx-1 my-2 h-8 w-[50dvh] p-2"
         onClick={() => handleFollow()}
       >
         {isFollowed ? '팔로잉' : '팔로우'}
       </Button>
       <Button
-        className="text-secondary-foregroundß mx-1 my-2 w-[50dvh] bg-secondary-foreground font-bold"
+        variant="secondary"
+        className="mx-1 my-2 h-8 w-[50dvh] p-2"
         onClick={handleSendMessage}
       >
         메시지

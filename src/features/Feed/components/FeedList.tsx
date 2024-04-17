@@ -27,7 +27,6 @@ const FeedList = () => {
   } = useInfiniteQuery<Feed[], string[]>({
     queryKey: ['feedList'],
     queryFn: async ({ pageParam = -1 }) => {
-      console.log('pageParam: ', pageParam);
       const response = await getFeedList(
         pageParam as number,
         longitude as number,
@@ -63,12 +62,14 @@ const FeedList = () => {
   useEffect(() => {
     if (isError) {
       console.log('feedList error', error);
-      window.location.reload();
+
       toast.warning('세션이 만료되었습니다.', {
         description: '다시 로그인해주세요.',
       });
+      new Promise((resolve) => setTimeout(resolve, 3000));
+      window.location.reload();
     }
-  }, [isError]);
+  }, [error, isError]);
 
   if (errorMsg) {
     return (
@@ -110,7 +111,7 @@ const FeedList = () => {
   return (
     <div className="h-[calc(100dvh-160px)] w-full overflow-y-scroll scrollbar-hide">
       <LocationStatusView isCurrentLocation={isCurrentLocation} />
-      <div className="grid grid-cols-2 justify-items-center">
+      <div className="grid grid-cols-2 justify-items-center gap-0 px-2">
         {data?.pages.map((page, pageIndex) => (
           <React.Fragment key={pageIndex}>
             {page.map((feed: Feed) => (

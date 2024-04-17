@@ -20,7 +20,7 @@ const LocationSelector = ({
   selectedLocation,
   setSelectedLocation,
 }: ILocationSelectorProps) => {
-  const { longitude, latitude, errorMsg } = useCurrentLocation();
+  const { longitude, latitude } = useCurrentLocation();
 
   // 지도 표시
   useEffect(() => {
