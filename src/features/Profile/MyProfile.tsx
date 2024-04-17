@@ -27,7 +27,7 @@ const MyProfilePage = () => {
   const [isEditSheetOpen, setIsEditSheetOpen] = useState(false);
   const [isEtcSheetOpen, setIsEtcSheetOpen] = useState(false);
   const [showExitForm, setShowExitForm] = useState(false);
-  const [password, setPassword] = useState<string>();
+  const [email, setEmail] = useState<string>();
   const navigate = useNavigate();
 
   const {
@@ -54,14 +54,11 @@ const MyProfilePage = () => {
   };
 
   const handleDeleteAccount = async () => {
-    if (!password) toast.error('탈퇴를 위해 비밀번호를 입력해주세요.');
-    if (user && password) {
+    if (!email)
+      toast.error('본인 확인을 위해 카카오계정 이메일을 입력해주세요.');
+    if (user && email) {
       try {
-        const response = await deleteAccount(
-          user?.userName,
-          user?.email,
-          password,
-        );
+        const response = await deleteAccount(user?.userName, email);
 
         if (response.status === 200) {
           toast.success('서비스 탈퇴 완료', {
@@ -74,9 +71,10 @@ const MyProfilePage = () => {
         }
       } catch (error) {
         const err = error as AxiosError;
-        if (err.status === 400) {
+        if (err.response?.status === 400) {
           toast.error('탈퇴 처리 실패', {
-            description: '입력하신 비밀번호가 일치하지 않습니다.',
+            description:
+              '입력하신 카카오 이메일이 회원정보와 일치하지 않습니다.',
           });
         }
         console.log(error);
@@ -90,6 +88,8 @@ const MyProfilePage = () => {
 
   const handleCloseEtcSheet = () => {
     setIsEtcSheetOpen(false);
+    setShowExitForm(false);
+    setEmail('');
   };
 
   const refetchData = () => {
@@ -147,17 +147,17 @@ const MyProfilePage = () => {
           <div className="flex w-full flex-col justify-center gap-4 px-7 pt-1">
             <p className="text-lg">🥺 정말 계정을 삭제하시겠어요?</p>
             <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="비밀번호를 입력하세요..."
-              className="border-b border-b-black p-1 text-base focus:outline-none"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="카카오 계정 이메일 주소를 입력해주세요"
+              className="border-b border-b-black p-1 text-base font-semibold focus:outline-none"
             />
             <div className="inline-flex justify-end gap-2">
               <Button onClick={handleDeleteAccount} variant="secondary">
                 네 탈퇴 할게요...
               </Button>
-              <Button onClick={() => setIsEtcSheetOpen(false)} variant="accent">
+              <Button onClick={handleCloseEtcSheet} variant="accent">
                 탈퇴는 안할래요!
               </Button>
             </div>

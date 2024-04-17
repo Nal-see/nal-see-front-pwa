@@ -22,6 +22,8 @@ import {
 import useAuthStore from '@/store/useAuthStore';
 import { createPostApi } from './services/createPostApi';
 import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
+import { BeatLoader } from 'react-spinners';
 
 const PostCreatePage = () => {
   const { user } = useAuthStore();
@@ -30,12 +32,32 @@ const PostCreatePage = () => {
   const [imgFiles, setImgFiles] = useState<globalThis.File[]>([]);
   const [selectedLocation, setSelectedLocation] =
     useState<ISelectedLocation | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const { mutate } = useMutation({
+    mutationFn: ({ userId, data }: { userId: string; data: IPostCreateForm }) =>
+      createPostApi(userId, data),
+    onMutate: () => {
+      setIsSubmitting(true);
+    },
+    onSuccess: () => {
+      reset();
+      setIsSubmitting(false);
+      navigate(-1);
+      toast.success('게시물이 등록되었습니다.');
+    },
+    onError: (err) => {
+      console.error(err);
+      toast.error('문제가 발생했습니다. 다시 시도해주세요.');
+      setIsSubmitting(false);
+    },
+  });
 
   const {
     register,
+    watch,
     handleSubmit,
     setValue,
-    getValues,
     reset,
     control,
     trigger,
@@ -48,27 +70,12 @@ const PostCreatePage = () => {
     resolver: zodResolver(PostCreateFormSchema),
   });
 
-  useEffect(() => {
-    if (errors) {
-      console.log('form error', errors);
-      console.log('photo', getValues('photos'));
-    }
-  }, [errors]);
+  const constitutionFormValue = watch('constitution');
+  const genderFormValue = watch('gender');
 
   const onSubmit: SubmitHandler<IPostCreateForm> = (data) => {
     if (user) {
-      createPostApi(user.userId, data)
-        .then((res) => {
-          if (res.success === true) {
-            reset();
-            navigate(-1);
-            toast.success('게시물이 등록되었습니다.');
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-          toast.error('문제가 발생했습니다. 다시 시도해주세요.');
-        });
+      mutate({ userId: user.userId, data });
     }
   };
 
@@ -135,14 +142,27 @@ const PostCreatePage = () => {
       });
   }, []);
 
+  // 체질, 성별 : 선택 취소한 경우 Null값 부여
+  useEffect(() => {
+    if (!constitutionFormValue?.length) setValue('constitution', null);
+    if (!genderFormValue?.length) setValue('gender', null);
+  }, [constitutionFormValue, genderFormValue]);
+
   return (
     <div className="flex-1">
+      {isSubmitting && (
+        <BeatLoader
+          color="var(--primary-foreground)"
+          className="absolute left-1/2 top-1/2 z-[3] -translate-x-7 -translate-y-5"
+        />
+      )}
       {/* Form */}
       <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
         <PostCreateHeader
           step={currentStep}
           setStep={setCurrentStep}
           formTrigger={trigger}
+          isSubmitting={isSubmitting}
         />
         <div className="h-[calc(100dvh-156px)] overflow-y-scroll scrollbar-hide">
           {/* STEP 1 : 사진 선택 */}
@@ -232,15 +252,7 @@ const PostCreatePage = () => {
                   render={({ field: { onChange, value } }) => (
                     <Selector
                       value={value ? [value] : []}
-                      onChange={
-                        (selectedVal) => {
-                          if (selectedVal.length) {
-                            onChange(selectedVal[0]);
-                          } else {
-                            onChange(selectedVal);
-                          }
-                        } // antd-mobile Selector 컴포넌트가 기본적으로 value를 배열로 받기 때문에 이와 같이 작성함
-                      }
+                      onChange={(selectedVal) => onChange(selectedVal)} // antd-mobile Selector 컴포넌트가 기본적으로 value를 배열로 받기 때문에 이와 같이 작성함
                       showCheckMark={false}
                       options={constitutionOptions}
                     />
@@ -269,13 +281,7 @@ const PostCreatePage = () => {
                   render={({ field: { onChange, value } }) => (
                     <Selector
                       value={value ? [value] : []}
-                      onChange={(selectedVal) => {
-                        if (selectedVal.length) {
-                          onChange(selectedVal[0]);
-                        } else {
-                          onChange(selectedVal);
-                        }
-                      }}
+                      onChange={(selectedVal) => onChange(selectedVal)}
                       showCheckMark={false}
                       options={genderOptions}
                     />
