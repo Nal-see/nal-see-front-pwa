@@ -1,5 +1,6 @@
 // ChatBubble.tsx
 import { ProfileImage } from '@/features/Feed/components/FeedCard/FeedCardStyle';
+import { convertImgSrcToHTTPS } from '@/lib/helpers';
 import useAuthStore from '@/store/useAuthStore';
 import React from 'react';
 
@@ -28,11 +29,15 @@ const ChatBubble: React.FC<ChatBubbleProps> = ({
       }`}
     >
       {!isMyMessage && receiverImage && (
-        <ProfileImage src={receiverImage} alt="receiver" className="mr-2" />
+        <ProfileImage
+          src={convertImgSrcToHTTPS(receiverImage)}
+          alt="receiver"
+          className="mr-2"
+        />
       )}
       <div
         className={`whitespace-pre-wrap rounded-2xl p-2 px-4 ${
-          isMyMessage ? 'border' : 'bg-gray-300'
+          isMyMessage ? 'bg-accent text-slate-50' : 'bg-gray-300'
         }`}
       >
         {splitMsg.join('\n')}

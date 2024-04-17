@@ -27,7 +27,6 @@ const FeedList = () => {
   } = useInfiniteQuery<Feed[], string[]>({
     queryKey: ['feedList'],
     queryFn: async ({ pageParam = -1 }) => {
-      console.log('pageParam: ', pageParam);
       const response = await getFeedList(
         pageParam as number,
         longitude as number,
@@ -68,7 +67,7 @@ const FeedList = () => {
         description: '다시 로그인해주세요.',
       });
     }
-  }, [isError]);
+  }, [error, isError]);
 
   if (errorMsg) {
     return (
