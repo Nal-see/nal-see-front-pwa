@@ -2,14 +2,19 @@ import ChatItem from './components/ChatItem';
 import ChatContainer from './components/ChatContainer';
 import useAuthStore from '@/store/useAuthStore';
 import useWebSocketStore from '@/store/useWebsocketStore';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { convertImgSrcToHTTPS } from '@/lib/helpers';
 import SplashGirl from '@/assets/splash-girl2.png';
 import SplashSun from '@/assets/splash-sun.png';
 import Navbar from '@/components/NalSeeNavbar';
-import { api } from '@/lib/api';
+
+interface IUserStatus {
+  [key: string]: boolean;
+}
 
 const ChatListPage = () => {
+  const [userStatus, setUserStatus] = useState<IUserStatus>({});
+
   const {
     connect,
     disconnect,
@@ -57,85 +62,38 @@ const ChatListPage = () => {
     user,
   ]);
 
-  // useEffect(() => {
-  //   console.log('first', userList);
-  //   const sendUserListToServer = async () => {
-  //     if (userList.length > 0) {
-  //       try {
-  //         const response = await api.post(`/subscribe`, {
-  //           userList,
-  //         });
-  //         console.log('userList 전송 성공:', response.data);
-  //       } catch (error) {
-  //         console.error('userList 전송 실패:', error);
-  //       }
-  //     }
-  //   };
-
-  //   sendUserListToServer();
-  // }, [userList]);
-
-  // useEffect(() => {
-  //   const eventSource = new EventSource(
-  //     `${import.meta.env.VITE_API_BASE_URL}:8080/subscribe`,
-  //   );
-
-  //   eventSource.onopen = () => {
-  //     console.log('SSE 연결 열림');
-  //   };
-
-  //   eventSource.onmessage = (event) => {
-  //     const { userId, status } = JSON.parse(event.data);
-  //     console.log(`유저 ${userId}의 상태: ${status}`);
-  //     // 유저의 접속 상태 변화에 따른 처리 로직 추가
-  //   };
-
-  //   return () => {
-  //     eventSource.close();
-  //     console.log('SSE 연결 닫힘');
-  //   };
-  // }, []);
-
   useEffect(() => {
-    console.log('userList:', userList);
-    const sendPostRequest = async () => {
+    const subscribeToUserStatus = async () => {
+      const url = `${import.meta.env.VITE_API_BASE_URL}:8080/subscribe?userIds=${userList.join(',')}`;
       try {
-        const response = await api.post('/subscribe', userList);
+        const eventSource = new EventSource(url);
 
-        if (response.status === 200) {
-          console.log('POST 요청 성공', response.data);
-        } else {
-          console.error('POST 요청 실패:', response.status);
-        }
+        eventSource.onopen = () => {};
+
+        eventSource.addEventListener('userStatus', function (event) {
+          const newData = JSON.parse(event.data);
+          setUserStatus((prevStatus) => ({
+            ...prevStatus,
+            ...newData,
+          }));
+        });
+
+        eventSource.onerror = (error) => {
+          console.error('SSE error:', error);
+          eventSource.close();
+        };
+
+        return () => {
+          eventSource.close();
+        };
       } catch (error) {
-        console.error('POST 요청 에러:', error);
+        console.error('Exception while setting up SSE:', error);
       }
     };
 
-    sendPostRequest();
-
-    const eventSource = new EventSource(
-      `${import.meta.env.VITE_API_BASE_URL}:8080/subscribe`,
-    );
-
-    eventSource.onopen = () => {
-      console.log('SSE 연결 열림');
-    };
-
-    eventSource.onmessage = (event) => {
-      const testData = JSON.parse(event.data);
-      console.log(`유저 ${testData}`);
-      // 유저의 접속 상태 변화에 따른 처리 로직 추가
-    };
-
-    eventSource.onerror = (error) => {
-      console.error('SSE 에러:', error);
-    };
-
-    return () => {
-      eventSource.close();
-      console.log('SSE 연결 닫힘');
-    };
+    if (userList.length > 0) {
+      subscribeToUserStatus();
+    }
   }, [userList]);
 
   if (!chatList) {
@@ -182,9 +140,9 @@ const ChatListPage = () => {
             readCnt={chat.readCnt}
             senderId={chat.senderId}
             isOnline={
-              userList.includes(
-                myId == chat.senderId ? chat.receiverId : chat.senderId,
-              ) || false
+              userStatus[
+                myId == chat.senderId ? chat.receiverId : chat.senderId
+              ]
             }
           />
         ))}

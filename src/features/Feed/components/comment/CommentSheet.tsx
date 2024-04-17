@@ -54,7 +54,6 @@ const CommentSheet: React.FC<CommentSheetProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('newComment: ', newComment);
     createCommentMutation.mutate({ postId, content: newComment });
     setNewComment('');
   };
@@ -101,7 +100,6 @@ const CommentSheet: React.FC<CommentSheetProps> = ({
             type="text"
             value={newComment}
             onChange={(e) => {
-              console.log('e.value: ', e.target.value);
               setNewComment(e.target.value);
             }}
             placeholder="댓글을 입력해주세요."

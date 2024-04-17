@@ -1,5 +1,5 @@
 import CircleProfileImg from '@/components/CircleProfileImg';
-import { formatNotificationDate } from '@/lib/helpers';
+import { convertImgSrcToHTTPS, formatNotificationDate } from '@/lib/helpers';
 import useAuthStore from '@/store/useAuthStore';
 import { useNavigate } from 'react-router-dom';
 
@@ -44,7 +44,7 @@ const ChatItem = ({
             size="size-[50px]"
             profileImgUrl={
               profileImgUrl
-                ? profileImgUrl
+                ? convertImgSrcToHTTPS(profileImgUrl)
                 : '/src/assets/weatherImage/placeholder.jpg'
             }
           />
