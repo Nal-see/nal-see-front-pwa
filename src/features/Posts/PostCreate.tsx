@@ -252,7 +252,13 @@ const PostCreatePage = () => {
                   render={({ field: { onChange, value } }) => (
                     <Selector
                       value={value ? [value] : []}
-                      onChange={(selectedVal) => onChange(selectedVal)} // antd-mobile Selector 컴포넌트가 기본적으로 value를 배열로 받기 때문에 이와 같이 작성함
+                      onChange={(selectedVal) => {
+                        if (selectedVal.length) {
+                          onChange(selectedVal[0]);
+                        } else {
+                          onChange(selectedVal);
+                        }
+                      }} // antd-mobile Selector 컴포넌트가 기본적으로 value를 배열로 받기 때문에 이와 같이 작성함
                       showCheckMark={false}
                       options={constitutionOptions}
                     />
@@ -281,7 +287,13 @@ const PostCreatePage = () => {
                   render={({ field: { onChange, value } }) => (
                     <Selector
                       value={value ? [value] : []}
-                      onChange={(selectedVal) => onChange(selectedVal)}
+                      onChange={(selectedVal) => {
+                        if (selectedVal.length) {
+                          onChange(selectedVal[0]);
+                        } else {
+                          onChange(selectedVal);
+                        }
+                      }}
                       showCheckMark={false}
                       options={genderOptions}
                     />

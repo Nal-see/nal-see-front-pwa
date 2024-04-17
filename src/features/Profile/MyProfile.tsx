@@ -99,8 +99,8 @@ const MyProfilePage = () => {
 
   if (isLoading || !userData) {
     return (
-      <div className="flex h-[100dvh-183px] flex-1 flex-col overflow-y-scroll">
-        <BackBtnHeader title="My Profile" />
+      <div className="flex h-[calc(100dvh-80px)] flex-col overflow-y-scroll">
+        <BackBtnHeader title="내 프로필" />
         <ProfileHeaderSkeleton />
         <Skeleton className=" mb-3 ml-8 h-8 w-1/12 rounded-md font-bold text-secondary-foreground" />
         <div className="flex items-center justify-center gap-7">

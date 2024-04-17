@@ -76,7 +76,7 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed, onUpdateSuccess }) => {
       : feed?.postResponseDto.content?.slice(0, maxContentLength);
 
   return (
-    <div className="mb-4 h-[calc(100vh-170px)] overflow-hidden overflow-y-scroll scrollbar-hide">
+    <div className="h-[calc(100dvh-144px)] overflow-y-scroll scrollbar-hide">
       <div className="flex items-center justify-between p-3 px-4">
         <div className="flex">
           <img
@@ -119,7 +119,7 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed, onUpdateSuccess }) => {
           <CarouselContent>
             {feed.postResponseDto.pictureList.map((picture, index) => (
               <CarouselItem key={index}>
-                <div className="relative h-96">
+                <div className="relative h-[calc(100dvw*4/3)]">
                   <img
                     className="absolute left-0 top-0 size-full object-cover"
                     src={picture}
@@ -141,8 +141,8 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed, onUpdateSuccess }) => {
           ))}
         </div>
       </div>
-      <div className="p-3">
-        <div className="mb-2 flex">
+      <div className="p-3 px-4">
+        <div className="mb-1 flex">
           <span
             className="z-0 mr-2 cursor-pointer"
             onClick={(event) => handleToggleLike(event)}
@@ -163,7 +163,7 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed, onUpdateSuccess }) => {
           </span>
         </div>
         <span className="ml-0.5 text-base font-normal">좋아요 {likeCnt}</span>
-        <p className="m-0">
+        <p className="ml-0.5 mt-2 text-base">
           {displayedContent}
           {feed.postResponseDto.content.length > maxContentLength && (
             <>
