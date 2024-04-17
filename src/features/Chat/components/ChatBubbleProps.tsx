@@ -24,7 +24,7 @@ const ChatBubble: React.FC<ChatBubbleProps> = ({
 
   return (
     <div
-      className={`m-2 flex items-center ${
+      className={`m-2 flex items-center text-base ${
         isMyMessage ? 'ml-auto flex-row-reverse' : 'flex-row'
       }`}
     >
@@ -37,7 +37,7 @@ const ChatBubble: React.FC<ChatBubbleProps> = ({
       )}
       <div
         className={`whitespace-pre-wrap rounded-2xl p-2 px-4 ${
-          isMyMessage ? 'bg-accent text-slate-50' : 'bg-gray-300'
+          isMyMessage ? 'bg-accent text-slate-50' : 'bg-[#E2E6E9]'
         }`}
       >
         {splitMsg.join('\n')}
