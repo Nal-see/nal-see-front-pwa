@@ -58,7 +58,7 @@ const MotionWeatherCard = () => {
               🧚 날씨 요정이 현재 날씨를 불러오는 중입니다...
             </div>
           </div>
-        ) : error ? (
+        ) : error || !data ? (
           <div className="inline-flex items-center justify-center gap-4">
             <div className="font-light text-primary-foreground">
               ⚠️ 죄송합니다. 현재 날씨를 불러올 수 없습니다.
@@ -72,14 +72,14 @@ const MotionWeatherCard = () => {
             className="inline-flex items-center justify-center gap-4"
           >
             <div className="size-[30px]">
-              <img src={formatWeatherToImage(data?.data.results.weather)} />
+              <img src={formatWeatherToImage(data.data.results.weather)} />
             </div>
             <div className="flex items-center justify-center">
               <p className="text-center text-xs font-normal leading-[18px] text-black">
                 날씨
               </p>
               <p className="w-[52px] text-center text-xs font-semibold leading-[18px] text-black">
-                {weatherSelector(data?.data.results.weather)}
+                {weatherSelector(data.data.results.weather)}
               </p>
             </div>
             <div className="flex items-center justify-center">
@@ -87,7 +87,7 @@ const MotionWeatherCard = () => {
                 온도
               </div>
               <p className="w-[52px] text-center text-xs font-semibold leading-[18px] text-black">
-                {data?.data.results.temperature}°
+                {data.data.results.temperature}°
               </p>
             </div>
             <div className="flex items-center justify-center">
@@ -95,7 +95,7 @@ const MotionWeatherCard = () => {
                 체감온도
               </p>
               <p className="w-[52px] text-center text-xs font-semibold leading-[18px] text-black">
-                {data?.data.results.feelsLike}°
+                {data.data.results.feelsLike}°
               </p>
             </div>
           </motion.div>
@@ -113,14 +113,14 @@ const MotionWeatherCard = () => {
             </div>
             <div className="inline-flex items-start justify-start gap-4">
               <div className="flex size-[60px] items-center justify-center pb-[10.50px] pl-[5px] pr-1 pt-[11px]">
-                <img src={formatWeatherToImage(data?.data.results.weather)} />
+                <img src={formatWeatherToImage(data.data.results.weather)} />
               </div>
               <div className="inline-flex flex-col items-center justify-center gap-1">
                 <p className="text-center text-sm font-light leading-tight text-black">
                   날씨
                 </p>
                 <p className="w-[70px] text-center text-xl font-semibold leading-7 text-black">
-                  {weatherSelector(data?.data.results.weather)}
+                  {weatherSelector(data.data.results.weather)}
                 </p>
               </div>
               <div className="inline-flex flex-col items-center justify-center gap-1">
@@ -128,7 +128,7 @@ const MotionWeatherCard = () => {
                   온도
                 </p>
                 <p className="w-[70px] text-center text-xl font-semibold leading-7 text-black">
-                  {data?.data.results.temperature}°
+                  {data.data.results.temperature}°
                 </p>
               </div>
               <div className="inline-flex flex-col items-center justify-center gap-1">
@@ -136,7 +136,7 @@ const MotionWeatherCard = () => {
                   체감온도
                 </p>
                 <p className="w-[70px] text-center text-xl font-semibold leading-7 text-black">
-                  {data?.data.results.feelsLike}°
+                  {data.data.results.feelsLike}°
                 </p>
               </div>
             </div>
@@ -145,13 +145,13 @@ const MotionWeatherCard = () => {
                 <p className="text-center text-xs font-medium leading-[18px] text-black">
                   미세먼지
                 </p>
-                <img src={switchPm10Icon(data?.data.results.pm10)} />
+                <img src={switchPm10Icon(data.data.results.pm10)} />
               </div>
               <div className="inline-flex items-center justify-center gap-1 self-stretch">
                 <p className="text-center text-xs font-medium leading-[18px] text-black">
                   초미세먼지
                 </p>
-                <img src={switchPm25Icon(data?.data.results.pm25)} />
+                <img src={switchPm25Icon(data.data.results.pm25)} />
               </div>
               <div className="inline-flex items-center justify-center gap-1 self-stretch">
                 <p className="text-center text-xs font-medium leading-[18px] text-black">
@@ -159,7 +159,7 @@ const MotionWeatherCard = () => {
                 </p>
                 <div className="flex items-center justify-center rounded-[22px] bg-sky-500 px-[5px] py-0.5">
                   <p className="w-[46px] text-center text-xs font-medium leading-[18px] text-white">
-                    {data?.data.results.humidity}%
+                    {data.data.results.humidity}%
                   </p>
                 </div>
               </div>
