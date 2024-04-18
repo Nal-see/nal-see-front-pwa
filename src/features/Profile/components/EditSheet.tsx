@@ -76,64 +76,68 @@ export const PostEditSheet: React.FC<EditFeedProps> = ({
 
   return (
     <div className="p-4">
-      <textarea
-        className="w-full text-lg focus:outline-none"
-        placeholder="내용을 입력하세요..."
-        name="content"
-        value={FeedEditData.content}
-        onChange={handleInputChange}
-      />
-      <InputWrapper title="키">
-        <input
-          type="number"
-          className="text-lg focus:outline-none"
-          name="height"
-          value={FeedEditData.height ? FeedEditData.height : ''}
+      <div>
+        <textarea
+          className="w-full text-lg focus:outline-none"
+          placeholder="내용을 입력하세요..."
+          name="content"
+          value={FeedEditData.content}
           onChange={handleInputChange}
         />
-      </InputWrapper>
-      <InputWrapper title="몸무게">
-        <input
-          type="number"
-          className="text-lg focus:outline-none"
-          name="weight"
-          value={FeedEditData.weight ? FeedEditData.weight : ''}
-          onChange={handleInputChange}
-        />
-      </InputWrapper>
-      <InputWrapper title="체질">
-        <Selector
-          value={FeedEditData.constitution ? [FeedEditData.constitution] : []}
-          onChange={(selectedVal) =>
-            handleSelectorChange('constitution', selectedVal[0])
-          }
-          showCheckMark={false}
-          options={constitutionOptions}
-        />
-      </InputWrapper>
-      <InputWrapper title="스타일">
-        <Selector
-          value={FeedEditData.style}
-          onChange={(selectedVal) => handleSelectorChange('style', selectedVal)}
-          multiple
-          showCheckMark={false}
-          options={styleOptions}
-        />
-      </InputWrapper>
-      <InputWrapper title="성별">
-        <Selector
-          value={FeedEditData.gender ? [FeedEditData.gender] : []}
-          onChange={(selectedVal) =>
-            handleSelectorChange('gender', selectedVal[0])
-          }
-          showCheckMark={false}
-          options={genderOptions}
-        />
-      </InputWrapper>
-      <div className="mt-4 flex justify-end">
-        <Button onClick={onSubmit} variant="accent">
-          저장
-        </Button>
+        <InputWrapper title="키">
+          <input
+            type="number"
+            className="text-lg focus:outline-none"
+            name="height"
+            value={FeedEditData.height ? FeedEditData.height : ''}
+            onChange={handleInputChange}
+          />
+        </InputWrapper>
+        <InputWrapper title="몸무게">
+          <input
+            type="number"
+            className="text-lg focus:outline-none"
+            name="weight"
+            value={FeedEditData.weight ? FeedEditData.weight : ''}
+            onChange={handleInputChange}
+          />
+        </InputWrapper>
+        <InputWrapper title="체질">
+          <Selector
+            value={FeedEditData.constitution ? [FeedEditData.constitution] : []}
+            onChange={(selectedVal) =>
+              handleSelectorChange('constitution', selectedVal[0])
+            }
+            showCheckMark={false}
+            options={constitutionOptions}
+          />
+        </InputWrapper>
+        <InputWrapper title="스타일">
+          <Selector
+            value={FeedEditData.style}
+            onChange={(selectedVal) =>
+              handleSelectorChange('style', selectedVal)
+            }
+            multiple
+            showCheckMark={false}
+            options={styleOptions}
+          />
+        </InputWrapper>
+        <InputWrapper title="성별">
+          <Selector
+            value={FeedEditData.gender ? [FeedEditData.gender] : []}
+            onChange={(selectedVal) =>
+              handleSelectorChange('gender', selectedVal[0])
+            }
+            showCheckMark={false}
+            options={genderOptions}
+          />
+        </InputWrapper>
+        <div className="mb-10 mt-4 flex justify-end">
+          <Button onClick={onSubmit} variant="accent" className="px-6">
+            저장
+          </Button>
+        </div>
       </div>
     </div>
   );

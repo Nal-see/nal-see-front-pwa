@@ -21,6 +21,7 @@ import {
 import useFeedInteraction from '../../hooks/useFeedInteraction';
 import useCarousel from '../../hooks/useCarosel';
 import { convertImgSrcToHTTPS, formatNotificationDate } from '@/lib/helpers';
+import { toast } from 'sonner';
 interface FeedCardProps {
   feed: FeedDetail;
   onUpdateSuccess: () => void;
@@ -70,6 +71,19 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed, onUpdateSuccess }) => {
     }
   };
 
+  const confirmDelete = () => {
+    toast('⛅︎ 게시물을 삭제하시겠어요?', {
+      duration: 10000,
+      action: {
+        label: '삭제',
+        onClick: () => handleDelete(),
+      },
+      actionButtonStyle: {
+        background: 'var(--accent)',
+      },
+    });
+  };
+
   const displayedContent =
     feed && showFullContent
       ? feed.postResponseDto.content
@@ -106,10 +120,10 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed, onUpdateSuccess }) => {
           {isMyFeed ? (
             <>
               <GoPencil onClick={handleEdit} />
-              <FaTrashAlt onClick={handleDelete} />
+              <FaTrashAlt onClick={confirmDelete} />
             </>
           ) : null}
-          <span className=" text-sm text-gray-500">
+          <span className="text-nowrap text-sm text-gray-500">
             {formatNotificationDate(feed.postResponseDto.createDate)}
           </span>
         </div>
