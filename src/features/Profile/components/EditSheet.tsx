@@ -75,7 +75,7 @@ export const PostEditSheet: React.FC<EditFeedProps> = ({
   };
 
   return (
-    <div className="h-[calc(100dvh-156px)] overflow-y-scroll p-4 scrollbar-hide">
+    <div className="p-4">
       <div>
         <textarea
           className="w-full text-lg focus:outline-none"
@@ -133,8 +133,8 @@ export const PostEditSheet: React.FC<EditFeedProps> = ({
             options={genderOptions}
           />
         </InputWrapper>
-        <div className="mt-4 flex justify-end">
-          <Button onClick={onSubmit} variant="accent">
+        <div className="mb-10 mt-4 flex justify-end">
+          <Button onClick={onSubmit} variant="accent" className="px-6">
             저장
           </Button>
         </div>
