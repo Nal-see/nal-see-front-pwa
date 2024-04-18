@@ -11,6 +11,7 @@ import { getComments, postComment } from '../../services/commentApi';
 import { SyncLoader } from 'react-spinners';
 import { convertImgSrcToHTTPS } from '@/lib/helpers';
 import { Input } from '@/components/ui/input';
+import { FiSend } from 'react-icons/fi';
 
 interface CommentSheetProps {
   postId: number;
@@ -105,6 +106,12 @@ const CommentSheet: React.FC<CommentSheetProps> = ({
             placeholder="댓글을 입력해주세요."
             className="ml-3 rounded-full text-base"
           />
+          <button
+            type="submit"
+            className="ml-3 rounded-full bg-blue-500 p-2 text-white hover:bg-blue-700"
+          >
+            <FiSend size={14} />
+          </button>
         </StyledForm>
       </BottomSheet>
     </>
