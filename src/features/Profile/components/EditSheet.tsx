@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button';
 import { updateFeed } from '@/features/Feed/services/feedApi';
 import InputWrapper from '@/features/Posts/components/InputWrapper';
 import {
@@ -7,7 +8,7 @@ import {
 } from '@/features/Posts/utils/inputOptions';
 import { IPostEditFormData } from '@/types/feed';
 import { IPostEditForm } from '@/types/postCreate';
-import { Button, Selector } from 'antd-mobile';
+import { Selector } from 'antd-mobile';
 import { useState } from 'react';
 
 export interface EditFeedProps extends IPostEditFormData {
@@ -74,7 +75,7 @@ export const PostEditSheet: React.FC<EditFeedProps> = ({
   };
 
   return (
-    <div className="h-[calc(100dvh-156px)] p-4">
+    <div className="h-[calc(100dvh-156px)] overflow-y-scroll p-4 scrollbar-hide">
       <div>
         <textarea
           className="w-full text-lg focus:outline-none"
@@ -133,7 +134,9 @@ export const PostEditSheet: React.FC<EditFeedProps> = ({
           />
         </InputWrapper>
         <div className="mt-4 flex justify-end">
-          <Button onClick={onSubmit}>저장</Button>
+          <Button onClick={onSubmit} variant="accent">
+            저장
+          </Button>
         </div>
       </div>
     </div>
