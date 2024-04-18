@@ -2,7 +2,7 @@ import React from 'react';
 
 const PrivacyPolicy = () => {
   return (
-    <div className="border-primary-foreground/50 absolute inset-1/2 z-[3] flex h-2/3 w-[70%] -translate-x-1/2 -translate-y-1/2 flex-col items-center rounded-2xl border bg-white p-5 shadow-lg drop-shadow-lg">
+    <div className="border-primary-foreground/50 absolute inset-1/2 z-[2] flex h-2/3 w-[70%] -translate-x-1/2 -translate-y-[60%] flex-col items-center rounded-2xl border bg-white p-5 shadow-lg drop-shadow-lg hover:z-[4]">
       <p className="text-normal pb-2 text-base font-semibold">
         nalsee 개인정보 처리방침
       </p>

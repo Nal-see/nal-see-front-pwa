@@ -15,7 +15,7 @@ const SplashPage = () => {
       <PrivacyPolicy />
       <div className="relative h-dvh overflow-hidden bg-gradient-to-b from-blue-300 to-sky-400">
         <img
-          className="absolute right-0 top-[189.70px] h-60 w-40 origin-top-left rotate-[-46.01deg]"
+          className="absolute right-0 top-[189.70px] z-[3] h-60 w-40 origin-top-left rotate-[-46.01deg]"
           src={SplashSun}
           alt="splash-sun"
         />
@@ -23,7 +23,7 @@ const SplashPage = () => {
           src={NalseeWhiteLogo}
           className="absolute inset-x-0 top-[307px] mx-auto h-20 w-[74.10px]"
         />
-        <div className="absolute left-[-52px] top-[438px] h-[631px] w-[271.57px] overflow-hidden">
+        <div className="absolute left-[-52px] top-[438px] z-[3] h-[631px] w-[271.57px] overflow-hidden">
           <img
             src={SplashGirl}
             alt="splash-girl"
@@ -33,7 +33,7 @@ const SplashPage = () => {
 
         <button
           onClick={() => handleOauthLogin('kakao')}
-          className="absolute inset-x-0 bottom-[72px] mx-auto inline-flex w-80 cursor-pointer justify-center"
+          className="absolute inset-x-0 bottom-[72px] z-[3] mx-auto inline-flex w-80 cursor-pointer justify-center"
         >
           <img src={kakaoLoginBtn} />
         </button>
