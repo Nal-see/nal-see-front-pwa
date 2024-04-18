@@ -40,6 +40,7 @@ const MyProfilePage = () => {
     data: userInfo,
     refetch: refetchProfileData,
     isLoading,
+    isError,
   } = useQuery({
     queryKey: ['userDetails'],
     queryFn: getUserDetails,
@@ -103,7 +104,7 @@ const MyProfilePage = () => {
     refetchProfileHeader();
   };
 
-  if (!userData) {
+  if (isError && !userData) {
     toast('세션 만료', {
       description:
         '세션이 만료되어 데이터를 불러올 수 없습니다. 다시 로그인하시겠어요?',
@@ -114,6 +115,7 @@ const MyProfilePage = () => {
       actionButtonStyle: {
         background: 'var(--accent)',
       },
+      duration: 10000,
     });
   }
 
