@@ -8,6 +8,7 @@ import { StyledForm, UserImage } from '../Feed/components/comment/commentStyle';
 import useWebSocketStore from '@/store/useWebsocketStore';
 import { useParams } from 'react-router-dom';
 import { convertImgSrcToHTTPS } from '@/lib/helpers';
+import { FiSend } from 'react-icons/fi';
 
 const ChatRoomPage = () => {
   const { user } = useAuthStore();
@@ -124,6 +125,13 @@ const ChatRoomPage = () => {
           className="ml-3 rounded-full text-base"
           disabled={isReadOnly}
         />
+        <button
+          type="submit"
+          className="ml-3 rounded-full bg-accent p-2 text-white active:bg-sky-500"
+          disabled={isReadOnly}
+        >
+          <FiSend size={24} />
+        </button>
       </StyledForm>
     </div>
   );
