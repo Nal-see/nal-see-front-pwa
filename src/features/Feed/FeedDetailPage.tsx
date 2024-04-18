@@ -18,7 +18,12 @@ const FeedDetailPage = () => {
   });
 
   if (isLoading) {
-    return <FeedDetailSkeletonCard />;
+    return (
+      <div className="h-[calc(100dvh-80px)]">
+        <BackBtnHeader title="" />
+        <FeedDetailSkeletonCard />;
+      </div>
+    );
   }
 
   const handleUpdateSuccess = () => {
@@ -29,7 +34,11 @@ const FeedDetailPage = () => {
     <div>
       <BackBtnHeader title="" />
       {!feed ? (
-        <div>게시물이 존재하지 않습니다.</div>
+        <div className="flex h-[calc(100dvh-128px)] flex-col items-center justify-center text-lg text-primary-foreground">
+          <span>❗️</span>
+          <p>게시물을 불러올 수 없습니다.</p>
+          <p>페이지를 새로고침해주세요.</p>
+        </div>
       ) : (
         <FeedDetailCard feed={feed} onUpdateSuccess={handleUpdateSuccess} />
       )}

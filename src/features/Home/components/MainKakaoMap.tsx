@@ -61,7 +61,7 @@ const MainKakaoMap = () => {
         {isLoading && (
           <BeatLoader
             color="var(--primary-foreground)"
-            className="absolute left-1/2 top-1/2 z-[3] -translate-x-5 -translate-y-5"
+            className="absolute left-1/2 top-1/2 z-[3] -translate-x-[29.5px] -translate-y-[12px]"
           />
         )}
         {!kakaoMap && (
