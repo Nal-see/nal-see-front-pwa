@@ -48,7 +48,7 @@ const ChatItem = ({
                 : '/src/assets/weatherImage/placeholder.jpg'
             }
           />
-          {isOnline && (
+          {isOnline && username === '탈퇴한 사용자' && (
             <div className="absolute bottom-0 right-0 size-4 rounded-full bg-green-500"></div>
           )}
         </div>
