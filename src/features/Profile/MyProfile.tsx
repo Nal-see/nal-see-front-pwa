@@ -103,7 +103,21 @@ const MyProfilePage = () => {
     refetchProfileHeader();
   };
 
-  if (isLoading || !userData) {
+  if (!userData) {
+    toast('세션 만료', {
+      description:
+        '세션이 만료되어 데이터를 불러올 수 없습니다. 다시 로그인하시겠어요?',
+      action: {
+        label: '로그인',
+        onClick: () => window.location.reload(),
+      },
+      actionButtonStyle: {
+        background: 'var(--accent)',
+      },
+    });
+  }
+
+  if (isLoading) {
     return (
       <div className="flex h-[calc(100dvh-80px)] flex-col overflow-y-scroll">
         <BackBtnHeader title="내 프로필" />
