@@ -63,11 +63,17 @@ const FeedList = () => {
     if (isError) {
       console.log('feedList error', error);
 
-      toast.warning('세션이 만료되었습니다.', {
-        description: '다시 로그인해주세요.',
+      toast('세션 만료', {
+        description:
+          '세션이 만료되어 데이터를 불러올 수 없습니다. 다시 로그인하시겠어요?',
+        action: {
+          label: '로그인',
+          onClick: () => window.location.reload(),
+        },
+        actionButtonStyle: {
+          background: 'var(--accent)',
+        },
       });
-      new Promise((resolve) => setTimeout(resolve, 3000));
-      window.location.reload();
     }
   }, [error, isError]);
 

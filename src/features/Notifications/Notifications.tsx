@@ -36,7 +36,7 @@ const NotificationsPage = () => {
   return (
     <div className="flex-1">
       <BackBtnHeader title="알림" />
-      <div className="h-[calc(100dvh-152px)] overflow-y-scroll scrollbar-hide">
+      <div className="h-[calc(100dvh-136px)] overflow-y-scroll scrollbar-hide">
         {notificationList?.length ? (
           notificationList.map((item: INotificationData) => (
             <NotificationItem key={item.id} notification={item} />

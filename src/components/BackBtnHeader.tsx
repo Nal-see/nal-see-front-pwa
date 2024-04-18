@@ -11,7 +11,7 @@ const BackBtnHeader = ({ title, className }: IBackBtnHeaderProps) => {
 
   return (
     <div
-      className={`sticky top-auto flex w-full flex-row items-center gap-2 py-5 ${className}`}
+      className={`sticky top-auto flex w-full flex-row items-center gap-2 py-3 ${className}`}
     >
       <LeftOutline
         fontSize={24}
