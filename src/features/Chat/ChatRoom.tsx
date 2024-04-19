@@ -12,6 +12,7 @@ import { FiSend } from 'react-icons/fi';
 import { Button } from '@/components/ui/button';
 import { exitChat } from './services/chatApi';
 import { ImExit } from 'react-icons/im';
+import { toast } from 'sonner';
 
 const ChatRoomPage = () => {
   const { user } = useAuthStore();
@@ -88,6 +89,18 @@ const ChatRoomPage = () => {
     }
   };
 
+  const confirmExit = () => {
+    toast('⛅︎ 채팅방을 정말 나가시겠습니까?', {
+      duration: 10000,
+      action: {
+        label: '나가기',
+        onClick: () => handleExitChat(),
+      },
+      actionButtonStyle: {
+        background: 'var(--accent)',
+      },
+    });
+  };
   const handleExitChat = () => {
     if (!chatId) return;
     exitChat(chatId);
@@ -108,13 +121,11 @@ const ChatRoomPage = () => {
         ))}
         <div ref={messagesEndRef} />
       </div>
-      <div className="absolute right-4 top-16">
-        <Button
-          className="size-12 items-center justify-center rounded-full bg-secondary-foreground"
-          onClick={handleExitChat}
-        >
-          <ImExit className="" size={24} />
-        </Button>
+      <div className="absolute right-4 top-0">
+        <ImExit
+          className="mr-2 mt-3 items-center justify-center bg-white text-secondary"
+          size={24}
+        />
       </div>
       <StyledForm
         onSubmit={(e) => {
