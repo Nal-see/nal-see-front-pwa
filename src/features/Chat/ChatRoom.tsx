@@ -9,7 +9,6 @@ import useWebSocketStore from '@/store/useWebsocketStore';
 import { useNavigate, useParams } from 'react-router-dom';
 import { convertImgSrcToHTTPS } from '@/lib/helpers';
 import { FiSend } from 'react-icons/fi';
-import { Button } from '@/components/ui/button';
 import { exitChat } from './services/chatApi';
 import { ImExit } from 'react-icons/im';
 import { toast } from 'sonner';
@@ -125,6 +124,7 @@ const ChatRoomPage = () => {
         <ImExit
           className="mr-2 mt-3 items-center justify-center bg-white text-secondary"
           size={24}
+          onClick={confirmExit}
         />
       </div>
       <StyledForm
