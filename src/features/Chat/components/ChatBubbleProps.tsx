@@ -22,10 +22,8 @@ const ChatBubble: React.FC<ChatBubbleProps> = ({
   const navigate = useNavigate();
 
   const moveProfile = () => {
-    console.log('moveProfile');
     navigate(`/user/${senderId}`);
   };
-  // 메시지를 15글자 단위로 분할하여 배열로 저장
   const splitMsg = msg.match(/.{1,25}/g) || [msg];
 
   return (
