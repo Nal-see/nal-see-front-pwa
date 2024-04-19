@@ -130,9 +130,15 @@ const ChatListPage = () => {
           <ChatItem
             key={index}
             chatId={chat.chatId}
-            profileImgUrl={convertImgSrcToHTTPS(
-              myId == chat.senderId ? chat.receiverImg : chat.senderImg,
-            )}
+            profileImgUrl={
+              myId == chat.senderId
+                ? chat.receiverImg
+                : chat.senderImg
+                  ? convertImgSrcToHTTPS(
+                      myId == chat.senderId ? chat.receiverImg : chat.senderImg,
+                    )
+                  : null
+            }
             username={myId == chat.senderId ? chat.receiver : chat.sender}
             lastMessage={chat.msg}
             lastUpdatedDate={chat.createAt}

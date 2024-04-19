@@ -8,9 +8,10 @@ import { StyledForm, UserImage } from '../Feed/components/comment/commentStyle';
 import useWebSocketStore from '@/store/useWebsocketStore';
 import { useParams } from 'react-router-dom';
 import { convertImgSrcToHTTPS } from '@/lib/helpers';
-import { FiSend, FiX } from 'react-icons/fi';
+import { FiSend } from 'react-icons/fi';
 import { Button } from '@/components/ui/button';
 import { exitChat } from './services/chatApi';
+import { ImExit } from 'react-icons/im';
 
 const ChatRoomPage = () => {
   const { user } = useAuthStore();
@@ -105,8 +106,11 @@ const ChatRoomPage = () => {
         <div ref={messagesEndRef} />
       </div>
       <div className="absolute right-4 top-16">
-        <Button className="size-12 rounded-full" onClick={handleExitChat}>
-          <FiX size={24} />
+        <Button
+          className="size-12 items-center justify-center rounded-full bg-secondary-foreground"
+          onClick={handleExitChat}
+        >
+          <ImExit className="" size={24} />
         </Button>
       </div>
       <StyledForm
