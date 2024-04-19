@@ -6,7 +6,7 @@ import useAuthStore from '@/store/useAuthStore';
 import ChatBubble from './components/ChatBubbleProps';
 import { StyledForm, UserImage } from '../Feed/components/comment/commentStyle';
 import useWebSocketStore from '@/store/useWebsocketStore';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { convertImgSrcToHTTPS } from '@/lib/helpers';
 import { FiSend } from 'react-icons/fi';
 import { Button } from '@/components/ui/button';
@@ -33,6 +33,8 @@ const ChatRoomPage = () => {
   const isReadOnly =
     messages[0]?.sender == '탈퇴한 사용자' ||
     messages[0]?.receiver == '탈퇴한 사용자';
+
+  const navigate = useNavigate();
   useEffect(() => {
     if (user) {
       connect();
@@ -89,6 +91,7 @@ const ChatRoomPage = () => {
   const handleExitChat = () => {
     if (!chatId) return;
     exitChat(chatId);
+    navigate('/chat');
   };
 
   return (

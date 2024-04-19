@@ -29,6 +29,7 @@ const ChatItem = ({
   const updatedDate = formatNotificationDate(lastUpdatedDate);
   const navigate = useNavigate();
 
+  console.log('isOnline: ', isOnline);
   const enterChatRoom = () => {
     navigate(`/chat/${chatId}`);
   };
@@ -48,7 +49,7 @@ const ChatItem = ({
                 : '/src/assets/weatherImage/placeholder.jpg'
             }
           />
-          {isOnline && username === '탈퇴한 사용자' && (
+          {isOnline && username != '탈퇴한 사용자' && (
             <div className="absolute bottom-0 right-0 size-4 rounded-full bg-green-500"></div>
           )}
         </div>
