@@ -76,3 +76,23 @@ export const deleteAccount = async (username: string, email: string) => {
   });
   return response;
 };
+
+export async function getFollowingList(userId: string) {
+  try {
+    const response = await api.get(`/api/users/${userId}/following`);
+    console.log('response: 팔로잉 리스트', response.data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getFollowerList(userId: string) {
+  try {
+    const response = await api.get(`/api/users/${userId}/follower`);
+    console.log('response: 팔로워 리스트', response.data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
