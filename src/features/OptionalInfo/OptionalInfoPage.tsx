@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button';
 import { RightOutline } from 'antd-mobile-icons';
 import { IOptionalInfoForm, OptionalInfoFormSchema } from '@/types/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { toast } from 'sonner';
 import useAuthStore from '@/store/useAuthStore';
 import { postOptionalInfo } from './services/optionalInfoServices';
@@ -21,6 +21,8 @@ import { useNavigate } from 'react-router-dom';
 const OptionalInfoPage = () => {
   const { user } = useAuthStore();
   const navigate = useNavigate();
+  const heightRef = useRef<HTMLInputElement | null>();
+  const weightRef = useRef<HTMLInputElement | null>();
   const {
     register,
     watch,
@@ -61,7 +63,7 @@ const OptionalInfoPage = () => {
   useEffect(() => {
     if (!constitutionFormValue?.length) setValue('constitution', null);
     if (!genderFormValue?.length) setValue('gender', null);
-  }, [constitutionFormValue, genderFormValue]);
+  }, [constitutionFormValue, genderFormValue, setValue]);
 
   useEffect(() => {
     if (Object.keys(errors).length) {
@@ -112,16 +114,28 @@ const OptionalInfoPage = () => {
               키
             </div>
             <input
+              type="number"
+              step="0.02"
               className="w-1/5 text-right text-lg focus:outline-none"
-              {...register('height', { valueAsNumber: true })}
+              name="height"
+              ref={(e) => {
+                register('height');
+                heightRef.current = e;
+              }}
             />
             <p className="text-primary-foreground">cm</p>
             <div className="w-[64px] text-nowrap pl-3 text-lg font-semibold">
               몸무게
             </div>
             <input
+              type="number"
+              step="0.02"
               className="w-1/4 text-right text-lg focus:outline-none"
-              {...register('weight', { valueAsNumber: true })}
+              name="weight"
+              ref={(e) => {
+                register('weight');
+                weightRef.current = e;
+              }}
             />
             <p className="text-primary-foreground">kg</p>
           </div>
