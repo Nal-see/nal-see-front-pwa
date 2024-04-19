@@ -93,6 +93,7 @@ const ChatListPage = () => {
     if (userList.length > 0) {
       subscribeToUserStatus();
     }
+    console.log(userStatus);
   }, [userList]);
 
   if (!chatList) {
