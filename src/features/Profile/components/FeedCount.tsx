@@ -21,13 +21,12 @@ interface User {
   userId: string;
   username: string;
   picture: string;
-  isFollowd: boolean;
+  isFollowed: boolean;
 }
 
 const FeedCount: React.FC<FeedCountProp> = ({ count, counterName, userId }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
-  console.log('userId: 카운트에있는거 ', userId);
 
   const getFollowList = useCallback(
     async (type: string) => {
@@ -46,9 +45,19 @@ const FeedCount: React.FC<FeedCountProp> = ({ count, counterName, userId }) => {
   );
 
   const handleGetFollowList = () => {
-    console.log('handleGetFollowList');
     getFollowList(counterName);
   };
+
+  // const { mutate: updateProfileMutation } = useMutation({
+  //   mutationFn: () => updateProfile(ProfileEditInfo),
+  //   onSuccess: () => {
+  //     onUpdateSuccess();
+  //     onClose();
+  //   },
+  //   onError: (error) => {
+  //     console.error('Failed to update profile:', error);
+  //   },
+  // });
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -58,7 +67,7 @@ const FeedCount: React.FC<FeedCountProp> = ({ count, counterName, userId }) => {
             {count}
           </p>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="max-w-[350px]">
           <DialogHeader>
             <DialogTitle>{counterName} 목록</DialogTitle>
           </DialogHeader>
@@ -77,7 +86,7 @@ const FeedCount: React.FC<FeedCountProp> = ({ count, counterName, userId }) => {
               {users.map((user) => (
                 <div
                   key={user.userId}
-                  className="flex items-center justify-around space-x-4"
+                  className="flex items-center justify-between space-x-4"
                 >
                   <div className="flex items-center gap-4">
                     <CircleProfileImg
@@ -89,9 +98,13 @@ const FeedCount: React.FC<FeedCountProp> = ({ count, counterName, userId }) => {
                     </p>
                   </div>
                   <Button
-                    className={`${false ? `bg-accent text-slate-50` : `bg-secondary-foreground text-black`}`}
+                    className={`${
+                      !user.isFollowed
+                        ? 'bg-accent text-slate-50'
+                        : 'bg-secondary-foreground text-black'
+                    }`}
                   >
-                    {`${false ? '팔로우' : '팔로잉'}`}
+                    {`${!user.isFollowed ? '팔로우' : '팔로잉'}`}
                   </Button>
                 </div>
               ))}
