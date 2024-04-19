@@ -1,8 +1,8 @@
 // ChatBubble.tsx
-import { ProfileImage } from '@/features/Feed/components/FeedCard/FeedCardStyle';
 import { convertImgSrcToHTTPS } from '@/lib/helpers';
 import useAuthStore from '@/store/useAuthStore';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface ChatBubbleProps {
   msg: string;
@@ -19,6 +19,12 @@ const ChatBubble: React.FC<ChatBubbleProps> = ({
   const isMyMessage = myId == String(senderId);
   console.log('isMyMessage: ', isMyMessage);
 
+  const navigate = useNavigate();
+
+  const moveProfile = () => {
+    console.log('moveProfile');
+    navigate(`/user/${senderId}`);
+  };
   // 메시지를 15글자 단위로 분할하여 배열로 저장
   const splitMsg = msg.match(/.{1,25}/g) || [msg];
 
@@ -29,10 +35,11 @@ const ChatBubble: React.FC<ChatBubbleProps> = ({
       }`}
     >
       {!isMyMessage && receiverImage && (
-        <ProfileImage
+        <img
+          className="mr-3 size-10 rounded-full"
+          onClick={moveProfile}
           src={convertImgSrcToHTTPS(receiverImage)}
           alt="receiver"
-          className="mr-2"
         />
       )}
       <div
