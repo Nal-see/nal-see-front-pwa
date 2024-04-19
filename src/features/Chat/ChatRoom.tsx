@@ -8,7 +8,9 @@ import { StyledForm, UserImage } from '../Feed/components/comment/commentStyle';
 import useWebSocketStore from '@/store/useWebsocketStore';
 import { useParams } from 'react-router-dom';
 import { convertImgSrcToHTTPS } from '@/lib/helpers';
-import { FiSend } from 'react-icons/fi';
+import { FiSend, FiX } from 'react-icons/fi';
+import { Button } from '@/components/ui/button';
+import { exitChat } from './services/chatApi';
 
 const ChatRoomPage = () => {
   const { user } = useAuthStore();
@@ -83,8 +85,13 @@ const ChatRoomPage = () => {
     }
   };
 
+  const handleExitChat = () => {
+    if (!chatId) return;
+    exitChat(chatId);
+  };
+
   return (
-    <div className="flex h-screen flex-1 flex-col overflow-y-scroll">
+    <div className="relative flex h-screen flex-1 flex-col overflow-y-scroll">
       <BackBtnHeader title="메시지" />
       <div className="flex-1 overflow-y-auto px-3">
         {messages.map((data, index) => (
@@ -96,6 +103,11 @@ const ChatRoomPage = () => {
           />
         ))}
         <div ref={messagesEndRef} />
+      </div>
+      <div className="absolute right-4 top-16">
+        <Button className="size-12 rounded-full" onClick={handleExitChat}>
+          <FiX size={24} />
+        </Button>
       </div>
       <StyledForm
         onSubmit={(e) => {

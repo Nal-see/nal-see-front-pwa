@@ -7,7 +7,6 @@ import { convertImgSrcToHTTPS } from '@/lib/helpers';
 import SplashGirl from '@/assets/splash-girl2.png';
 import SplashSun from '@/assets/splash-sun.png';
 import Navbar from '@/components/NalSeeNavbar';
-
 interface IUserStatus {
   [key: string]: boolean;
 }
@@ -61,10 +60,6 @@ const ChatListPage = () => {
     unSubscribeFromChatList,
     user,
   ]);
-
-  useEffect(() => {
-    console.log('userlist', userList);
-  }, [userList]);
 
   useEffect(() => {
     const subscribeToUserStatus = async () => {
