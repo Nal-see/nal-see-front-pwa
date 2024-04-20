@@ -6,8 +6,6 @@ import HomePage from '@/features/Home';
 import PostCreatePage from '@/features/Posts/PostCreate';
 import ChatListPage from '@/features/Chat/ChatList';
 import UserProfilePage from '@/features/Profile/UserProfile';
-import PostDetailPage from '@/features/Posts/PostDetail';
-import PostEditPage from '@/features/Posts/PostEdit';
 import ChatRoomPage from '@/features/Chat/ChatRoom';
 import NotificationsPage from '@/features/Notifications/Notifications';
 import FeedListPage from '@/features/Feed/FeedPage';
@@ -56,14 +54,6 @@ const router = createBrowserRouter([
               {
                 path: 'create',
                 element: <PostCreatePage />,
-              },
-              {
-                path: ':postId',
-                element: <PostDetailPage />,
-              },
-              {
-                path: ':postId/edit',
-                element: <PostEditPage />,
               },
             ],
           },
