@@ -123,7 +123,7 @@ const FeedCount: React.FC<FeedCountProp> = ({
               {count}
             </p>
           </DialogTrigger>
-          <DialogContent className="max-w-[350px]">
+          <DialogContent className="max-w-[350px]" showCloseBtn={true}>
             <DialogHeader>
               <DialogTitle>{counterName} 목록</DialogTitle>
             </DialogHeader>
