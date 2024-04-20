@@ -15,6 +15,7 @@ import { getUserInfo } from '@/services/api/auth.service';
 import MyProfilePage from '@/features/Profile/MyProfile';
 import FeedDetailPage from '@/features/Feed/FeedDetailPage';
 import OptionalInfoPage from '@/features/OptionalInfo/OptionalInfoPage';
+import NotFound from './NotFound';
 
 const userLoader = async () => {
   const userInfo = await getUserInfo();
@@ -30,10 +31,12 @@ const router = createBrowserRouter([
     element: <PublicRoute />,
     loader: userLoader,
     id: 'user',
+    errorElement: <NotFound />,
     children: [
       {
         path: '/',
         element: <PrivateRoute />,
+
         children: [
           {
             path: 'home',
