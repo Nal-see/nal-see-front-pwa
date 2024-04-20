@@ -24,12 +24,17 @@ import { createPostApi } from './services/createPostApi';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { BeatLoader } from 'react-spinners';
+import ImageCropper from './components/ImageCropper';
+import { MdAddPhotoAlternate } from 'react-icons/md';
 
 const PostCreatePage = () => {
   const { user } = useAuthStore();
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
-  const [imgFiles, setImgFiles] = useState<globalThis.File[]>([]);
+  const [selectedImg, setSelectedImg] = useState<string>('');
+  const [selectedFileName, setSelectedFileName] = useState<string>('');
+  const [openCropper, setOpenCropper] = useState(false);
+  const [croppedImgFiles, setCroppedImgFiles] = useState<globalThis.File[]>([]);
   const [selectedLocation, setSelectedLocation] =
     useState<ISelectedLocation | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -81,41 +86,46 @@ const PostCreatePage = () => {
 
   const handleInputImgChange = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
-    if (files) {
-      let fileListToArray = Array.from(files);
 
-      // 선택 사진 갯수 제한
-      if (imgFiles.length + fileListToArray.length > 3) {
+    if (files) {
+      if (!files.length) return;
+
+      if (croppedImgFiles.length + files.length > 3) {
         toast.error('사진은 최대 3장 업로드할 수 있습니다.');
         return;
       }
 
-      // 중복되는 사진을 추가할 경우 파일 목록에서 제거
-      imgFiles.forEach((file) => {
-        if (fileListToArray.find((newFile) => newFile.name === file.name)) {
-          fileListToArray = fileListToArray.filter(
-            (newFile) => newFile.name !== file.name,
-          );
+      if (croppedImgFiles.find((file) => file.name === files[0].name)) {
+        toast.error(
+          '중복되는 사진을 선택했습니다. 목록에서 자동으로 제외됩니다.',
+        );
+        return;
+      }
 
-          toast.error(
-            '중복되는 사진을 선택했습니다. 목록에서 자동으로 제외됩니다.',
-          );
-        }
-      });
+      // cropper에 전달할 이미지 상태 저장
+      const reader = new FileReader();
+      reader.onload = () => {
+        setSelectedImg(reader.result as string);
+        setSelectedFileName(files[0].name);
+      };
+      reader.readAsDataURL(files[0]);
 
-      // 상태값으로 이미지 파일 저장 : 프리뷰 이미지에 사용
-      setImgFiles((prev) => [...prev, ...fileListToArray]);
-      // React hook form : 'photos'필드 에 파일 데이터 저장
-      setValue('photos', fileListToArray, { shouldValidate: true });
+      // 이미지 크롭을 위해 모달 Open
+      setOpenCropper(true);
     }
   };
 
   // Image file 선택 취소 (제거)
   const removeSelectedImg = (fileName: string) => {
-    const newImgFiles = imgFiles.filter((file) => file.name !== fileName);
-    setImgFiles(newImgFiles);
-    setValue('photos', newImgFiles, { shouldValidate: true });
+    setCroppedImgFiles((prev) => {
+      return prev.filter((file) => file.name !== fileName);
+    });
   };
+
+  // 이미지 크롭 완료 후 formData값으로 저장
+  useEffect(() => {
+    setValue('photos', croppedImgFiles, { shouldValidate: true });
+  }, [croppedImgFiles, setValue]);
 
   // 선택된 Location 좌표값을 React hook form field value로 Set
   useEffect(() => {
@@ -146,43 +156,34 @@ const PostCreatePage = () => {
   useEffect(() => {
     if (!constitutionFormValue?.length) setValue('constitution', null);
     if (!genderFormValue?.length) setValue('gender', null);
-  }, [constitutionFormValue, genderFormValue]);
+  }, [constitutionFormValue, genderFormValue, setValue]);
 
   return (
-    <div className="flex-1">
-      {isSubmitting && (
-        <BeatLoader
-          color="var(--primary-foreground)"
-          className="absolute left-1/2 top-1/2 z-[3] -translate-x-7 -translate-y-5"
-        />
-      )}
-      {/* Form */}
-      <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
-        <PostCreateHeader
-          step={currentStep}
-          setStep={setCurrentStep}
-          formTrigger={trigger}
-          isSubmitting={isSubmitting}
-        />
-        <div className="h-[calc(100dvh-156px)] overflow-y-scroll scrollbar-hide">
-          {/* STEP 1 : 사진 선택 */}
-          {currentStep === 0 && (
-            <div className="flex h-[calc(100dvh-156px)] flex-col items-center justify-center gap-5 p-4">
-              {/* 업로드한 이미지 프리뷰 */}
-              {imgFiles.map((file) => (
-                <PostImagePreview
-                  key={file.name}
-                  file={file}
-                  onRemove={removeSelectedImg}
-                />
-              ))}
-
-              {/* 사진 업로드를 위한 File Input */}
-              {imgFiles.length < 3 && (
-                <>
+    <>
+      <div className="h-[calc(100dvh-80px)]">
+        {isSubmitting && (
+          <BeatLoader
+            color="var(--primary-foreground)"
+            className="absolute left-1/2 top-1/2 z-[3] -translate-x-7 -translate-y-5"
+          />
+        )}
+        {/* Form */}
+        <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
+          <PostCreateHeader
+            step={currentStep}
+            setStep={setCurrentStep}
+            formTrigger={trigger}
+            isSubmitting={isSubmitting}
+          />
+          <div className="h-[calc(100dvh-158px)] overflow-auto scrollbar-hide">
+            {/* STEP 1 : 사진 선택 */}
+            {currentStep === 0 && (
+              <div className="flex h-[calc(100dvh-158px)] flex-col items-center gap-3 p-4 min-h-690:justify-center max-h-689:justify-start">
+                {/* 사진 업로드를 위한 File Input */}
+                <div>
                   <label htmlFor="photos">
-                    <div className="flex size-[154px] flex-col items-center justify-center gap-2 border-2 border-accent bg-accent-foreground p-3 font-black text-accent">
-                      <AddOutline fontSize={30} />
+                    <div className="inline-flex h-10 w-[calc(100dvw/3)] items-center justify-center gap-1 whitespace-nowrap rounded-md bg-accent px-4 py-2 text-sm font-medium text-white shadow-sm">
+                      <AddOutline fontSize={14} />
                       <p>사진 선택하기</p>
                     </div>
                   </label>
@@ -190,121 +191,148 @@ const PostCreatePage = () => {
                     type="file"
                     accept="image/*"
                     id="photos"
-                    multiple
                     className="hidden"
                     onChange={handleInputImgChange}
                   />
-                </>
-              )}
-            </div>
-          )}
-
-          {/* STEP 2 : 위치 선택 */}
-          {currentStep === 1 && (
-            <div className="h-[calc(100dvh-156px)]">
-              <LocationSelector
-                selectedLocation={selectedLocation}
-                setSelectedLocation={setSelectedLocation}
-              />
-            </div>
-          )}
-
-          {/* STEP 3 : 기타 게시물 정보 입력 */}
-          {currentStep === 2 && (
-            <div className="relative h-[calc(100dvh-156px)] p-4">
-              <Controller
-                control={control}
-                name="content"
-                render={({ field: { onChange, value } }) => (
-                  <textarea
-                    value={value}
-                    className="w-full text-lg focus:outline-none"
-                    placeholder="내용을 입력하세요..."
-                    onChange={async (value) => {
-                      onChange(value);
-                      if (await trigger('content')) clearErrors('content');
-                    }}
-                  />
-                )}
-              />
-
-              {errors['content'] && (
-                <div className="absolute right-6 top-[170px] text-red-400">
-                  게시물 내용을 최소 10자 이상 입력해주세요.
                 </div>
-              )}
-              <InputWrapper title="키">
-                <input
-                  className="text-lg focus:outline-none"
-                  {...register('height')}
-                />
-              </InputWrapper>
-              <InputWrapper title="몸무게">
-                <input
-                  className="text-lg focus:outline-none"
-                  {...register('weight')}
-                />
-              </InputWrapper>
-              <InputWrapper title="체질">
-                <Controller
-                  control={control}
-                  name="constitution"
-                  render={({ field: { onChange, value } }) => (
-                    <Selector
-                      value={value ? [value] : []}
-                      onChange={(selectedVal) => {
-                        if (selectedVal.length) {
-                          onChange(selectedVal[0]);
-                        } else {
-                          onChange(selectedVal);
-                        }
-                      }} // antd-mobile Selector 컴포넌트가 기본적으로 value를 배열로 받기 때문에 이와 같이 작성함
-                      showCheckMark={false}
-                      options={constitutionOptions}
+
+                <div className="flex flex-col gap-3">
+                  {/* 업로드한 이미지 프리뷰 */}
+                  {croppedImgFiles.map((file) => (
+                    <PostImagePreview
+                      key={file.name}
+                      file={file}
+                      onRemove={removeSelectedImg}
                     />
+                  ))}
+                  {!croppedImgFiles.length && (
+                    <div className="flex h-[calc(100dvw/9*4)] w-[calc(100dvw/3)] flex-col items-center justify-center gap-1 border border-primary-foreground bg-[#E2E6E9] text-primary-foreground">
+                      <MdAddPhotoAlternate size={30} />
+                      <p className="px-2 text-center text-primary-foreground">
+                        사진은 총 3장
+                        <br />
+                        선택할 수 있어요.
+                      </p>
+                    </div>
                   )}
+                </div>
+              </div>
+            )}
+
+            {/* STEP 2 : 위치 선택 */}
+            {currentStep === 1 && (
+              <div className="h-[calc(100dvh-158px)]">
+                <LocationSelector
+                  selectedLocation={selectedLocation}
+                  setSelectedLocation={setSelectedLocation}
                 />
-              </InputWrapper>
-              <InputWrapper title="스타일">
+              </div>
+            )}
+
+            {/* STEP 3 : 기타 게시물 정보 입력 */}
+            {currentStep === 2 && (
+              <div className="relative h-[calc(100dvh-158px)] overflow-auto p-4 scrollbar-hide">
                 <Controller
                   control={control}
-                  name="style"
+                  name="content"
                   render={({ field: { onChange, value } }) => (
-                    <Selector
+                    <textarea
                       value={value}
-                      onChange={(selectedVal) => onChange(selectedVal)}
-                      multiple
-                      showCheckMark={false}
-                      options={styleOptions}
-                    />
-                  )}
-                />
-              </InputWrapper>
-              <InputWrapper title="성별">
-                <Controller
-                  control={control}
-                  name="gender"
-                  render={({ field: { onChange, value } }) => (
-                    <Selector
-                      value={value ? [value] : []}
-                      onChange={(selectedVal) => {
-                        if (selectedVal.length) {
-                          onChange(selectedVal[0]);
-                        } else {
-                          onChange(selectedVal);
-                        }
+                      className="w-full text-lg focus:outline-none"
+                      placeholder="내용을 입력하세요..."
+                      onChange={async (value) => {
+                        onChange(value);
+                        if (await trigger('content')) clearErrors('content');
                       }}
-                      showCheckMark={false}
-                      options={genderOptions}
                     />
                   )}
                 />
-              </InputWrapper>
-            </div>
-          )}
-        </div>
-      </form>
-    </div>
+
+                {errors['content'] && (
+                  <div className="absolute right-6 top-[170px] text-red-400">
+                    게시물 내용을 최소 10자 이상 입력해주세요.
+                  </div>
+                )}
+                <InputWrapper title="키">
+                  <input
+                    className="text-lg focus:outline-none"
+                    {...register('height')}
+                  />
+                </InputWrapper>
+                <InputWrapper title="몸무게">
+                  <input
+                    className="text-lg focus:outline-none"
+                    {...register('weight')}
+                  />
+                </InputWrapper>
+                <InputWrapper title="체질">
+                  <Controller
+                    control={control}
+                    name="constitution"
+                    render={({ field: { onChange, value } }) => (
+                      <Selector
+                        value={value ? [value] : []}
+                        onChange={(selectedVal) => {
+                          if (selectedVal.length) {
+                            onChange(selectedVal[0]);
+                          } else {
+                            onChange(selectedVal);
+                          }
+                        }} // antd-mobile Selector 컴포넌트가 기본적으로 value를 배열로 받기 때문에 이와 같이 작성함
+                        showCheckMark={false}
+                        options={constitutionOptions}
+                      />
+                    )}
+                  />
+                </InputWrapper>
+                <InputWrapper title="스타일">
+                  <Controller
+                    control={control}
+                    name="style"
+                    render={({ field: { onChange, value } }) => (
+                      <Selector
+                        value={value}
+                        onChange={(selectedVal) => onChange(selectedVal)}
+                        multiple
+                        showCheckMark={false}
+                        options={styleOptions}
+                      />
+                    )}
+                  />
+                </InputWrapper>
+                <InputWrapper title="성별">
+                  <Controller
+                    control={control}
+                    name="gender"
+                    render={({ field: { onChange, value } }) => (
+                      <Selector
+                        value={value ? [value] : []}
+                        onChange={(selectedVal) => {
+                          if (selectedVal.length) {
+                            onChange(selectedVal[0]);
+                          } else {
+                            onChange(selectedVal);
+                          }
+                        }}
+                        showCheckMark={false}
+                        options={genderOptions}
+                      />
+                    )}
+                  />
+                </InputWrapper>
+              </div>
+            )}
+          </div>
+        </form>
+      </div>
+      <ImageCropper
+        openCropper={openCropper}
+        setOpenCropper={setOpenCropper}
+        selectedImgURL={selectedImg}
+        selectedFileName={selectedFileName}
+        setCroppedImgFiles={setCroppedImgFiles}
+      />
+    </>
   );
 };
 

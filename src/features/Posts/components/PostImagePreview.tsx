@@ -1,4 +1,3 @@
-import { Image } from 'antd-mobile';
 import { CloseOutline } from 'antd-mobile-icons';
 import { useCallback, useState } from 'react';
 
@@ -19,12 +18,13 @@ const PostImagePreview = ({ file, onRemove }: IPostImagePreviewProps) => {
 
   // 업로드한 이미지 선택 취소
   const removeImg = useCallback(() => {
+    console.log('removeImg', file.name);
     onRemove(file.name);
   }, []);
 
   return (
-    <div className="relative size-[154px] border-2 border-black">
-      <Image src={imgPath} width={150} height={150} fit="cover" />
+    <div className="relative inline-flex h-[calc(100dvw/9*4)] w-[calc(100dvw/3)] border-2 border-black">
+      <img src={imgPath} className="object-cover" />
       <button
         onClick={removeImg}
         className="absolute right-0 top-0 size-[20px] bg-black text-white opacity-80"
