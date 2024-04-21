@@ -108,9 +108,9 @@ const CommentSheet: React.FC<CommentSheetProps> = ({
           />
           <button
             type="submit"
-            className="ml-3 rounded-full bg-blue-500 p-2 text-white hover:bg-blue-700"
+            className="ml-3 rounded-full bg-accent p-2 pr-[10px] text-white"
           >
-            <FiSend size={14} />
+            <FiSend size={20} />
           </button>
         </StyledForm>
       </BottomSheet>

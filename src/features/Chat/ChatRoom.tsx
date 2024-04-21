@@ -107,9 +107,9 @@ const ChatRoomPage = () => {
   };
 
   return (
-    <div className="relative flex h-screen flex-1 flex-col overflow-y-scroll">
+    <div className="relative flex h-screen flex-col overflow-y-scroll scrollbar-hide">
       <BackBtnHeader title="메시지" />
-      <div className="flex-1 overflow-y-auto px-3">
+      <div className="flex-1 overflow-y-auto px-3 scrollbar-hide">
         {messages.map((data, index) => (
           <ChatBubble
             key={index}
@@ -157,7 +157,7 @@ const ChatRoomPage = () => {
         />
         <button
           type="submit"
-          className="ml-3 rounded-full bg-accent p-2 text-white active:bg-sky-500"
+          className="ml-3 rounded-full bg-accent p-2 pr-[10px] text-white active:bg-sky-500"
           disabled={isReadOnly}
         >
           <FiSend size={24} />

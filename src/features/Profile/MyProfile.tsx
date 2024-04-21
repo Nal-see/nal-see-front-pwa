@@ -121,7 +121,7 @@ const MyProfilePage = () => {
 
   if (isLoading) {
     return (
-      <div className="flex h-[calc(100dvh-80px)] flex-col overflow-y-scroll">
+      <div className="flex h-[calc(100dvh-80px)] flex-col overflow-y-scroll scrollbar-hide">
         <BackBtnHeader title="내 프로필" />
         <ProfileHeaderSkeleton />
         <Skeleton className=" mb-3 ml-8 h-8 w-1/12 rounded-md font-bold text-secondary-foreground" />
@@ -134,7 +134,7 @@ const MyProfilePage = () => {
   }
 
   return (
-    <div className="flex h-[calc(100dvh-80px)] flex-col gap-1 overflow-y-scroll">
+    <div className="flex h-[calc(100dvh-80px)] flex-col gap-1 overflow-y-scroll scrollbar-hide">
       <BackBtnHeader title="내 프로필" />
       {userData && <ProfileHeader userProfileData={userData.results} />}
       <BottomSheet

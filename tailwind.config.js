@@ -19,8 +19,9 @@ export const theme = {
   },
   extend: {
     screens: {
-      'min-h-690': { raw: '(min-height: 690px)' },
-      'max-h-689': { raw: '(max-height: 689px)' },
+      sm: '500px',
+      'min-h-790': { raw: '(min-height: 790px)' },
+      'max-h-789': { raw: '(max-height: 789px)' },
     },
     colors: {
       border: 'hsl(var(--border))',

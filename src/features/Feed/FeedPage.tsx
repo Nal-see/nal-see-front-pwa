@@ -4,7 +4,7 @@ import Navbar from '../../components/NalSeeNavbar';
 const FeedListPage = () => {
   console.log('FeedListPage');
   return (
-    <div className="flex flex-1 flex-col items-center">
+    <div className="flex w-dvw flex-col items-center sm:w-[400px]">
       <Navbar />
       <FeedList />
     </div>

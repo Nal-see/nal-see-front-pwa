@@ -23,7 +23,7 @@ const PostImagePreview = ({ file, onRemove }: IPostImagePreviewProps) => {
   }, []);
 
   return (
-    <div className="relative inline-flex h-[calc(100dvw/9*4)] w-[calc(100dvw/3)] border-2 border-black">
+    <div className="relative inline-flex h-[calc(100dvw/9*4)] w-[calc(100dvw/3)] border-2 border-black sm:h-[calc(400px/9*4)] sm:w-[calc(400px/3)]">
       <img src={imgPath} className="object-cover" />
       <button
         onClick={removeImg}
