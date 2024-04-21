@@ -76,8 +76,8 @@ const OptionalInfoPage = () => {
   }, [errors]);
 
   return (
-    <div className="flex h-[calc(100dvh-80px)] flex-col items-center justify-center gap-6 overflow-y-scroll p-5 scrollbar-hide">
-      <div className="flex w-[300px] flex-col items-center justify-center gap-3">
+    <div className="flex h-[calc(100dvh-80px)] w-dvw flex-col items-center gap-6 overflow-y-scroll p-5 scrollbar-hide sm:w-[400px]">
+      <div className="flex w-[300px] flex-col items-center justify-center gap-3 sm:pt-8">
         <NalseeLogo className="h-[60px] w-[120px]" />
         <div className="inline-flex items-center justify-center gap-4">
           <img src={SplashSun} className="w-[65px]" />
@@ -102,7 +102,7 @@ const OptionalInfoPage = () => {
         </p>
       </div>
       <form onSubmit={handleSubmit(submitForm)}>
-        <div className="w-[calc(100dvw-40px)]">
+        <div className="mx-auto w-[calc(100dvw-40px)] sm:w-[360px]">
           <InputWrapper title="닉네임">
             <input
               className="w-full text-base focus:outline-none"
@@ -201,7 +201,7 @@ const OptionalInfoPage = () => {
           </InputWrapper>
         </div>
 
-        <div className="inline-flex w-[calc(100dvw-40px)] justify-end">
+        <div className="mx-auto inline-flex w-[calc(100dvw-40px)] justify-end sm:w-[360px]">
           <Button
             type="submit"
             variant="accent"
