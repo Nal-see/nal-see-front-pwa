@@ -2,7 +2,7 @@ export interface ProfileFeedData {
   results: {
     postId: number;
     postPicture: string;
-    many: boolean;
+    isMany: boolean;
   }[];
 }
 
@@ -23,7 +23,7 @@ export interface UserProfilePageProps {
   feedCount: number;
   followerCount: number;
   followingCount: number;
-  followed: boolean;
+  isFollowed: boolean;
   username: string;
   userImage: string | null;
 }

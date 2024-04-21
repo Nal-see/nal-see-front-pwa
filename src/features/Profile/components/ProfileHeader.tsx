@@ -1,4 +1,6 @@
-import FeedCount from './FeedCount';
+import { convertImgSrcToHTTPS } from '@/lib/helpers';
+import FeedCount, { FeedCountSkeleton } from './FeedCount';
+import { Skeleton } from '@/components/ui/skeleton';
 
 type ProfileHeaderProps = {
   userProfileData: {
@@ -7,38 +9,65 @@ type ProfileHeaderProps = {
     followingCount: string | number;
     followerCount: string | number;
     username: string;
-    followed: boolean;
+    isFollowed: boolean;
+    userId: string;
   };
 };
 
 const ProfileHeader: React.FC<ProfileHeaderProps> = ({ userProfileData }) => {
   return (
     <div className="mb-2">
-      <div className="flex items-center justify-around pb-2">
+      <div className="flex items-center justify-between px-6 py-2">
         <img
-          className="mx-5 size-20 rounded-full"
+          className="size-20 rounded-full"
           src={
             userProfileData.userImage
-              ? `${userProfileData.userImage}`
+              ? convertImgSrcToHTTPS(userProfileData.userImage)
               : 'https://placeholder.co/50x50'
           }
           alt="user"
         />
-        <div className="flex flex-auto justify-around">
-          <FeedCount count={userProfileData.feedCount} counterName="Posts" />
+        <div className="inline-flex w-[65%] justify-center gap-9">
+          <FeedCount
+            count={userProfileData.feedCount}
+            counterName="게시물"
+            userId={null}
+            isFeedCount={true}
+          />
           <FeedCount
             count={userProfileData.followerCount}
-            counterName="Followers"
+            counterName="팔로워"
+            userId={userProfileData.userId}
+            isFeedCount={false}
           />
           <FeedCount
             count={userProfileData.followingCount}
-            counterName="Following"
+            counterName="팔로잉"
+            userId={userProfileData.userId}
+            isFeedCount={false}
           />
         </div>
       </div>
-      <h1 className="ml-7 text-lg font-bold">{userProfileData.username}</h1>
+      <h1 className="px-6 pt-2 text-lg font-semibold">
+        {userProfileData.username}
+      </h1>
     </div>
   );
 };
 
 export default ProfileHeader;
+
+export const ProfileHeaderSkeleton = () => {
+  return (
+    <div className="mb-2">
+      <div className="flex items-center justify-around pb-2">
+        <Skeleton className="mx-5 size-20 rounded-full" />
+        <div className="flex flex-auto justify-around">
+          <FeedCountSkeleton />
+          <FeedCountSkeleton />
+          <FeedCountSkeleton />
+        </div>
+      </div>
+    </div>
+  );
+};

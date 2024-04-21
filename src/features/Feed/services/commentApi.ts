@@ -11,9 +11,6 @@ export async function postComment(
   content: string,
   userId: number,
 ): Promise<void> {
-  console.log('userId: ', userId);
-  console.log('postId: ', postId);
-  console.log('content: ', content);
   if (!userId) throw new Error('User not found');
   const response = await api.post(`/api/posts/${postId}/comments`, {
     content,
@@ -28,10 +25,13 @@ export async function updateComment(
   content: string,
   userId: number,
 ): Promise<void> {
-  const response = await api.put(`/api/posts/${postId}/comments/${commentId}`, {
-    content,
-    userId,
-  });
+  const response = await api.patch(
+    `/api/posts/${postId}/comments/${commentId}`,
+    {
+      content,
+      userId,
+    },
+  );
   console.log('response.data: ', response.data);
 }
 

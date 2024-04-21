@@ -6,13 +6,14 @@ import HomePage from '@/features/Home';
 import PostCreatePage from '@/features/Posts/PostCreate';
 import ChatListPage from '@/features/Chat/ChatList';
 import UserProfilePage from '@/features/Profile/UserProfile';
-import PostDetailPage from '@/features/Posts/PostDetail';
-import PostEditPage from '@/features/Posts/PostEdit';
 import ChatRoomPage from '@/features/Chat/ChatRoom';
 import NotificationsPage from '@/features/Notifications/Notifications';
 import FeedListPage from '@/features/Feed/FeedPage';
 import { getUserInfo } from '@/services/api/auth.service';
 import MyProfilePage from '@/features/Profile/MyProfile';
+import FeedDetailPage from '@/features/Feed/FeedDetailPage';
+import OptionalInfoPage from '@/features/OptionalInfo/OptionalInfoPage';
+import NotFound from './NotFound';
 
 const userLoader = async () => {
   const userInfo = await getUserInfo();
@@ -28,10 +29,12 @@ const router = createBrowserRouter([
     element: <PublicRoute />,
     loader: userLoader,
     id: 'user',
+    errorElement: <NotFound />,
     children: [
       {
         path: '/',
         element: <PrivateRoute />,
+
         children: [
           {
             path: 'home',
@@ -40,12 +43,10 @@ const router = createBrowserRouter([
           {
             path: 'feeds',
             element: <FeedListPage />,
-            children: [
-              {
-                path: ':feedId',
-                element: <PostDetailPage />,
-              },
-            ],
+          },
+          {
+            path: 'feeds/:feedId',
+            element: <FeedDetailPage />,
           },
           {
             path: 'posts',
@@ -53,14 +54,6 @@ const router = createBrowserRouter([
               {
                 path: 'create',
                 element: <PostCreatePage />,
-              },
-              {
-                path: ':postId',
-                element: <PostDetailPage />,
-              },
-              {
-                path: ':postId/edit',
-                element: <PostEditPage />,
               },
             ],
           },
@@ -93,6 +86,10 @@ const router = createBrowserRouter([
           {
             path: 'notifications',
             element: <NotificationsPage />,
+          },
+          {
+            path: 'optionalInfo',
+            element: <OptionalInfoPage />,
           },
         ],
       },

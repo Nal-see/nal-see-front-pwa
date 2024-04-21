@@ -1,19 +1,21 @@
-import useAuthStore from '@/store/useAuthStore';
+import MainKakaoMap from './components/MainKakaoMap';
+import NotificationButton from './components/NotificationButton';
+import MotionWeatherCard from './components/MotionWeatherCard';
+import PostGroupListDrawer from './PostGroupListDrawer';
+import ToastNotiPermission from '../Notifications/components/ToastNotiPermission';
+import RetrySearchOnMapBtn from './components/RetrySearchOnMapBtn';
 
 const HomePage = () => {
-  const { user } = useAuthStore();
-
-  if (!user) {
-    return <div>유저 정보가 없습니다.</div>;
-  }
-  const { userId, userName, email, isNewUser } = user;
   return (
-    <div className="flex-1 bg-purple-50">
-      <p className="text-accent">나는 홈페이지 입니다.</p>
-      <p>userId: {userId}</p>
-      <p>userName: {userName}</p>
-      <p>email: {email}</p>
-      <p>isNewUser: {isNewUser ? 'true' : 'false'}</p>
+    <div className="relative flex-1">
+      <ToastNotiPermission />
+      <PostGroupListDrawer />
+      <MotionWeatherCard />
+      <div className="h-[calc(100dvh-80px)]">
+        <MainKakaoMap />
+      </div>
+      <NotificationButton />
+      <RetrySearchOnMapBtn />
     </div>
   );
 };

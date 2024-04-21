@@ -4,25 +4,30 @@ import 'react-spring-bottom-sheet/dist/style.css';
 import { Comment } from '../../../../mocks/data/commentData';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import CommentBox from './comment';
-import { Input, StyledForm, UserImage } from './commentStyle';
-import { FaRegComment } from 'react-icons/fa';
+import { StyledForm, UserImage } from './commentStyle';
+import { TfiComment } from 'react-icons/tfi';
 import useAuthStore from '@/store/useAuthStore';
 import { getComments, postComment } from '../../services/commentApi';
+import { SyncLoader } from 'react-spinners';
+import { convertImgSrcToHTTPS } from '@/lib/helpers';
+import { Input } from '@/components/ui/input';
+import { FiSend } from 'react-icons/fi';
 
 interface CommentSheetProps {
   postId: number;
   username: string;
   userImage: string;
+  isDetail?: boolean;
 }
 
 const CommentSheet: React.FC<CommentSheetProps> = ({
   postId,
   username,
-  userImage,
+  isDetail = false,
 }) => {
   const { user } = useAuthStore();
   const userId = user?.userId;
-  console.log('userId: ', userId);
+  const userImage = user?.picture;
   const [open, setOpen] = useState(false);
   const [newComment, setNewComment] = useState('');
   const sheetRef = useRef<HTMLDivElement>(null);
@@ -50,14 +55,16 @@ const CommentSheet: React.FC<CommentSheetProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('newComment: ', newComment);
     createCommentMutation.mutate({ postId, content: newComment });
     setNewComment('');
   };
 
   return (
     <>
-      <FaRegComment onClick={() => setOpen(true)}>Open Comments</FaRegComment>
+      <TfiComment
+        className={`${isDetail ? 'mt-1.5 size-6' : 'mt-1 size-4'}`}
+        onClick={() => setOpen(true)}
+      />
       <BottomSheet
         open={open}
         onDismiss={() => setOpen(false)}
@@ -69,7 +76,7 @@ const CommentSheet: React.FC<CommentSheetProps> = ({
           className="z-40 h-[calc(100vh-183px)] overflow-y-auto p-4"
         >
           {isLoading ? (
-            <div>Loading...</div>
+            <SyncLoader className="bg-accent" />
           ) : (
             comments?.map((comment: Comment) => (
               <CommentBox
@@ -82,16 +89,29 @@ const CommentSheet: React.FC<CommentSheetProps> = ({
           )}
         </div>
         <StyledForm onSubmit={handleSubmit}>
-          <UserImage src={userImage} alt={username} />
+          <UserImage
+            src={
+              userImage
+                ? convertImgSrcToHTTPS(userImage)
+                : '/assets/weatherImage.placeholder.jpg'
+            }
+            alt={username}
+          />
           <Input
             type="text"
             value={newComment}
             onChange={(e) => {
-              console.log('e.value: ', e.target.value);
               setNewComment(e.target.value);
             }}
             placeholder="댓글을 입력해주세요."
+            className="ml-3 rounded-full text-base"
           />
+          <button
+            type="submit"
+            className="ml-3 rounded-full bg-blue-500 p-2 text-white hover:bg-blue-700"
+          >
+            <FiSend size={14} />
+          </button>
         </StyledForm>
       </BottomSheet>
     </>

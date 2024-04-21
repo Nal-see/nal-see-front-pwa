@@ -2,11 +2,8 @@ import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios';
 import { errorInterceptor } from './interceptors';
 
 const axiosRequestConfig: AxiosRequestConfig = {
-  baseURL: `${import.meta.env.VITE_API_BASE_URL}`,
+  baseURL: `${import.meta.env.VITE_API_BASE_URL}:8080`,
   responseType: 'json',
-  headers: {
-    'Content-Type': 'application/json',
-  },
   withCredentials: true,
 };
 

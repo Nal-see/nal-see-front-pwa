@@ -29,7 +29,7 @@ export type Comment = {
   userImage: string;
   username: string;
   postId: number;
-  isLiked: boolean;
+  liked: boolean;
 };
 
 // Remove the existing declaration of comments: const comments: Comment[] = [];
@@ -46,7 +46,7 @@ for (let i = 0; i <= 50; i++) {
     userImage: 'https://placehold.co/40x40',
     username: usernames[i % usernames.length] + i,
     postId: i,
-    isLiked: i % 2 === 0 ? true : false,
+    liked: i % 2 === 0 ? true : false,
   };
   comments.results.push(comment);
 }

@@ -1,27 +1,83 @@
 import { Button } from '@/components/ui/button';
-import { useState } from 'react';
-import { followUser, unfollowUser } from '../services/profileApi';
+import { followUser, unFollowUser } from '../services/profileApi';
+import { useNavigate } from 'react-router-dom';
+import useAuthStore from '@/store/useAuthStore';
+import { useMutation } from '@tanstack/react-query';
+// import { useState } from 'react';
 
-const FollowMesgComp = ({ followed, userId }: { followed: boolean }) => {
-  const [followedState, setFollowedState] = useState(followed);
+const FollowMesgComp = ({
+  userId,
+  isFollowed,
+  onSuccess,
+}: {
+  userId: string;
+  isFollowed: boolean;
+  onSuccess: () => void;
+}) => {
+  // const [followed, setfollowed] = useState(second);
+  const navigate = useNavigate();
+  const { user } = useAuthStore();
+  const myId = user?.userId;
 
   const handleFollow = () => {
-    if (followedState) {
-      unfollowUser(userId);
+    if (isFollowed) {
+      unFollowMutation.mutate();
     } else {
-      followUser(userId);
+      followMutation.mutate();
     }
-    setFollowedState(!followedState);
   };
+
+  const followMutation = useMutation({
+    mutationFn: () => followUser(userId),
+    onMutate: async () => {
+      followUser(userId);
+    },
+    onSuccess: () => {
+      console.log('followed success');
+      onSuccess();
+    },
+    onError: () => {
+      console.log('followed failed');
+    },
+  });
+
+  const unFollowMutation = useMutation({
+    mutationFn: () => unFollowUser(userId),
+    onMutate: async () => {
+      unFollowUser(userId);
+    },
+    onSuccess: () => {
+      console.log('unfollowed success');
+      onSuccess();
+    },
+    onError: () => {
+      console.log('unfollowed failed');
+    },
+  });
+
+  const handleSendMessage = () => {
+    if (!myId) return;
+    if (Number(myId) < Number(userId)) {
+      navigate(`/chat/${myId}-${userId}`);
+    } else {
+      navigate(`/chat/${userId}-${myId}`);
+    }
+  };
+
   return (
-    <div className="mx-2 flex justify-around">
+    <div className="mx-6 flex justify-around gap-2">
       <Button
-        className={`"mx-1 my-2 w-[50dvh] ${followedState ? 'text-secondary-foregroundß bg-secondary-foreground' : 'bg-accent text-secondary-foreground'} font-bold `}
+        variant={isFollowed ? 'secondary' : 'accent'}
+        className="mx-1 my-2 h-8 w-[50dvh] p-2"
         onClick={() => handleFollow()}
       >
-        {followedState ? '팔로잉' : '팔로우'}
+        {isFollowed ? '팔로잉' : '팔로우'}
       </Button>
-      <Button className="text-secondary-foregroundß mx-1 my-2 w-[50dvh] bg-secondary-foreground font-bold">
+      <Button
+        variant="secondary"
+        className="mx-1 my-2 h-8 w-[50dvh] p-2"
+        onClick={handleSendMessage}
+      >
         메시지
       </Button>
     </div>

@@ -18,6 +18,10 @@ export const theme = {
     },
   },
   extend: {
+    screens: {
+      'min-h-690': { raw: '(min-height: 690px)' },
+      'max-h-689': { raw: '(max-height: 689px)' },
+    },
     colors: {
       border: 'hsl(var(--border))',
       input: 'hsl(var(--input))',

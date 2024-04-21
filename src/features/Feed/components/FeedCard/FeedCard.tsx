@@ -1,125 +1,116 @@
-import React, { useState } from 'react';
-import { Feed } from '@/types/feed';
-import { FaHeart, FaRegHeart } from 'react-icons/fa';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import {
-  FeedCardContainer,
-  FeedCardHeader,
-  ProfileImage,
-  UserInfo,
-  UserName,
-  Place,
-  UploadTime,
-  FeedImage,
-  FeedCardFooter,
-  IconContainer,
-  Icon,
-  Content,
-  ToggleButton,
-} from './FeedCardStyle';
-import { formatDate } from '../../utils/formatDate';
+import React from 'react';
+import { PostResponseDto } from '@/types/feed';
+import { PiHeartStraightFill, PiHeartStraightLight } from 'react-icons/pi';
+import { formatLikeCnt } from '../../utils/dataFormatUtil';
 import CommentSheet from '../comment/CommentSheet';
-import { addPostLike, cancelPostLike } from '../../services/feedApi';
 import { useNavigate } from 'react-router-dom';
+import CircleProfileImg from '@/components/CircleProfileImg';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from '@/components/ui/carousel';
+import useFeedInteraction from '../../hooks/useFeedInteraction';
+import useCarousel from '../../hooks/useCarosel';
+import { convertImgSrcToHTTPS } from '@/lib/helpers';
 
 interface FeedCardProps {
-  feed: Feed;
+  feed: PostResponseDto;
 }
 
-const FeedCard: React.FC<FeedCardProps> = ({ feed }) => {
-  const [isLiked, setIsLiked] = useState(feed.liked);
-  const [showFullContent, setShowFullContent] = useState(false);
-  const maxContentLength = 100; // 초기에 보여줄 content의 최대 길이
-
+const FeedListCard: React.FC<FeedCardProps> = ({ feed }) => {
+  const maxContentLength = 15;
   const navigate = useNavigate();
 
-  const moveProfile = () => {
-    navigate(`/user/${feed.userId}`);
+  const { isLiked, likeCnt, handleToggleLike } = useFeedInteraction(
+    feed.liked,
+    feed.likeCnt,
+    Number(feed.id),
+  );
+
+  const { currentSlide, slideCount, setApi } = useCarousel();
+
+  const moveToDetailPage = () => {
+    navigate(`/feeds/${feed.id}`);
   };
 
-  const toggleContent = () => {
-    setShowFullContent(!showFullContent);
-  };
-
-  const handleToggleLike = async (event: React.MouseEvent<HTMLSpanElement>) => {
-    event.stopPropagation();
-    const newIsLiked = !isLiked;
-    setIsLiked(newIsLiked);
-    try {
-      if (newIsLiked) {
-        await addPostLike(Number(feed.id));
-      } else {
-        await cancelPostLike(Number(feed.id));
-      }
-    } catch (error) {
-      console.error('게시물 좋아요 토글 실패:', error);
-      setIsLiked(!newIsLiked); // 게시물 좋아요 토글 실패 시 이전 상태로 되돌림
-    }
-  };
-
-  const displayedContent = showFullContent
-    ? feed.content
-    : feed.content.slice(0, maxContentLength);
-
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
+  const displayedContent =
+    feed?.content.length < maxContentLength
+      ? feed.content
+      : feed?.content.slice(0, maxContentLength);
 
   return (
-    <FeedCardContainer>
-      <FeedCardHeader>
-        <ProfileImage
-          onClick={moveProfile}
-          src={feed.userImage}
-          alt={feed.username}
-        />
-        <UserInfo onClick={moveProfile}>
-          <UserName>{feed.username}</UserName>
-          <Place>{feed.address}</Place>
-        </UserInfo>
-        <UploadTime>{formatDate(feed.createDate)}</UploadTime>
-      </FeedCardHeader>
-      <Slider {...sliderSettings}>
-        {feed.pictureList.map((picture, index) => (
-          <div key={index}>
-            <FeedImage src={picture} alt={`${feed.address} ${index + 1}`} />
+    <div className="mb-3 w-[45dvw]">
+      <div onClick={moveToDetailPage} className="cursor-pointer">
+        <div className="relative">
+          <Carousel className="w-full" setApi={setApi}>
+            <CarouselContent>
+              {feed.pictureList.map((picture, index) => (
+                <CarouselItem key={index}>
+                  <div className="relative h-[60dvw]">
+                    <img
+                      className="absolute left-0 top-0 size-full rounded-md object-cover"
+                      src={picture}
+                      alt={`${feed.address} ${index + 1}`}
+                    />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+          <div className="absolute inset-x-0 bottom-2 flex justify-center">
+            {Array.from({ length: slideCount }).map((_, index) => (
+              <div
+                key={index}
+                className={`mx-1 size-2 rounded-full ${
+                  currentSlide === index + 1 ? 'bg-white' : 'bg-gray-300'
+                }`}
+              />
+            ))}
           </div>
-        ))}
-      </Slider>
-      <FeedCardFooter>
-        <IconContainer>
-          <Icon onClick={(event) => handleToggleLike(event)}>
-            {isLiked ? <FaHeart color="red" /> : <FaRegHeart />}
-          </Icon>
-          <Icon>
-            <CommentSheet
-              postId={Number(feed.id)}
-              username={feed.username}
-              userImage={feed.userImage}
+        </div>
+        <div>
+          <div className="mb-1 mt-2 flex items-center">
+            <CircleProfileImg
+              profileImgUrl={
+                feed.userImage
+                  ? convertImgSrcToHTTPS(feed.userImage)
+                  : '/assets/weatherImage/placeholder.jpg'
+              }
+              size="size-5 mr-2"
             />
-          </Icon>
-        </IconContainer>
-        <UserName onClick={moveProfile}>{feed.username}</UserName>
-        <Content>
-          {displayedContent}
-          {feed.content.length > maxContentLength && (
-            <>
-              {!showFullContent ? '...' : ''}
-              <ToggleButton onClick={toggleContent}>
-                {showFullContent ? '접기' : '더보기'}
-              </ToggleButton>
-            </>
+            <div className="flex cursor-pointer">
+              <span className="mr-2 font-medium">{feed.username}</span>
+            </div>
+          </div>
+          <p className="m-0">
+            {displayedContent}
+            {feed.content.length > maxContentLength && '...'}
+          </p>
+        </div>
+      </div>
+      <div className="mb-2 flex">
+        <span
+          className="z-0 mr-1 flex cursor-pointer"
+          onClick={(event) => handleToggleLike(event)}
+        >
+          {isLiked ? (
+            <PiHeartStraightFill className="size-5" color="red" />
+          ) : (
+            <PiHeartStraightLight className="size-5" />
           )}
-        </Content>
-      </FeedCardFooter>
-    </FeedCardContainer>
+        </span>
+        <span>{formatLikeCnt(likeCnt)}</span>
+        <span className="z-0 mx-3 cursor-pointer">
+          <CommentSheet
+            postId={Number(feed.id)}
+            username={feed.username}
+            userImage={feed.userImage}
+          />
+        </span>
+      </div>
+    </div>
   );
 };
 
-export default FeedCard;
+export default FeedListCard;

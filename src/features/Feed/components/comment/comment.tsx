@@ -21,6 +21,7 @@ import {
   updateComment,
 } from '../../services/commentApi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { convertImgSrcToHTTPS } from '@/lib/helpers';
 
 interface CommentProps {
   comment: CommentType;
@@ -29,7 +30,7 @@ interface CommentProps {
 }
 
 const Comment: React.FC<CommentProps> = ({ comment, postId, isMyComment }) => {
-  const [isLiked, setIsLiked] = useState(comment.isLiked);
+  const [isLiked, setIsLiked] = useState(comment.liked);
   const [likeCount, setLikeCount] = useState(comment.likeCNT);
   const [showFullContent, setShowFullContent] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -111,7 +112,11 @@ const Comment: React.FC<CommentProps> = ({ comment, postId, isMyComment }) => {
     <CommentContainer>
       <UserImage
         onClick={moveProfile}
-        src={comment.userImage}
+        src={
+          comment.userImage
+            ? convertImgSrcToHTTPS(comment.userImage)
+            : '/assets/weatherImage/placeholder.jpg'
+        }
         alt={comment.username}
       />
       <CommentContent>
@@ -139,6 +144,7 @@ const Comment: React.FC<CommentProps> = ({ comment, postId, isMyComment }) => {
               type="text"
               value={editedContent}
               onChange={(e) => setEditedContent(e.target.value)}
+              className="w-full rounded-md focus:border-blue-500 focus:outline-none"
             />
           </Content>
         ) : (
