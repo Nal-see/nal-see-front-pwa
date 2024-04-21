@@ -135,3 +135,22 @@ textarea:not([rows]) {
 :target {
   scroll-margin-block: 5ex;
 }
+
+/* react-spring-bottom-sheet */
+:root {
+  --rsbs-backdrop-bg: rgba(0, 0, 0, 0.6);
+  --rsbs-bg: #ffffff;
+  --rsbs-handle-bg: #31313a;
+  --rsbs-max-w: auto;
+  --rsbs-ml: env(safe-area-inset-left);
+  --rsbs-mr: env(safe-area-inset-right);
+  --rsbs-overlay-rounded: 16px;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --rsbs-max-w: 400px;
+    --rsbs-ml: auto;
+    --rsbs-mr: auto;
+  }
+}

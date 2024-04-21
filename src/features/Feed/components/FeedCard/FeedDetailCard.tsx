@@ -133,7 +133,7 @@ const FeedDetailCard: React.FC<FeedCardProps> = ({ feed, onUpdateSuccess }) => {
           <CarouselContent>
             {feed.postResponseDto.pictureList.map((picture, index) => (
               <CarouselItem key={index}>
-                <div className="relative h-[calc(100dvw*4/3)]">
+                <div className="relative h-[calc(100dvw*4/3)] sm:h-[calc(400px/3*4)]">
                   <img
                     className="absolute left-0 top-0 size-full object-cover"
                     src={picture}

@@ -20,7 +20,7 @@ const PrivateRoute = () => {
   }, []);
 
   return userData ? (
-    <div className="flex h-dvh flex-col">
+    <div className="flex h-dvh w-dvw flex-col sm:mx-auto sm:w-[400px]">
       <Outlet />
       <Tabbar />
     </div>

@@ -178,11 +178,11 @@ const PostCreatePage = () => {
           <div className="h-[calc(100dvh-158px)] overflow-auto scrollbar-hide">
             {/* STEP 1 : 사진 선택 */}
             {currentStep === 0 && (
-              <div className="flex h-[calc(100dvh-158px)] flex-col items-center gap-3 p-4 min-h-690:justify-center max-h-689:justify-start">
+              <div className="flex h-[calc(100dvh-158px)] flex-col items-center gap-3 p-4 min-h-790:justify-center max-h-789:justify-start">
                 {/* 사진 업로드를 위한 File Input */}
                 <div>
                   <label htmlFor="photos">
-                    <div className="inline-flex h-10 w-[calc(100dvw/3)] items-center justify-center gap-1 whitespace-nowrap rounded-md bg-accent px-4 py-2 text-sm font-medium text-white shadow-sm">
+                    <div className="inline-flex h-10 w-[calc(100dvw/3)] items-center justify-center gap-1 whitespace-nowrap rounded-md bg-accent px-4 py-2 text-sm font-medium text-white shadow-sm sm:w-[calc(400px/3)]">
                       <AddOutline fontSize={14} />
                       <p>사진 선택하기</p>
                     </div>
@@ -206,7 +206,7 @@ const PostCreatePage = () => {
                     />
                   ))}
                   {!croppedImgFiles.length && (
-                    <div className="flex h-[calc(100dvw/9*4)] w-[calc(100dvw/3)] flex-col items-center justify-center gap-1 border border-primary-foreground bg-[#E2E6E9] text-primary-foreground">
+                    <div className="flex h-[calc(100dvw/9*4)] w-[calc(100dvw/3)] flex-col items-center justify-center gap-1 border border-primary-foreground bg-[#E2E6E9] text-primary-foreground sm:h-[calc(400px/9*4)] sm:w-[calc(400px/3)]">
                       <MdAddPhotoAlternate size={30} />
                       <p className="px-2 text-center text-primary-foreground">
                         사진은 총 3장

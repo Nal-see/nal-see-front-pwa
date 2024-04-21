@@ -72,8 +72,8 @@ const PostGroupListDrawer = () => {
               {data.data.results.map((post: PostResponseDto) => (
                 <FeedListCard key={post.id} feed={post} />
               ))}
-              <div className="flex w-[45dvw] flex-col gap-3">
-                <div className="border-primary-foreground/50 flex h-[60dvw] flex-row items-end justify-between rounded-md border bg-gradient-to-t from-[#F5F6F7] to-accent-foreground">
+              <div className="flex w-[45dvw] flex-col gap-3 sm:w-[180px]">
+                <div className="border-primary-foreground/50 flex h-[60dvw] flex-row items-end justify-between rounded-md border bg-gradient-to-t from-[#F5F6F7] to-accent-foreground sm:h-[240px]">
                   <div className="ml-3 w-[70px]">
                     <img src={SplashMan} className="drop-shadow-md" />
                   </div>
