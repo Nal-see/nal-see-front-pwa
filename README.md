@@ -183,27 +183,34 @@ src/features 디렉토리 아래에 각 기능별로 디렉토리를 만들어 �
 
 ### Next.js vs React
 
-![alt text](image-9.png)
+<img src="image-9.png" alt="React Logo" width="300">
 
 - React를 선택한 이유는 프로젝트의 규모와 요구사항을 고려했을 때, Next.js의 서버사이드 렌더링이나 라우팅 기능이 필요하지 않았기 때문입니다. React는 컴포넌트 기반 라이브러리로서 가볍고 빠르며, 프로젝트에 필요한 기능을 유연하게 구현할 수 있어 적합했습니다.
 
+### TypeScript
+
+<img src="image-14.png" alt="TypeScript Logo" width="300">
+
+- 정적 타입 검사를 통해 코드의 안정성 향상, 코드의 가독성을 높여주며, 개발 생산성을 향상
+- 프로젝트 규모가 커지면서 코드의 복잡성이 증가하여 코드의 유지보수성을 높일 수 있습니다.
+
 ### 웹소켓과 SSE 병행 사용
 
-![alt text](image-10.png)
+<img src="image-10.png" alt="WebSocket and SSE" width="300">
 
 - 웹소켓(Stomp/SockJS) : 채팅 기능 구현 웹소켓을 통해 클라이언트와 서버 간의 지속적인 연결을 유지하고 메시지를 실시간으로 주고받을 수 있습니다.
 - SSE : 사용자의 온라인 상태 업데이트와 같이 서버에서 클라이언트로의 단방향 이벤트 전송이 필요한 경우 SSE는 서버에서 클라이언트로 이벤트를 전송하는데 적합하며, 웹소켓보다 간단하고 가벼운 방식.
 
 ### Zustand
 
-![alt text](zustand-1.jpg)
+<img src="zustand-1.jpg" alt="Zustand Logo" width="300">
 
 - 간단하고 직관적인 API 제공
 - Redux와 같은 보일러플레이트 코드가 적어 생산성 향상.
 
 ### Vite
 
-![alt text](image-11.png)
+<img src="image-11.png" alt="Vite Logo" width="300">
 
 - 빠른 개발 서버 시작과 빌드 속도를 제공
 - 네이티브 ES 모듈을 사용하여 코드 분할과 지연 로딩을 최적화
@@ -211,13 +218,13 @@ src/features 디렉토리 아래에 각 기능별로 디렉토리를 만들어 �
 
 ### Tailwind CSS
 
-![alt text](image.jpeg)
+<img src="image.jpeg" alt="Tailwind CSS Logo" width="300">
 
 - 빠른 스타일링과 일관된 디자인 시스템을 구축
 
 ### Shadcn/ui
 
-![alt text](1697728518105.jpeg)
+<img src="1697728518105.jpeg" alt="Shadcn/ui Logo" width="300">
 
 - 접근성과 디자인이 고려된 고품질의 UI 컴포넌트를 빠르게 구현 가능
 - Tailwind CSS와 잘 통합되어 사용이 편리합니다.
@@ -229,19 +236,19 @@ src/features 디렉토리 아래에 각 기능별로 디렉토리를 만들어 �
 
 ### PWA
 
-![alt text](image-13.png)
+<img src="image-13.png" alt="PWA Logo" width="300">
 
 - 모바일 사용자에게 앱과 유사한 경험을 제공
 
 ### Axios
 
-![alt text](<img (1).jpeg>)
+<img src="img (1).jpeg" alt="Axios Logo" width="300">
 
 - 요청과 응답을 쉽게 인터셉트하고 변형 / 자동으로 JSON 데이터를 변환 및 에러 처리 용이
 
 ### MSW
 
-![alt text](<image (2).png>)
+<img src="image (2).png" alt="MSW Logo" width="300">
 
 - 백엔드 API와 독립적으로 프론트엔드 개발을 진행 가능 API와 유사한 환경에서 개발과 테스트를 수행
 
