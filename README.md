@@ -12,12 +12,12 @@
 
 ## 프론트엔드 팀 소개
 
-|        | ![](image.png)                                                                         | ![alt text](image-1.png)                                                                      |
+|        | <img src="image.png" width="100">                                                      | <img src="image-1.png" width="100">                                                           |
 | ------ | -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
 | 이름   | 김채현                                                                                 | 권오영                                                                                        |
 | 역할   | FE-Lead                                                                                | TeamMate                                                                                      |
 | 기능   | \* 메인지도, 날씨드롭 게시물 등록, 로그인 및 회원탈퇴, PWA, FCM알람, 프론트 배포 CI/CD | \* 피드 리스트 및 상세 피드 RUD, 1:1 채팅 및 리스트, 유저 프로필, 정보 수정, 팔로우, 로그아웃 |
-| 깃허브 | [https://github.com/devchaena](https://github.com/devchaena)                           | [https://github.com/oyeong011](https://github.com/oyeong011)                                  |
+| 깃허브 | [김채현의 GitHub](https://github.com/devchaena)                                        | [권오영의 GitHub](https://github.com/oyeong011)                                               |
 
 ## 시작 가이드
 
