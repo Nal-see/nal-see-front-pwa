@@ -17,7 +17,7 @@
 | 이름   | 김채현                                                                                 | 권오영                                                                                        |
 | 역할   | FE-Lead                                                                                | TeamMate                                                                                      |
 | 기능   | \* 메인지도, 날씨드롭 게시물 등록, 로그인 및 회원탈퇴, PWA, FCM알람, 프론트 배포 CI/CD | \* 피드 리스트 및 상세 피드 RUD, 1:1 채팅 및 리스트, 유저 프로필, 정보 수정, 팔로우, 로그아웃 |
-| 깃허브 | [김채현의 GitHub](https://github.com/devchaen)                                        | [권오영의 GitHub](https://github.com/oyeong011)                                               |
+| 깃허브 | [김채현의 GitHub](https://github.com/devchaen)                                         | [권오영의 GitHub](https://github.com/oyeong011)                                               |
 
 ## 시작 가이드
 
@@ -203,7 +203,7 @@ src/features 디렉토리 아래에 각 기능별로 디렉토리를 만들어 �
 
 ### Zustand
 
-<img src="zustand-1.jpg" alt="Zustand Logo" width="300">
+<img src="public/readme/zustand-1.jpg" alt="Zustand Logo" width="300">
 
 - 간단하고 직관적인 API 제공
 - Redux와 같은 보일러플레이트 코드가 적어 생산성 향상.
@@ -224,7 +224,7 @@ src/features 디렉토리 아래에 각 기능별로 디렉토리를 만들어 �
 
 ### Shadcn/ui
 
-<img src="1697728518105.jpeg" alt="Shadcn/ui Logo" width="300">
+<img src="public/readme/1697728518105.jpeg" alt="Shadcn/ui Logo" width="300">
 
 - 접근성과 디자인이 고려된 고품질의 UI 컴포넌트를 빠르게 구현 가능
 - Tailwind CSS와 잘 통합되어 사용이 편리합니다.
